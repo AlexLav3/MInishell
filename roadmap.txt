@@ -1,0 +1,13 @@
+//
+links - sources 
+
+https://medium.com/@muxanz/how-the-shell-works-internally-when-entering-a-command-42f08458870
+https://0xax.gitbooks.io/linux-insides/content/SysCall/
+
+//
+actual to-do -main
+init the shell (display it)
+Display prompt
+have the variable to find path 
+if command is findable, execute, if not - error message that command is not found and display prompt again 
+history 
