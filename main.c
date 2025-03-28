@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/28 23:42:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/29 00:00:39 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ int	main(int argc, char **argv)
 {
 	t_shell shell;
 	if (argc > 1)
-		return (printf("This program does not take any arguments\n"), 0);
+		return (printf("This program does not take any arguments\n"),
+			EXIT_FAILURE);
 	init_shell(&shell);
+	//honestly, not sure if while loop is needed, but it makes sense. (otherwise, it would just return)
 	while (!shell.exit)
 	{
 		//handle input
@@ -25,5 +27,5 @@ int	main(int argc, char **argv)
 		//find command
 		//execute
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
