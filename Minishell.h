@@ -6,19 +6,36 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/28 17:52:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/28 23:44:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include <stdio.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
-void	init_shell(void);
-void	print_dir(void);
-void	input(void);
-void	find_arg(void);
-void	exec_comd(void);
-void	proc_string(void);
+//for storing tokens (commands, for example, "ls" and "l" are 2 tokens.)
+typedef struct s_token
+{
+	char			token;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
+
+//state of shell and more, idk yet.
+typedef struct s_shell
+{
+	int				exit;
+}					t_shell;
+
+//I think the names here are pretty self-explanatory.
+void	            init_shell(t_shell *shell); //init shell values
+void	            print_comm(void);           //print command
+void				input(void);
+void				find_argc(void);
+void				exec_comd(void);
+void				proc_string(void);
 
 #endif

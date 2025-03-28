@@ -1,8 +1,8 @@
-NAME = Minishell
-CC = cc -g -Wall -Werror -Wextra
+NAME = minishell
+CC = cc -g 
 CFLAGS =  
 
-SOURCES = main.c 
+SOURCES = main.c init.c
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(NAME)

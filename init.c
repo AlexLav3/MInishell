@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/28 23:42:09 by elavrich         ###   ########.fr       */
+/*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
+/*   Updated: 2025/03/28 23:38:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	main(int argc, char **argv)
+//initial values
+void	init_shell(t_shell *shell)
 {
-	t_shell shell;
-	if (argc > 1)
-		return (printf("This program does not take any arguments\n"), 0);
-	init_shell(&shell);
-	while (!shell.exit)
-	{
-		//handle input
-		//process string
-		//find command
-		//execute
-	}
-	return (0);
+	shell->exit = 0; //instead of gaving a 1 loop, to keep track on when to close.
 }

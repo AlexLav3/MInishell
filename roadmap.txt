@@ -3,6 +3,7 @@ And it shell be light!!
 //
 links - sources 
 
+https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
 https://medium.com/@muxanz/how-the-shell-works-internally-when-entering-a-command-42f08458870
 https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
