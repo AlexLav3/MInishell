@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 05:29:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 14:50:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 //tokenizer. will need to add error management later.
 //will need to fix for that bitch norminette.
+//maybe will also need a function to check for '<<' and taking more than two < as invalid.
 void	*input(char *str, t_token **tokens)
 {
     int i = 0; 

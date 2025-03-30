@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 03:57:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 15:24:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <readline/history.h>
 # include "libft/src/libft.h"
 # include <readline/readline.h>
+# include <dirent.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
@@ -39,7 +40,7 @@ void				init_shell(t_shell *shell); //init shell values
 void				print_comm(t_token *tokens);
 void				*input(char *str,  t_token **tokens); //process input
 
-void				find_argc(void);
+char				*find_dir(t_token *token);
 void				exec_comd(void);
 void				proc_string(void);
 
