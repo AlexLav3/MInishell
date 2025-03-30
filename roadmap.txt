@@ -15,5 +15,3 @@ Display prompt - ok?
 have the variable to find path 
 if command is findable, execute, if not - error message that command is not found and display prompt again 
 history 
-
-//Hi, I am crying already. 
