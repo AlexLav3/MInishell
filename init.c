@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 03:53:04 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 04:36:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	print_comm(t_token *tokens)
 	char	*command;
 
 	command = readline("prompt> ");
-	printf("command: %s\n", command); //test 
-	input(command, &tokens);
+	//printf("command: %s\n", command); //test 
+	input(command, &tokens); //process string
 }

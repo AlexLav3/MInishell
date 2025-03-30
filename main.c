@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 03:50:47 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 04:36:41 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv)
 	{
 		//handle input
 		print_comm(token);
-		//process string
 		//find command
 		//execute
 	}
