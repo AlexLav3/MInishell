@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 16:25:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:36:47 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*input(char *str, t_token **tokens)
             i++;
         if(is_sep(str[i]))
         {
-            char sep[2] = {str[i], '\0'};
+            char sep[2] = {str[i], '\0'}; //deal with special (such as piping) separetly
             add_token(tokens, sep);
             i++;
         }
@@ -35,7 +35,7 @@ void	*input(char *str, t_token **tokens)
             //make tokenizer function instead with this
             int start = i;
             while (str[i] && !is_sep(str[i]) && str[i] != ' ')
-                i++; 
+                i++;
             int word_len = i - start; 
             word = malloc(word_len + 1);
             if (!word)
@@ -44,8 +44,8 @@ void	*input(char *str, t_token **tokens)
             add_token(tokens, word);
         }
     }
-    //print_list(*tokens); //test to check what's inside the tokens
-    free(word);
+    print_list(*tokens); //test to check what's inside the tokens
+    //free(word);
 }
 
 t_token *new_token(char *word)
