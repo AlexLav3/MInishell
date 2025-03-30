@@ -10,7 +10,10 @@ https://0xax.gitbooks.io/linux-insides/content/SysCall/
 //
 actual to-do -main
 init the shell (display it)
-Display prompt
+Display prompt - ok?
+    tokenize input -> use is space, and add other for things like '-'
 have the variable to find path 
 if command is findable, execute, if not - error message that command is not found and display prompt again 
 history 
+
+//Hi, I am crying already. 

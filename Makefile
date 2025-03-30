@@ -1,16 +1,16 @@
 NAME = minishell
-CC = cc -g 
-CFLAGS =  -lreadline
+CC = cc -g
+CFLAGS =  -lreadline -I${LIB_FT}
 
-SOURCES = main.c init.c input.c 
+SOURCES = main.c init.c input.c utils.c
 OBJECTS = $(SOURCES:.c=.o)
 
-LIBFT = libft/libft.a
+LIB_FT = libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(LIBFT)
+$(NAME): $(OBJECTS) $(LIB_FT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJECTS) $(LIB_FT)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
