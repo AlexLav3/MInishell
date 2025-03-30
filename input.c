@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 01:01:32 by elavrich         ###   ########.fr       */
+/*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
+/*   Updated: 2025/03/30 01:02:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-//initial values
-void	init_shell(t_shell *shell)
+char	*input(char *str, t_token *token)
 {
-	shell->exit = 0; //keep track on when to close.
-}
-void	print_comm(t_token *token)
-{
-	char	*command;
-
-	command = readline("prompt> ");
+    
 }
