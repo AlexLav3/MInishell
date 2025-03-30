@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 17:26:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 22:30:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,5 @@ void	print_comm(t_token *tokens)
 	input(command, &tokens); //process string
 	path = find_dir(tokens);
 	printf("path: %s\n", path); //test to see what path is.
-	//path keeps being printed once found even if later you put random words, even if you free it path
-	//find why and free it. it should not print the path if the command isn't found.
+	//!The pointer returned by readdir() points to data which may be overwritten by another call to readdir() on the same directory stream. This data is not overwritten by another call to readdir() on a different directory stream.!
 }
