@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 15:57:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:22:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ void	print_comm(t_token *tokens)
 	//printf("command: %s\n", command); //test
 	input(command, &tokens); //process string
 	path = find_dir(tokens);
-	printf("path: %s\n", path);
+	printf("path: %s\n", path); //test 
 }

@@ -6,14 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 14:50:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:18:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-//tokenizer. will need to add error management later.
-//will need to fix for that bitch norminette.
+//tokenizer. will need to add error management.
 //maybe will also need a function to check for '<<' and taking more than two < as invalid.
 void	*input(char *str, t_token **tokens)
 {
@@ -46,6 +45,7 @@ void	*input(char *str, t_token **tokens)
         }
     }
     print_list(*tokens); //test
+    free(word);
 }
 
 t_token *new_token(char *word)
