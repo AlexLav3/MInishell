@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 16:20:30 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/03/30 16:24:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_dir(t_token *token)
 			return (NULL);
 		while ((dir = readdir(folder)) != NULL)
 		{
-			if (token->com != NULL)
+			if (token->com != NULL) // make a function to put here instead, in the while loop.
 			{
 				if (strcmp(dir->d_name, token->com) == 0) //create ft_strcmp
 				{
