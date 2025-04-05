@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/03/30 15:24:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/05 18:59:13 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 //for storing tokens (commands, for example, "ls" and "l" are 2 tokens.)
 typedef struct s_token
 {
+	char			**envp; //add by Ferenc temp
 	char			*com;
 	struct s_token	*next;
 	// struct s_token	*prev;
@@ -52,5 +53,6 @@ void 				add_token(t_token **head, char *word);
 int					is_sep(char c);
 //testing
 void 				print_list(t_token *tokens);
+
 
 #endif
