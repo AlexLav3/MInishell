@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 21:27:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 21:52:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,19 @@ void	take_comm(t_token *tokens, t_shell *shell)
 	char	*path;
 
 	command = readline("prompt> ");
-	input(command, &tokens); 
+	input(command, &tokens);
 	cmd = make_args(tokens);
 	if(cmd)
 	{
-		path = get_cmd_path(cmd[0], shell->env_var);
+		path = get_cmd_path(cmd[0], &shell->env_var);
 		if (!path)
 			free_array(cmd);
-		if(execve(path, cmd, shell->env_var) == -1)
-			free_array(cmd);
+		else 
+		{
+			if(execve(path, cmd, shell->env_var) == -1)
+				free_array(cmd);
+		}
+		
 	}
 	//int j = 0;
 	// while (cmd[j]) //testing 

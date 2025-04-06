@@ -34,7 +34,7 @@ char	*get_cmd_path(char *cmd, t_shell *shell)
 	char	**envp = shell->env_var;
 
 	full_path = NULL;
-	while (*envp && ft_strncmp(*envp, "PATH=", 5)) //this is seg faulting
+	while (*envp && ft_strncmp(*envp, "PATH=", 5)) 
 		envp++;
 	if (!*envp)
 		return (NULL);
