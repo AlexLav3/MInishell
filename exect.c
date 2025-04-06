@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 16:29:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:31:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ char	**make_args(t_token *tokens)
 		{
 			cmd[i] = ft_strdup(tmp->com);
 			if (!cmd[i])
-			{
 				return (NULL);
-			}
 			i++;
 		}
 		tmp = tmp->next;
