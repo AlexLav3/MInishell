@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 15:39:57 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:09:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ typedef struct s_shell
 void				init_shell(t_shell *shell, char **envp); //init shell values
 void				take_comm(t_token *tokens); //changed name 
 void				*input(char *str,  t_token **tokens); //process input
-char				*make_args(t_token *tokens); //make cmd and arguments as arrayvoid	add_to_array(char *cmd, int len, char *token)
-void				add_to_array(char *cmd, int len, char *token);
+char				**make_args(t_token *tokens); //make cmd and arguments as arrayvoid	add_to_array(char *cmd, int len, char *token)
+char				*add_to_array(char *cmd, int len, char *token);
 
 // get_path
 char				*get_cmd_path(char *cmd, t_shell *shell);

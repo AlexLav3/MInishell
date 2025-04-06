@@ -6,41 +6,46 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 15:39:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:29:23 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
 //array creation
-char	*make_args(t_token *tokens)
+char	**make_args(t_token *tokens)
 {
-	char *cmd; 
-	int i = 0; 
-	int len = 0;
-	while(tokens)
-	{
-		if(tokens->com)
-		{
-			len = ft_strlen(tokens->com);
-			add_to_array(cmd,len, tokens->com);
-		}		
-		tokens = tokens->next;
-	}
-	return cmd;
-}
+	int		count;
+	t_token	*tmp;
+	char	**cmd;
+	int		i;
 
-void	add_to_array(char *cmd, int len, char *token)
-{
-	int i = 0;
-	int k = 0; 
-	cmd = malloc((sizeof(char*) * len) + 1);
-	while(cmd[i])
-		i++;
-	while(token[k])
+	count = 0;
+	tmp = tokens;
+	while (tmp)
 	{
-		cmd[i] = token[k];
-		i++;
-		k++;
+		if (tmp->com && !is_sep(tmp->com[0]))
+			count++;
+		tmp = tmp->next;
 	}
+	cmd = malloc(sizeof(char *) * (count + 1));
+	if (!cmd)
+		return (NULL);
+	tmp = tokens;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->com && !is_sep(tmp->com[0]))
+		{
+			cmd[i] = ft_strdup(tmp->com);
+			if (!cmd[i])
+			{
+				return (NULL);
+			}
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	cmd[i] = NULL;
+	return (cmd);
 }

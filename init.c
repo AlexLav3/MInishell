@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 15:33:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 16:30:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ void	init_shell(t_shell *shell, char **envp)
 void	take_comm(t_token *tokens)
 {
 	char	*command;
-	char	*cmd;
+	char	**cmd;
 
 	command = readline("prompt> ");
 	input(command, &tokens); 
 	cmd = make_args(tokens);
-	printf("cmd: %s\n", cmd); //test
+	int j = 0;
+	while (cmd[j])
+	{
+		printf("arg[%d] = %s\n", j, cmd[j]); //once the comm is executed, or  not found, we should free the array cmd.
+		j++;
+	}
 }
