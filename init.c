@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 21:55:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 22:16:28 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	take_comm(t_token *tokens, t_shell *shell)
 	cmd = make_args(tokens);
 	if(cmd) //basic version, will prob need to change later.
 	{
-		path = get_cmd_path(cmd[0], &shell->env_var);
+		path = get_cmd_path(cmd[0], shell);
 		if (!path)
 			free_array(cmd);
 		else 
