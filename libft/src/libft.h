@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 00:23:37 by elavrich          #+#    #+#             */
-/*   Updated: 2024/09/23 15:58:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 11:28:25 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void				ft_putnbr_fd(int n, int fd);
 char				*ft_strtrim(char const *s1, char const *set);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_itoa(int n);
+
+int					ft_strcmp(const char *s1, const char *s2);
 
 typedef struct s_list
 {

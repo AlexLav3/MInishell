@@ -7,7 +7,8 @@ src/ft_split.c src/ft_putchar_fd.c src/ft_putendl_fd.c src/ft_putnbr_fd.c src/ft
 src/ft_calloc.c src/ft_strjoin.c src/ft_strtrim.c src/ft_strmapi.c src/ft_itoa.c src/ft_striteri.c src/ft_strdup.c src/ft_strlcat.c \
 get_next_line/get_next_line_utils.c get_next_line/get_next_line.c \
 printf/ft_atoi.c printf/ft_c.c printf/ft_chosehex.c printf/ft_hexlower.c printf/ft_hexupper.c printf/ft_pointer.c printf/ft_printf.c printf/ft_putchar_onear.c printf/ft_putchar.c printf/ft_putnbr.c\
-printf/ft_putnewl.c printf/ft_putstr.c printf/ft_putunsint.c printf/ft_chosenbr.c
+printf/ft_putnewl.c printf/ft_putstr.c printf/ft_putunsint.c printf/ft_chosenbr.c\
+src/ft_strcmp.c
 
 BONUS_SOURCES = src/ft_lstadd_back.c src/ft_lstadd_front.c src/ft_lstclear.c src/ft_lstdelone.c src/ft_lstiter.c \
 src/ft_lstlast.c src/ft_lstmap.c src/ft_lstnew.c src/ft_lstsize.c

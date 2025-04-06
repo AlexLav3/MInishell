@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/05 18:59:13 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/06 11:30:19 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,23 @@ void				exec_comd(void);
 void				proc_string(void);
 
 //for list tokens
-t_token 			*new_token(char *word);
+t_token				*new_token(char *word);
 void 				add_token(t_token **head, char *word);
 
 //utils 
 int					is_sep(char c);
+
 //testing
 void 				print_list(t_token *tokens);
+
+//envp_handle.c
+void 				print_env(t_token env_clone);
+char				**copy_envp(char **envp);
+
+// get_path.c
+char				*join_path(const char *dir, const char *cmd);
+void				free_array(char **arr);
+char				*get_cmd_path(char *cmd, t_token *env_clone);
 
 
 #endif
