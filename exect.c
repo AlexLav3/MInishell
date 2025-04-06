@@ -6,18 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 15:00:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:15:23 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+//array creation 
 
-
-//find directory/path
-char	*find_dir(t_token *token)
-{
-	
-}
 
 

@@ -25,45 +25,14 @@
 // 	}
 // }
 
-
-char	*join_path(const char *dir, const char *cmd)
-{
-	char	*tmp;
-	char	*full_path;
-
-	tmp = ft_strjoin(dir, "/");
-	if (!tmp)
-		return (NULL);
-	full_path = ft_strjoin(tmp, cmd);
-	free(tmp);
-	if (!full_path)
-		return (NULL);
-	return (full_path);
-}
-
-void	free_array(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
 // cmd should be the first position of an array: array[0]
 // change argument intake to struct and after changed it back to array
-char	*get_cmd_path(char *cmd, t_token *env_clone)
+char	*get_cmd_path(char *cmd, t_shell *shell)
 {
 	char	**paths;
 	char	*full_path;
 	int		i;
-	char	**envp = env_clone->envp; //change back to array and function needs NO other modification
+	char	**envp = shell->env_var; //change back to array and function needs NO other modification
 
 	full_path = NULL;
 	while (*envp && ft_strncmp(*envp, "PATH=", 5))

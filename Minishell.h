@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 15:04:30 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:21:29 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_token
 {
 	char			*com;
 	struct s_token	*next;
-	// struct s_token	*prev;
+	// struct s_token	*prev; //maybe will be needed 
 }					t_token;
 
 //state of shell and more, idk yet.
@@ -35,16 +35,23 @@ typedef struct s_shell
 	char			**env_var;
 	int				exit;
 	pid_t 			status; 
-	//possibily, for wait() bc getpid() is not allowed.
 }					t_shell;
 
-void				init_shell(t_shell *shell); //init shell values
-void				print_comm(t_token *tokens);
+void				init_shell(t_shell *shell, char **envp); //init shell values
+void				take_comm(t_token *tokens); //changed name 
 void				*input(char *str,  t_token **tokens); //process input
 
 char				*find_dir(t_token *token);
 void				exec_comd(void);
 void				proc_string(void);
+
+//env variables 
+void 				print_env(t_shell shell); //printing
+char				**copy_envp(char **envp); //copy
+
+// get_path
+void				free_array(char **arr);
+char				*get_cmd_path(char *cmd, t_shell *shell);
 
 //for list tokens
 t_token				*new_token(char *word);
@@ -52,18 +59,13 @@ void 				add_token(t_token **head, char *word);
 
 //utils 
 int					is_sep(char c);
+char				*join_path(const char *dir, const char *cmd);
 
 //testing
 void 				print_list(t_token *tokens);
 
-//envp_handle.c
-void 				print_env(t_shell shell);
-char				**copy_envp(char **envp);
 
-// get_path.c
-char				*join_path(const char *dir, const char *cmd);
-void				free_array(char **arr);
-char				*get_cmd_path(char *cmd, t_token *env_clone);
+
 
 
 #endif

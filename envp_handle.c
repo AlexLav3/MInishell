@@ -1,6 +1,6 @@
 #include "Minishell.h"
 
-// temp stuff to test printing envp
+// printing envp
 void print_env(t_shell shell)
 {
 	if (!shell.env_var)
@@ -12,7 +12,7 @@ void print_env(t_shell shell)
 	while (shell.env_var[i] != NULL)
 		printf("%s\n", shell.env_var[i++]);
 }
-// temp stuff to test copy of envp
+// copy of envp
 char **copy_envp(char **envp)
 {
 	int count;
