@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 15:21:29 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 15:39:57 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,16 @@ typedef struct s_shell
 void				init_shell(t_shell *shell, char **envp); //init shell values
 void				take_comm(t_token *tokens); //changed name 
 void				*input(char *str,  t_token **tokens); //process input
+char				*make_args(t_token *tokens); //make cmd and arguments as arrayvoid	add_to_array(char *cmd, int len, char *token)
+void				add_to_array(char *cmd, int len, char *token);
 
-char				*find_dir(t_token *token);
+// get_path
+char				*get_cmd_path(char *cmd, t_shell *shell);
 void				exec_comd(void);
-void				proc_string(void);
 
 //env variables 
 void 				print_env(t_shell shell); //printing
 char				**copy_envp(char **envp); //copy
-
-// get_path
-void				free_array(char **arr);
-char				*get_cmd_path(char *cmd, t_shell *shell);
 
 //for list tokens
 t_token				*new_token(char *word);
@@ -60,6 +58,7 @@ void 				add_token(t_token **head, char *word);
 //utils 
 int					is_sep(char c);
 char				*join_path(const char *dir, const char *cmd);
+void				free_array(char **arr);
 
 //testing
 void 				print_list(t_token *tokens);
