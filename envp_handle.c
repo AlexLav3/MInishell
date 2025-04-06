@@ -1,16 +1,16 @@
 #include "Minishell.h"
 
 // temp stuff to test printing envp
-void print_env(t_token env_clone)
+void print_env(t_shell shell)
 {
-	if (!env_clone.envp)
+	if (!shell.env_var)
 	{
 		printf("No environment variables.\n");
 		return;
 	}
 	int i = 0;
-	while (env_clone.envp[i] != NULL)
-		printf("%s\n", env_clone.envp[i++]);
+	while (shell.env_var[i] != NULL)
+		printf("%s\n", shell.env_var[i++]);
 }
 // temp stuff to test copy of envp
 char **copy_envp(char **envp)

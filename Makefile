@@ -2,7 +2,7 @@ NAME = minishell
 CC = cc -g
 CFLAGS =  -lreadline -I${LIB_FT}
 
-SOURCES = main.c init.c input.c utils.c exect.c
+SOURCES = main.c init.c input.c utils.c exect.c envp_handle.c
 OBJECTS = $(SOURCES:.c=.o)
 
 LIB_FT = libft/libft.a
