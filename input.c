@@ -6,14 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 20:10:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 20:14:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
 //tokenizer. will need to add error management.
-//maybe will also need a function to check for '<<' and taking more than two < as invalid.
 void	*input(char *str, t_token **tokens)
 {
     int i = 0; 
@@ -36,7 +35,7 @@ void	*input(char *str, t_token **tokens)
             ft_strlcpy(word, &str[start], word_len + 1);
             add_token(tokens, word);
     }
-    print_list(*tokens); //test to check what's inside the tokens
+    //print_list(*tokens); //test to check what's inside the tokens
     //free(word);
 }
 
