@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 20:14:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/06 21:24:19 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-//for storing tokens (commands, for example, "ls" and "l" are 2 tokens.)
 typedef struct s_token
 {
 	char			*com;
@@ -29,7 +28,6 @@ typedef struct s_token
 	// struct s_token	*prev; //maybe will be needed 
 }					t_token;
 
-//state of shell and more, idk yet.
 typedef struct s_shell
 {
 	char			**env_var;
@@ -38,9 +36,9 @@ typedef struct s_shell
 }					t_shell;
 
 void				init_shell(t_shell *shell, char **envp); //init shell values
-void				take_comm(t_token *tokens); //changed name 
-void				*input(char *str,  t_token **tokens); //process input
-char				**make_args(t_token *tokens); //make cmd and arguments as arrayvoid	add_to_array(char *cmd, int len, char *token)
+void				take_comm(t_token *tokens, t_shell *shell);
+void				*input(char *str,  t_token **tokens);
+char				**make_args(t_token *tokens); //make cmd and arguments as array
 
 // get_path
 char				*get_cmd_path(char *cmd, t_shell *shell);
@@ -61,9 +59,5 @@ void				free_array(char **arr);
 
 //testing
 void 				print_list(t_token *tokens);
-
-
-
-
 
 #endif
