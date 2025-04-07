@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 21:03:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:54:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    sig_handle(int sig)
 
 void	setup_sig(void)
 {
-	signal(SIGINT, sig_handle);
-	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+
+	signal(SIGINT, sig_handle); //ctr + C
+	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+ slash
 }
     

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 22:49:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:53:47 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	execute_cmd(char **cmd, t_shell *shell)
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 	{
-		perror("Command not found");
+		perror("Command not found"); //here, maybe we can check if it's exit or another type of command first?
 		return ;
 	}
-	pid = fork();
-		//can we use shell->status (pid type?) maybe better to change the name,lol.
+	pid = fork();//can we use shell->status (pid type) maybe better to change the name,lol.
 	if (pid == -1)
 		perror("fork");
 	else if (pid == 0)
@@ -53,6 +52,7 @@ void	execute_cmd(char **cmd, t_shell *shell)
 	free(path);
 }
 
+//this is way too long and may get longer. 
 void	take_comm(t_token **tokens, t_shell *shell)
 {
 	char	*command;
