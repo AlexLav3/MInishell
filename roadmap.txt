@@ -13,7 +13,7 @@ basic commands and ctr stuff, working, and no leaks so far, good job to us! XD
 
 //
 actual to-do -main
-    handle quotes -> handle in tokenization process?
+    handle quotes -> double ok, handle single.
     built in commands, some of them not behaving as should.
     
     piping
