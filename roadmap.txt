@@ -8,10 +8,15 @@ https://medium.com/@muxanz/how-the-shell-works-internally-when-entering-a-comman
 https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
 //
+
+basic commands and ctr stuff, working, and no leaks so far, good job to us! XD
+
+//
 actual to-do -main
-init the shell (display it)
-Display prompt - ok?
-    tokenize input -> use is space, and add other for things like '-'
-have the variable to find path 
-if command is findable, execute, if not - error message that command is not found and display prompt again 
-history 
+    handle quotes and fix the "ls " not working (with the space) -> handle both in tokenization process?
+    built in commands, some of them not behaving as should.
+    
+    piping
+    redirection
+    $?
+    env -> that should be easy.
