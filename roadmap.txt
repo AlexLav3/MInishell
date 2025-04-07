@@ -24,4 +24,4 @@ actual to-do -main
 fixing 
     not typing anything and pressing enter = "command not found" - maybe fixed
 
-    prompt> ls (space after ls) - fixed
+    prompt> ls (space after ls) - fixed, now works no matter how many spaces you put after ls, with or without a flag.
