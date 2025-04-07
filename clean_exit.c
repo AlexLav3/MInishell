@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 16:13:18 by elavrich         ###   ########.fr       */
+/*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
+/*   Updated: 2025/04/07 16:12:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+// to deaclocate nodes (well, tokens)
+void	deallocate(t_token **root)
 {
-	t_shell	shell;
-	t_token	*token;
+	t_token	*curr;
+	t_token	*aux;
 
-	(void)argv;
-	token = NULL;
-	if (argc > 1)
-		return (printf("This program does not take any arguments\n"),
-				EXIT_FAILURE);
-	init_shell(&shell, envp);
-	if (!shell.exit)
-		take_comm(&token, &shell);
-	close_free(token, &shell);
-	return (EXIT_SUCCESS);
+	if (!root)
+		return ;
+	curr = *root;
+	while (curr != NULL)
+	{
+		aux = curr;
+		curr = curr->next;
+		free(aux);
+	}
+	*root = NULL;
+}
+
+void    close_free(t_token *tokens, t_shell *shell)
+{
+    deallocate(&tokens);
+    free_array(shell->env_var);
 }

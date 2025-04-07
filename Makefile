@@ -3,7 +3,7 @@ CC = cc -g
 CFLAGS =  -Ilibft 
 LDFLAGS = -lreadline
 
-SOURCES = main.c init.c input.c utils.c exect.c envp_handle.c get_path.c
+SOURCES = main.c init.c input.c utils.c exect.c envp_handle.c get_path.c clean_exit.c
 OBJECTS = $(SOURCES:.c=.o)
 
 LIB_FT = libft/libft.a

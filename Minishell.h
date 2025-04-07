@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:48:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:12:40 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void				exec_comd(void);
 char				**copy_envp(char **envp);
 void 				print_env(t_shell shell);
 
+//close & free
+void close_free(t_token *tokens, t_shell *shell);
+void				free_array(char **arr);
+void				deallocate(t_token **root);
+
 //for list tokens
 t_token				*new_token(char *word);
 void 				add_token(t_token **head, char *word);
@@ -55,8 +60,6 @@ void 				add_token(t_token **head, char *word);
 //utils 
 int					is_sep(char c);
 char				*join_path(const char *dir, const char *cmd);
-void				free_array(char **arr);
-void				deallocate(t_token **root);
 
 //testing
 void 				print_list(t_token *tokens);
