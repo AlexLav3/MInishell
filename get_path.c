@@ -1,7 +1,6 @@
 
 #include "Minishell.h"
 
-// cmd should be the first position of an array: array[0]
 char	*get_cmd_path(char *cmd, t_shell *shell)
 {
 	char	**paths;

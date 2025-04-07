@@ -6,13 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:46:16 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:47:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-//tokenizer. will need to add error management.
 // f:07/04/25 - removed unused variables + update
 void	input(char *str, t_token **tokens)
 {
@@ -26,8 +25,8 @@ void	input(char *str, t_token **tokens)
 	{
 		if(str[i] == ' ')
 			i++;
-		if(is_sep(str[i])) //for now we break, to not include what goes after a pipe as arg
-			break; //in the futre, we may want to re-call this function for what is after a pipe.
+		if(is_sep(str[i]))
+			break;
 		start = i;
 		while (str[i] && !is_sep(str[i]) && str[i] != ' ')
 			i++;
@@ -49,7 +48,6 @@ t_token	*new_token(char *word)
 	tokens = malloc(sizeof(t_token));
 	if (!tokens)
 		return NULL;
-	// tokens->com = word;  // Store the word
 	tokens->com = ft_strdup(word); // f:07/04/25 - create a copy of word, so we can free it in input
 	if (!tokens->com)
 	{

@@ -30,7 +30,7 @@ char	**copy_envp(char **envp)
 		return NULL;
 	while (i < count)
 	{
-		copy[i] = ft_strdup(envp[i]); // allocate memory and copy the string, not just the address to ptr
+		copy[i] = ft_strdup(envp[i]);
 		if (!copy[i]) // f:07/04/25 - due to malloc
 		{
 			while (i-- > 0)

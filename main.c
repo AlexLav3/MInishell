@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:42:58 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:47:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*token;
 
 	(void)argv;
-	// // token = malloc(sizeof(t_token));
-	// if (!token) // f:07/04/25 - due to malloc
-	// 	return 1;
 	token = NULL;
 	if (argc > 1)
 		return (printf("This program does not take any arguments\n"),

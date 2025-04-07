@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:43:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:48:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ typedef struct s_shell
 	pid_t 			status; 
 }					t_shell;
 
-void				init_shell(t_shell *shell, char **envp); //init shell values
+void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
 void				input(char *str,  t_token **tokens);
-char				**make_args(t_token *tokens); //make cmd and arguments as array
+char				**make_args(t_token *tokens);
 
 // get_path
 char				*get_cmd_path(char *cmd, t_shell *shell);
 void				exec_comd(void);
 
 //env variables 
-char				**copy_envp(char **envp); //copy
-void 				print_env(t_shell shell); //printing
+char				**copy_envp(char **envp);
+void 				print_env(t_shell shell);
 
 //for list tokens
 t_token				*new_token(char *word);

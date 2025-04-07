@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:17:28 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:47:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		}
 		if (command && *command)
 			add_history(command);
-		
 		if (ft_strcmp(command, "exit") == 0) {
 			free(command);
 			break;  // Exit the loop if user types "exit"
