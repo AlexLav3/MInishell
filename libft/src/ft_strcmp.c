@@ -3,22 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:56:53 by fnagy             #+#    #+#             */
-/*   Updated: 2025/04/06 11:26:20 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 17:52:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "libft.h"
 
 /* return -1 for NULl not part of original strcmp,
 but I guess we better have it for future projects to hand NULL inputs.*/
-	// if (!s1 || !s2)
-	// 	return (-1);
-
+// if (!s1 || !s2)
+// 	return (-1);
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;

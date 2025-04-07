@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:47:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:59:41 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 //initial values
 void	init_shell(t_shell *shell, char **envp)
 {
-	shell->exit = 0; //keep track on when to close.env
+	shell->exit = 0;
 	shell->env_var = copy_envp(envp);
-	// print_env(*shell); // test printing
 }
+
 // f:07/04/25 - we will need more space for sep
 void	child_process(t_shell *shell, char **cmd, char *path)
 {
@@ -28,6 +28,7 @@ void	child_process(t_shell *shell, char **cmd, char *path)
 		exit(EXIT_FAILURE);
 	}
 }
+
 void	execute_cmd(char **cmd, t_shell *shell)
 {
 	char	*path;
@@ -37,7 +38,7 @@ void	execute_cmd(char **cmd, t_shell *shell)
 	if (!path)
 	{
 		perror("Command not found");
-		return;
+		return ;
 	}
 	pid = fork();
 	if (pid == -1)
@@ -58,23 +59,25 @@ void	take_comm(t_token **tokens, t_shell *shell)
 	while (1)
 	{
 		command = readline("prompt> ");
-		if (!command) // f:07/04/25 - ctrl - d - otherwise runs to seg fault, we need to handle this later
+		if (!command)
 		{
 			deallocate(tokens);
-			break;
+			break ;
 		}
 		if (command && *command)
 			add_history(command);
-		if (ft_strcmp(command, "exit") == 0) {
+		if (ft_strcmp(command, "exit") == 0)
+		{
 			free(command);
-			break;  // Exit the loop if user types "exit"
+			break ;
 		}
 		input(command, tokens);
 		cmd = make_args(*tokens);
 		free(command);
-		if (!cmd) {
+		if (!cmd)
+		{
 			deallocate(tokens);
-			continue;
+			continue ;
 		}
 		execute_cmd(cmd, shell);
 		free_array(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:03:12 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 17:53:15 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	deallocate(t_token **root)
 	*root = NULL;
 }
 
-void    close_free(t_token *tokens, t_shell *shell)
+void	close_free(t_token *tokens, t_shell *shell)
 {
-    deallocate(&tokens);
-    free_array(shell->env_var);
+	deallocate(&tokens);
+	free_array(shell->env_var);
 }

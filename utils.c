@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:51:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:00:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	size_args(t_token *tokens)
 	int		count;
 
 	count = 0;
-	tmp = tokens;	
+	tmp = tokens;
 	if (tokens == NULL)
 		return (0);
 	while (tmp)

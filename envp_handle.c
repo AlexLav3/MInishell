@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envp_handle.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
+/*   Updated: 2025/04/07 17:53:46 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Minishell.h"
 
 // printing envp
@@ -8,18 +20,18 @@ void	print_env(t_shell shell)
 	if (!shell.env_var)
 	{
 		printf("No environment variables.\n");
-		return;
+		return ;
 	}
 	i = 0;
 	while (shell.env_var[i] != NULL)
 		printf("%s\n", shell.env_var[i++]);
 }
-// copy of envp
+
 char	**copy_envp(char **envp)
 {
-	int	count;
-	int	i;
-	char **copy;
+	int		count;
+	int		i;
+	char	**copy;
 
 	count = 0;
 	i = 0;
@@ -27,7 +39,7 @@ char	**copy_envp(char **envp)
 		count++;
 	copy = malloc(sizeof(char *) * (count + 1));
 	if (!copy)
-		return NULL;
+		return (NULL);
 	while (i < count)
 	{
 		copy[i] = ft_strdup(envp[i]);
@@ -36,10 +48,10 @@ char	**copy_envp(char **envp)
 			while (i-- > 0)
 				free(copy[i]);
 			free(copy);
-			return NULL;
+			return (NULL);
 		}
 		i++;
 	}
 	copy[count] = NULL;
-	return copy;
+	return (copy);
 }
