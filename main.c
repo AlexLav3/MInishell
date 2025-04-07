@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:27:18 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:42:58 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	main(int argc, char **argv, char **envp)
 	init_shell(&shell, envp);
 	if (!shell.exit)
 		take_comm(&token, &shell);
-	deallocate(token); // f:07/04/25 - free tokens, we may need to free shell as well
+	deallocate(&token); // f:07/04/25 - free tokens, we may need to free shell as well
 	return (EXIT_SUCCESS);
 }

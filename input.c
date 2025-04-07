@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:24:17 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:36:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	input(char *str, t_token **tokens)
 		add_token(tokens, word);
 	}
 	//print_list(*tokens); //test to check what's inside the tokens
-	// free(word);
+	free(word);
 }
 
 t_token	*new_token(char *word)
