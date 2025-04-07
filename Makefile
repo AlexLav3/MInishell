@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc -g
-CFLAGS =  -lreadline -I${LIB_FT}
+CFLAGS =  -Ilibft 
 LDFLAGS = -lreadline
 
 SOURCES = main.c init.c input.c utils.c exect.c envp_handle.c get_path.c

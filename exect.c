@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 16:31:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 10:19:11 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	**make_args(t_token *tokens)
 	int		i;
 
 	count = 0;
+	i = 0;
 	tmp = tokens;
 	while (tmp)
 	{
@@ -32,14 +33,18 @@ char	**make_args(t_token *tokens)
 	if (!cmd)
 		return (NULL);
 	tmp = tokens;
-	i = 0;
 	while (tmp)
 	{
 		if (tmp->com && !is_sep(tmp->com[0]))
 		{
 			cmd[i] = ft_strdup(tmp->com);
-			if (!cmd[i])
+			if (!cmd[i]) // f:07/04/25 - due to malloc, free the previous allocations as well
+			{
+				while (--i >= 0)
+					free(cmd[i]);
+				free(cmd);
 				return (NULL);
+			}
 			i++;
 		}
 		tmp = tmp->next;

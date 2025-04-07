@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/06 21:50:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 09:14:32 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void 				add_token(t_token **head, char *word);
 int					is_sep(char c);
 char				*join_path(const char *dir, const char *cmd);
 void				free_array(char **arr);
+void				deallocate(t_token **root);
 
 //testing
 void 				print_list(t_token *tokens);
