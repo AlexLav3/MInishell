@@ -6,12 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 20:13:27 by elavrich          #+#    #+#             */
-/*   Updated: 2024/09/21 16:36:17 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:31:30 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include "ft_strlen.c"
+#include "ft_strlen.c"
 
 static char	*ft_strcpy(char *dest, const char *src)
 {

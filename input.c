@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 15:47:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:41:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	input(char *str, t_token **tokens)
 		add_token(tokens, word);
 	}
 	//print_list(*tokens); //test to check what's inside the tokens
-	//free(word); //doesn't change anything in the memory leaks, I suppose it's useless.
+	//free(word); //doesn't change anything in the memory leaks but creates issues.
 }
 
 t_token	*new_token(char *word)
@@ -51,9 +51,10 @@ t_token	*new_token(char *word)
 	tokens->com = ft_strdup(word); // f:07/04/25 - create a copy of word, so we can free it in input
 	if (!tokens->com)
 	{
-		free(tokens);
-		return NULL;
+		free(word);
+		return (free(tokens), NULL);
 	}
+	free(word);
 	tokens->next = NULL;
 	return tokens;
 }
@@ -63,7 +64,7 @@ void	add_token(t_token **head, char *word)
 	t_token	*new;
 	t_token	*tmp;
 
-	new = new_token(word);
+	new = new_token(word); //we can free the word inside new token.
 	if (!new)
 		return;
 	if (!*head)
