@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 21:34:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:48:37 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	execute_cmd(char **cmd, t_shell *shell)
 	char	*path;
 	pid_t	pid;
 
-	if(!cmd[0])
-		return; 
+	if (!cmd[0])
+		return ;
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 	{
@@ -43,6 +43,8 @@ void	execute_cmd(char **cmd, t_shell *shell)
 		return ;
 	}
 	pid = fork();
+		//can we use shell->status (pid type?) maybe better to change the name,
+		lol.
 	if (pid == -1)
 		perror("fork");
 	else if (pid == 0)
@@ -64,14 +66,14 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		if (!command)
 		{
 			deallocate(tokens);
-			break;
+			break ;
 		}
 		if (command && *command)
 			add_history(command);
-		if (ft_strcmp(command, "exit") == 0)
+		if (ft_strcmp(command, "exit") == 0) //what if instead, we put exit in the exec fun. If not found, and is not "exit" or etc, then not found.?
 		{
 			free(command);
-			break;
+			break ;
 		}
 		input(command, tokens);
 		cmd = make_args(*tokens);
