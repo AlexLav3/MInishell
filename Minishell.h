@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:43:58 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:54:37 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ void				exec_comd(void);
 char				**copy_envp(char **envp);
 void 				print_env(t_shell shell);
 
+//signals
+void    			sig_handle(int sig);
+void				setup_sig(void);
 //close & free
-void close_free(t_token *tokens, t_shell *shell);
+void 				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
 void				deallocate(t_token **root);
 

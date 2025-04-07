@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 20:58:21 by elavrich         ###   ########.fr       */
+/*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
+/*   Updated: 2025/04/07 21:02:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void    sig_handle(int sig)
 {
-	t_shell	shell;
-	t_token	*token;
-
-	(void)argv;
-	token = NULL;
-	if (argc > 1)
-		return (printf("This program does not take any arguments\n"),
-			EXIT_FAILURE);
-	init_shell(&shell, envp);
-	if (!shell.exit)
-	{
-		setup_sig();
-		take_comm(&token, &shell);
-	}
-	close_free(token, &shell);
-	return (EXIT_SUCCESS);
+    (void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
+
+void	setup_sig(void)
+{
+	signal(SIGINT, sig_handle);
+	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+\ 
+}
+    

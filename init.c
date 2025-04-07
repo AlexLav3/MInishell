@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:59:41 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 18:11:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		if (!command)
 		{
 			deallocate(tokens);
-			break ;
+			break;
 		}
 		if (command && *command)
 			add_history(command);
 		if (ft_strcmp(command, "exit") == 0)
 		{
 			free(command);
-			break ;
+			break;
 		}
 		input(command, tokens);
 		cmd = make_args(*tokens);
