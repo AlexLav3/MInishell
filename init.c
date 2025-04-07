@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 14:45:08 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:17:28 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	execute_cmd(char **cmd, t_shell *shell)
 	free(path);
 }
 
-void	take_comm(t_token *tokens, t_shell *shell)
+void	take_comm(t_token **tokens, t_shell *shell)
 {
 	char	*command;
 	char	**cmd;
@@ -60,7 +60,7 @@ void	take_comm(t_token *tokens, t_shell *shell)
 		command = readline("prompt> ");
 		if (!command) // f:07/04/25 - ctrl - d - otherwise runs to seg fault, we need to handle this later
 		{
-			free(command);
+			deallocate(tokens);
 			break;
 		}
 		if (command && *command)
@@ -70,16 +70,16 @@ void	take_comm(t_token *tokens, t_shell *shell)
 			free(command);
 			break;  // Exit the loop if user types "exit"
 		}
-		input(command, &tokens);
-		cmd = make_args(tokens);
+		input(command, tokens);
+		cmd = make_args(*tokens);
 		free(command);
 		if (!cmd) {
-			deallocate(&tokens);
+			deallocate(tokens);
 			continue;
 		}
 		execute_cmd(cmd, shell);
 		free_array(cmd);
-		deallocate(&tokens);
+		deallocate(tokens);
 	}
 	rl_clear_history();
 }

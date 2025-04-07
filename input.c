@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 13:32:25 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 15:21:19 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //tokenizer. will need to add error management.
 // f:07/04/25 - removed unused variables + update
-void	*input(char *str, t_token **tokens)
+void	input(char *str, t_token **tokens)
 {
 	int		i; 
 	char	*word;
@@ -34,7 +34,7 @@ void	*input(char *str, t_token **tokens)
 		word_len = i - start; 
 		word = malloc(word_len + 1);
 		if (!word)
-			return NULL;
+			return ;
 		ft_strlcpy(word, &str[start], word_len + 1);
 		add_token(tokens, word);
 		free(word); // f:07/04/25 - protect from leaks
