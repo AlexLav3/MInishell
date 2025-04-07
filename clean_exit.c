@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 16:16:58 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:03:12 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@
 void	deallocate(t_token **root)
 {
 	t_token	*curr;
-	t_token	*aux;
+	t_token	*token;
 
-	if (!root)
+	if (!root || !*root)
 		return ;
 	curr = *root;
 	while (curr != NULL)
 	{
-		aux = curr;
+		token = curr;
 		curr = curr->next;
-		free(aux);
+		free(token->com);
+		free(token);
 	}
 	*root = NULL;
 }
