@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:23:36 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 17:32:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	input(char *str, t_token **tokens)
 			return ;
 		ft_strlcpy(word, &str[start], word_len + 1);
 		add_token(tokens, word);
-		// free(word);
 	}
 	//print_list(*tokens); //test to check what's inside the tokens
 	//free(word); //doesn't change anything in the memory leaks but creates issues.
