@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 13:39:14 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 17:50:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,27 @@
 //array creation
 char	**make_args(t_token *tokens)
 {
-	int		count;
-	t_token	*tmp;
 	char	**cmd;
 	int		i;
 
-	count = 0;
 	i = 0;
-	if (tokens == NULL)
-		return (NULL);
-	tmp = tokens;
-	while (tmp)
-	{
-		if (tmp->com && !is_sep(tmp->com[0]))
-			count++;
-		tmp = tmp->next;
-	}
-	cmd = malloc(sizeof(char *) * (count + 1));
+	cmd = malloc(sizeof(char *) * (size_args(tokens) + 1));
 	if (!cmd)
 		return (NULL);
-	tmp = tokens;
-	while (tmp)
+	while (tokens)
 	{
-		if (tmp->com && !is_sep(tmp->com[0]))
+		if (tokens->com && !is_sep(tokens->com[0]))
 		{
-			cmd[i] = ft_strdup(tmp->com);
-			if (!cmd[i]) // f:07/04/25 - due to malloc, free the previous allocations as well
+			cmd[i] = ft_strdup(tokens->com);
+			if (!cmd[i]) // f:07/04/25 - free the previous allocations as well
 			{
 				while (i > 0)
 					free(cmd[--i]);
-				free(cmd);
-				return (NULL);
+				return (free(cmd), NULL);
 			}
 			i++;
 		}
-		tmp = tmp->next;
+		tokens = tokens->next;
 	}
 	cmd[i] = NULL;
 	return (cmd);

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 16:12:40 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:43:58 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void 				add_token(t_token **head, char *word);
 //utils 
 int					is_sep(char c);
 char				*join_path(const char *dir, const char *cmd);
-
+int					size_args(t_token *tokens);
 //testing
 void 				print_list(t_token *tokens);
 

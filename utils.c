@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 16:10:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:51:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	is_sep(char c)
 		return (0);
 }
 
-void 	print_list(t_token *tokens)
+void	print_list(t_token *tokens)
 {
-	while(tokens)
+	while (tokens)
 	{
 		if (tokens->com)
 			printf("token value: %s\n", tokens->com);
@@ -58,4 +58,22 @@ char	*join_path(const char *dir, const char *cmd)
 	if (!full_path)
 		return (NULL);
 	return (full_path);
+}
+
+int	size_args(t_token *tokens)
+{
+	t_token	*tmp;
+	int		count;
+
+	count = 0;
+	tmp = tokens;	
+	if (tokens == NULL)
+		return (0);
+	while (tmp)
+	{
+		if (tmp->com && !is_sep(tmp->com[0]))
+			count++;
+		tmp = tmp->next;
+	}
+	return (count);
 }
