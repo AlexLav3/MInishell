@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:50:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:54:03 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**make_args(t_token *tokens)
 		return (NULL);
 	while (tokens)
 	{
-		if (tokens->com && !is_sep(tokens->com[0]))
+		if (tokens->com != NULL && !is_sep(tokens->com[0]))
 		{
 			cmd[i] = ft_strdup(tokens->com);
 			if (!cmd[i]) // f:07/04/25 - free the previous allocations as well

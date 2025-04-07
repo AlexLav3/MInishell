@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 18:11:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/07 21:34:37 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	execute_cmd(char **cmd, t_shell *shell)
 	char	*path;
 	pid_t	pid;
 
+	if(!cmd[0])
+		return; 
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 	{

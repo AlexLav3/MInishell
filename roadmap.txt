@@ -13,10 +13,15 @@ basic commands and ctr stuff, working, and no leaks so far, good job to us! XD
 
 //
 actual to-do -main
-    handle quotes and fix the "ls " not working (with the space) -> handle both in tokenization process?
+    handle quotes -> handle in tokenization process?
     built in commands, some of them not behaving as should.
     
     piping
     redirection
     $?
     env -> that should be easy.
+//
+fixing 
+    not typing anything and pressing enter = "command not found" - maybe fixed
+
+    prompt> ls (space after ls) - fixed
