@@ -19,12 +19,13 @@ char	**copy_envp(char **envp)
 {
 	int	count;
 	int	i;
+	char **copy;
 
 	count = 0;
 	i = 0;
 	while (envp[count])
 		count++;
-	char **copy = malloc(sizeof(char *) * (count + 1));
+	copy = malloc(sizeof(char *) * (count + 1));
 	if (!copy)
 		return NULL;
 	while (i < count)

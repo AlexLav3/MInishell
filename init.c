@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 11:37:26 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 14:45:08 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 //initial values
 void	init_shell(t_shell *shell, char **envp)
 {
-	shell->exit = 0; //keep track on when to close.
+	shell->exit = 0; //keep track on when to close.env
 	shell->env_var = copy_envp(envp);
-	//print_env(*shell); // test printing
+	// print_env(*shell); // test printing
 }
-
-void	child_process(t_shell *shell, char **cmd, char *path) // f:07/04/25 - we will need more space for pipe
+// f:07/04/25 - we will need more space for sep
+void	child_process(t_shell *shell, char **cmd, char *path)
 {
 	if (execve(path, cmd, shell->env_var) == -1)
 	{
@@ -55,19 +55,31 @@ void	take_comm(t_token *tokens, t_shell *shell)
 	char	**cmd;
 	pid_t	pid;
 
-	command = readline("prompt> ");
-	if (!command) // f:07/04/25 - ctrl - d - otherwise runs to seg fault, we need to handle this later
-		return;
-	input(command, &tokens);
-	cmd = make_args(tokens);
-	if (!cmd)
-		return;
-	execute_cmd(cmd, shell);
-	free_array(cmd);
-	//int j = 0;//testing 
-	// while (cmd[j]) 
-	// {
-	// 	printf("arg[%d] = %s\n", j, cmd[j]); //once the comm is executed, or  not found, we should free the array cmd.
-	// 	j++;
-	// }
+	while (1)
+	{
+		command = readline("prompt> ");
+		if (!command) // f:07/04/25 - ctrl - d - otherwise runs to seg fault, we need to handle this later
+		{
+			free(command);
+			break;
+		}
+		if (command && *command)
+			add_history(command);
+		
+		if (ft_strcmp(command, "exit") == 0) {
+			free(command);
+			break;  // Exit the loop if user types "exit"
+		}
+		input(command, &tokens);
+		cmd = make_args(tokens);
+		free(command);
+		if (!cmd) {
+			deallocate(&tokens);
+			continue;
+		}
+		execute_cmd(cmd, shell);
+		free_array(cmd);
+		deallocate(&tokens);
+	}
+	rl_clear_history();
 }

@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 10:38:31 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/07 13:32:25 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*input(char *str, t_token **tokens)
 		free(word); // f:07/04/25 - protect from leaks
 	}
 	//print_list(*tokens); //test to check what's inside the tokens
-	//free(word);
+	// free(word);
 }
 
 t_token	*new_token(char *word)
