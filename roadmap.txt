@@ -72,6 +72,11 @@ we need to create a condition to check if the command line has any of these sign
 	take_comm was separated to different parts
 		- "exit" check done by check_for_exit which is in clean_exit.c
 		- created a new function called process_commands which took over the rest of the take_comm
+		- tried to handle pipes, failed, at the end tried to get chatgpt fix it, failed
+			for_pipes.c at the moment is not good
+			for_pipes_utils.c has useful functions we maybe able to use for other seperators
+		- builtin.c just a splace where we can do the next parts, not developed yet
+
 
 
 
