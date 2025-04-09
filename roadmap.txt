@@ -28,3 +28,29 @@ fixing
     not typing anything and pressing enter = "command not found" - maybe fixed
 
     prompt> ls (space after ls) - fixed, now works no matter how many spaces you put after ls, with or without a flag.
+
+
+// Ferenc 09/05/25
+questions:
+	In the sig.c  file:
+	- identifier "SIGQUIT" is undefined same goes to SIGQUIT, SIG_IGN.
+		Do we need to add something or it is just on my computer?
+	- signal(SIGINT, sig_handle)
+		Dont we need an int in the sig_handle call?
+
+	According to the subject, we should have one global variable for signal, do you know anything about it?
+	I have no clue how that is working. 
+
+your questions/comments in the init.c files:
+	- exit:
+		yes, we can check if we can do that, the current one probably only works if the exit typed as first word,
+		but I am not sure that correct, we need to research how exit command acts in terminal
+	- pid as struct:
+		I am not sure if that would give any benefits, rather make things more complicated.
+		If there is any reason you think it should be better, pls let me know. We probably can make that work too.
+		But I think a local int variable is easier to handle and faster as well for the program. 
+	- take_comm to make shorter
+		I will work on this now and see how we coudl split it. 
+		Probaly start with removing the exit part :D
+		
+
