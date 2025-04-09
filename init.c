@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 22:53:47 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:05:38 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,45 +19,66 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->env_var = copy_envp(envp);
 }
 
-// f:07/04/25 - we will need more space for sep
-void	child_process(t_shell *shell, char **cmd, char *path)
-{
-	if (execve(path, cmd, shell->env_var) == -1)
-	{
-		perror("execve failed");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	execute_cmd(char **cmd, t_shell *shell)
+void	execute_single_cmd(char **cmd, t_shell *shell)
 {
 	char	*path;
-	pid_t	pid;
 
-	if (!cmd[0])
+	if (!cmd[0] || !cmd)
 		return ;
+	
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 	{
 		perror("Command not found"); //here, maybe we can check if it's exit or another type of command first?
 		return ;
 	}
-	pid = fork();//can we use shell->status (pid type) maybe better to change the name,lol.
-	if (pid == -1)
+	shell->pid1 = fork();
+	if (shell->pid1 == -1)
 		perror("fork");
-	else if (pid == 0)
-		child_process(shell, cmd, path);
+	else if (shell->pid1 == 0)
+	{
+		if (execve(path, cmd, shell->env_var) == -1)
+		{
+			perror("execve failed");
+			exit(EXIT_FAILURE);
+		}
+	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(shell->pid1, NULL, 0);
 	free(path);
 }
 
-//this is way too long and may get longer. 
+void	process_commands(char *command, t_token **tokens, t_shell *shell)
+{
+	char	**cmd;
+
+	cmd = make_args(*tokens);
+	free(command);
+	if (!cmd)
+	{
+		deallocate(tokens);
+		return ;
+	}
+	// if (handle_builtin(cmd, shell))
+	// {
+	// 	free_array(cmd);
+	// 	deallocate(tokens);
+	// 	return ;
+	// }
+	if (has_seps(cmd, '|')) // command with pipe(s)
+	{
+		split_by_pipe(shell, cmd);
+		execute_pipeline(shell);
+	}
+	else
+		execute_single_cmd(cmd, shell); //single command
+	free_array(cmd);
+	deallocate(tokens);
+}
+
 void	take_comm(t_token **tokens, t_shell *shell)
 {
-	char	*command;
-	char	**cmd;
-	pid_t	pid;
+	char	*command;	
 
 	while (1)
 	{
@@ -69,22 +90,10 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		}
 		if (command && *command)
 			add_history(command);
-		if (ft_strcmp(command, "exit") == 0) //what if instead, we put exit in the exec fun. If not found, and is not "exit" or etc, then not found.?
-		{
-			free(command);
+		if (check_for_exit(command))
 			break ;
-		}
 		input(command, tokens);
-		cmd = make_args(*tokens);
-		free(command);
-		if (!cmd)
-		{
-			deallocate(tokens);
-			continue ;
-		}
-		execute_cmd(cmd, shell);
-		free_array(cmd);
-		deallocate(tokens);
+		process_commands(command, tokens, shell);
 	}
 	rl_clear_history();
 }

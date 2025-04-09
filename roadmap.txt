@@ -46,11 +46,32 @@ your questions/comments in the init.c files:
 		yes, we can check if we can do that, the current one probably only works if the exit typed as first word,
 		but I am not sure that correct, we need to research how exit command acts in terminal
 	- pid as struct:
-		I am not sure if that would give any benefits, rather make things more complicated.
-		If there is any reason you think it should be better, pls let me know. We probably can make that work too.
-		But I think a local int variable is easier to handle and faster as well for the program. 
+		well, due to pipe I had to chang them to structs at the end
 	- take_comm to make shorter
 		I will work on this now and see how we coudl split it. 
 		Probaly start with removing the exit part :D
-		
+
+subject:
+	exit with no options
+	so it should be enough what we have, exit if the first word is "exit" command
+
+// pipes and other stuff
+	Implement the following redirections:
+	◦ < should redirect input.
+	◦ > should redirect output.
+	◦ << should be given a delimiter, then read the input until a line containing the
+	delimiter is seen. However, it doesn’t have to update the history!
+	◦ >> should redirect output in append mode.
+	• Implement pipes (| character). The output of each command in the pipeline is
+	connected to the input of the next command via a pipe.
+
+we need to create a condition to check if the command line has any of these signs and call different process according to that
+
+
+// stuff done:
+	take_comm was separated to different parts
+		- "exit" check done by check_for_exit which is in clean_exit.c
+		- created a new function called process_commands which took over the rest of the take_comm
+
+
 

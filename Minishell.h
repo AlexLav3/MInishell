@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 20:54:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:26:38 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_token
 {
@@ -31,8 +32,13 @@ typedef struct s_token
 typedef struct s_shell
 {
 	char			**env_var;
+	char			***av;
+	int				input_fd;
+	int				output_fd;
+	int				pipe_fd[2];
+	pid_t			pid1;
+	pid_t			pipe_pid;
 	int				exit;
-	pid_t 			status; 
 }					t_shell;
 
 void				init_shell(t_shell *shell, char **envp);
@@ -41,8 +47,22 @@ void				input(char *str,  t_token **tokens);
 char				**make_args(t_token *tokens);
 
 // get_path
+void				process_commands(char *command, t_token **tokens, t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
-void				exec_comd(void);
+// void				exec_comd(void);
+void				execute_single_cmd(char **cmd, t_shell *shell);
+
+// pipes utils
+int					has_seps(char **cmd, char sep);
+int					count_seps(char **cmd, char sep);
+int					count_segment_tokens(char **cmd, int start, char sep);
+void				free_av(char ***av);
+
+// pipes
+void				split_by_pipe(t_shell *shell, char **cmd);
+void 				execute_command(char **cmd, int input_fd, int output_fd, t_shell *shell);
+void 				execute_pipeline(t_shell *shell);
+void				handle_pipeline(t_shell *shell, int index, int input_fd);
 
 //env variables 
 char				**copy_envp(char **envp);
@@ -55,6 +75,7 @@ void				setup_sig(void);
 void 				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
 void				deallocate(t_token **root);
+bool				check_for_exit(char *command);
 
 //for list tokens
 t_token				*new_token(char *word);

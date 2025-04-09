@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 21:54:03 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:54:49 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ char	**make_args(t_token *tokens)
 		return (NULL);
 	while (tokens)
 	{
-		if (tokens->com != NULL && !is_sep(tokens->com[0]))
+		if (tokens->com && tokens->com[0] != '\0') // tokens->com != NULL && !is_sep(tokens->com[0])
 		{
 			cmd[i] = ft_strdup(tokens->com);
-			if (!cmd[i]) // f:07/04/25 - free the previous allocations as well
+			if (!cmd[i])
 			{
 				while (i > 0)
 					free(cmd[--i]);

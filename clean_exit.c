@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:53:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:40:43 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	deallocate(t_token **root)
 	{
 		token = curr;
 		curr = curr->next;
-		free(token->com);
+		if (token->com)
+            free(token->com);
 		free(token);
 	}
 	*root = NULL;
@@ -35,4 +36,14 @@ void	close_free(t_token *tokens, t_shell *shell)
 {
 	deallocate(&tokens);
 	free_array(shell->env_var);
+}
+
+bool	check_for_exit(char *command)
+{
+	if (ft_strcmp(command, "exit") == 0) //what if instead, we put exit in the exec fun. If not found, and is not "exit" or etc, then not found.?
+	{
+		free(command);
+		return (true);
+	}	
+	return (false);
 }
