@@ -20,7 +20,10 @@ actual to-do -main
     other commands such as redirections.  
 //
 
-// Ferenc 09/05/25
+// deleted lines that had no answer needed/were updates /other things I would just say ok to. to keep this readable, and shorter.
+//	feel free to delete questions that are solved, or update them given the new info. Let's try to keep this updated and with needed questions/links/info
+
+// Ferenc 09/05/25 //you can see who made the commit and when on the commits history, not needed to specify.
 questions:
 	In the sig.c  file:
 	- identifier "SIGQUIT" is undefined same goes to SIGQUIT, SIG_IGN.
