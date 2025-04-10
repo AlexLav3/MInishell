@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:53:39 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/10 03:23:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/10 03:43:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	has_seps(char **cmd, char sep)
 
 	i = 0;
 	while (cmd[i])
-	{							//and if index one is the end?
+	{							//and if index one is the end? what is they are later?
 		if (cmd[i][0] == sep && cmd[i][1] == '\0') // cmd {"ls", "|", "grep", "a", NULL}
 			return (1);
 		i++;

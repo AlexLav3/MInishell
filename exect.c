@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/09 16:54:49 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/10 03:43:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**make_args(t_token *tokens)
 	if (!cmd)
 		return (NULL);
 	while (tokens)
-	{
+	{	//why?
 		if (tokens->com && tokens->com[0] != '\0') // tokens->com != NULL && !is_sep(tokens->com[0])
 		{
 			cmd[i] = ft_strdup(tokens->com);

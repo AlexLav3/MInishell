@@ -6,12 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:49:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/10 03:12:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/10 03:42:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+//this can be done in tokenization proccess. If you want, I can implement it.
 void	split_by_pipe(t_shell *shell, char **cmd)
 {
 	int	i;
