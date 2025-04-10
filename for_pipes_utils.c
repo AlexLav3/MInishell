@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   for_pipes_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 15:53:39 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/09 17:17:15 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/10 03:23:15 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	has_seps(char **cmd, char sep)
 
 	i = 0;
 	while (cmd[i])
-	{
+	{							//and if index one is the end?
 		if (cmd[i][0] == sep && cmd[i][1] == '\0') // cmd {"ls", "|", "grep", "a", NULL}
 			return (1);
 		i++;
@@ -36,7 +36,7 @@ int	count_seps(char **cmd, char sep)
 	if (!cmd)
 		return (0);
 	while (cmd[i])
-	{
+	{							//and if it's the end of string? why?
 		if (cmd[i][0] == sep && cmd[i][1] == '\0')
 			count++;
 		i++;		
@@ -50,7 +50,7 @@ int count_segment_tokens(char **cmd, int start, char sep)
 	
 	count = 0;
 	if (!cmd || start < 0)
-		return 0;
+		return 0;									//why and index one is the end of string? 
 	while (cmd[start] && !(cmd[start][0] == sep && cmd[start][1] == '\0'))
 	{
 		count++;

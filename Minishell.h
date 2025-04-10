@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/09 17:26:38 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/10 03:36:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,18 @@ void				split_by_pipe(t_shell *shell, char **cmd);
 void 				execute_command(char **cmd, int input_fd, int output_fd, t_shell *shell);
 void 				execute_pipeline(t_shell *shell);
 void				handle_pipeline(t_shell *shell, int index, int input_fd);
+
+//functions you inserted as declarations in the builtin.c file, deleted for now. 
+//these functions do not seem to have any clear idea in mind, we can read the command required in the 
+//pdf, so these may be deleted or changed, ofc.
+bool				handle_builtin(char **cmd, t_shell *shell);
+bool				ft_echo(char **cmd);
+bool				ft_cd(char **cmd, t_shell *shell);
+bool				ft_pwd(void);
+bool				ft_export(char **cmd, t_shell *shell);
+bool				ft_unset(char **cmd, t_shell *shell);
+bool				ft_env(t_shell *shell);
+void				ft_exit(t_shell *shell);
 
 //env variables 
 char				**copy_envp(char **envp);

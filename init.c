@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/09 16:05:38 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/10 03:10:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 	{
-		perror("Command not found"); //here, maybe we can check if it's exit or another type of command first?
+		perror("Command not found"); 
 		return ;
 	}
 	shell->pid1 = fork();
