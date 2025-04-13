@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/10 03:10:52 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 03:02:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 		deallocate(tokens);
 		return ;
 	}
-	// if (handle_builtin(cmd, shell))
-	// {
-	// 	free_array(cmd);
-	// 	deallocate(tokens);
-	// 	return ;
-	// }
+	if (handle_builtin(cmd, shell))
+	{
+		free_array(cmd);
+		deallocate(tokens);
+		return ;
+	}
 	if (has_seps(cmd, '|')) // command with pipe(s)
 	{
 		split_by_pipe(shell, cmd);
 		execute_pipeline(shell);
 	}
 	else
-		execute_single_cmd(cmd, shell); //single command
+		execute_single_cmd(cmd, shell); //single command - echo works with this already. 
 	free_array(cmd);
 	deallocate(tokens);
 }

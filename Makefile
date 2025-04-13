@@ -4,7 +4,7 @@ CFLAGS =  -Ilibft
 LDFLAGS = -lreadline
 
 SOURCES = main.c init.c input.c utils.c exect.c envp_handle.c get_path.c clean_exit.c for_pipes.c for_pipes_utils.c \
-sig.c
+sig.c builtin.c
 OBJECTS = $(SOURCES:.c=.o)
 
 LIB_FT = libft/libft.a

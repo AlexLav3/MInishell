@@ -6,27 +6,27 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/10 03:36:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 02:55:45 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <readline/history.h>
 # include "libft/src/libft.h"
-# include <readline/readline.h>
 # include <dirent.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <stdbool.h>
 
 typedef struct s_token
 {
 	char			*com;
 	struct s_token	*next;
-	// struct s_token	*prev; //maybe will be needed 
+	// struct s_token	*prev; //maybe will be needed
 }					t_token;
 
 typedef struct s_shell
@@ -43,11 +43,12 @@ typedef struct s_shell
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
-void				input(char *str,  t_token **tokens);
+void				input(char *str, t_token **tokens);
 char				**make_args(t_token *tokens);
 
 // get_path
-void				process_commands(char *command, t_token **tokens, t_shell *shell);
+void				process_commands(char *command, t_token **tokens,
+						t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
 // void				exec_comd(void);
 void				execute_single_cmd(char **cmd, t_shell *shell);
@@ -60,44 +61,44 @@ void				free_av(char ***av);
 
 // pipes
 void				split_by_pipe(t_shell *shell, char **cmd);
-void 				execute_command(char **cmd, int input_fd, int output_fd, t_shell *shell);
-void 				execute_pipeline(t_shell *shell);
+void				execute_command(char **cmd, int input_fd, int output_fd,
+						t_shell *shell);
+void				execute_pipeline(t_shell *shell);
 void				handle_pipeline(t_shell *shell, int index, int input_fd);
 
-//functions you inserted as declarations in the builtin.c file, deleted for now. 
-//these functions do not seem to have any clear idea in mind, we can read the command required in the 
-//pdf, so these may be deleted or changed, ofc.
+//builtin
 bool				handle_builtin(char **cmd, t_shell *shell);
-bool				ft_echo(char **cmd);
-bool				ft_cd(char **cmd, t_shell *shell);
+// bool				ft_echo(char **cmd); //works already with execute single cmd 
+void    			builtin_cd(char **cmd, t_shell *shell);
+
 bool				ft_pwd(void);
 bool				ft_export(char **cmd, t_shell *shell);
 bool				ft_unset(char **cmd, t_shell *shell);
 bool				ft_env(t_shell *shell);
 void				ft_exit(t_shell *shell);
 
-//env variables 
+//env variables
 char				**copy_envp(char **envp);
-void 				print_env(t_shell shell);
+void				print_env(t_shell shell);
 
 //signals
-void    			sig_handle(int sig);
+void				sig_handle(int sig);
 void				setup_sig(void);
 //close & free
-void 				close_free(t_token *tokens, t_shell *shell);
+void				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
 void				deallocate(t_token **root);
 bool				check_for_exit(char *command);
 
 //for list tokens
 t_token				*new_token(char *word);
-void 				add_token(t_token **head, char *word);
+void				add_token(t_token **head, char *word);
 
-//utils 
+//utils
 int					is_sep(char c);
 char				*join_path(const char *dir, const char *cmd);
 int					size_args(t_token *tokens);
 //testing
-void 				print_list(t_token *tokens);
+void				print_list(t_token *tokens);
 
 #endif
