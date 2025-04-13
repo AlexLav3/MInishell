@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/13 02:55:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 03:21:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_shell
 {
 	char			**env_var;
 	char			***av;
+	char			*pwd;
 	int				input_fd;
 	int				output_fd;
 	int				pipe_fd[2];
@@ -45,6 +46,7 @@ void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
 void				input(char *str, t_token **tokens);
 char				**make_args(t_token *tokens);
+char				*set_pwd(t_shell *shell);
 
 // get_path
 void				process_commands(char *command, t_token **tokens,
@@ -71,10 +73,11 @@ bool				handle_builtin(char **cmd, t_shell *shell);
 // bool				ft_echo(char **cmd); //works already with execute single cmd 
 void    			builtin_cd(char **cmd, t_shell *shell);
 
-bool				ft_pwd(void);
+void 				builtin_pwd(char **cmd, t_shell *shell); //I figured this one out. it was using the one in bin/pwd, but interal variable didn't change.
+//it updates correctly now. 
 bool				ft_export(char **cmd, t_shell *shell);
 bool				ft_unset(char **cmd, t_shell *shell);
-bool				ft_env(t_shell *shell);
+//bool				ft_env(t_shell *shell); //working already. 
 void				ft_exit(t_shell *shell);
 
 //env variables

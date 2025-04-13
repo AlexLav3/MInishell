@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/13 03:00:44 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 03:24:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		builtin_cd(cmd, shell);
 		return (1);
 	}
+	if (ft_strcmp(cmd[0], "pwd") == 0)
+		return (builtin_pwd(cmd, shell), 1);
 	return (0);
 }
 
@@ -48,4 +50,14 @@ void	builtin_cd(char **cmd, t_shell *shell)
 		return ;
 	if (chdir(path) != 0)
 		perror("cd");
+	else 
+		shell->pwd = set_pwd(shell);
+}
+
+void	builtin_pwd(char **cmd, t_shell *shell)
+{
+	if(!shell->pwd)
+		return;
+	//printf("custom function; %s\n", shell->pwd); //used to check if it was using the custom function or not. 
+	printf("%s\n", shell->pwd); 
 }

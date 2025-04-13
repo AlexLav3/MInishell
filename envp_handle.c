@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/07 17:53:46 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 03:06:04 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**copy_envp(char **envp)
 	while (i < count)
 	{
 		copy[i] = ft_strdup(envp[i]);
-		if (!copy[i]) // f:07/04/25 - due to malloc
+		if (!copy[i])
 		{
 			while (i-- > 0)
 				free(copy[i]);

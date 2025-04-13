@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/13 03:02:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 03:11:17 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
 	shell->env_var = copy_envp(envp);
+	shell->pwd = set_pwd(shell);
 }
 
 void	execute_single_cmd(char **cmd, t_shell *shell)
@@ -25,11 +26,10 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 
 	if (!cmd[0] || !cmd)
 		return ;
-	
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 	{
-		perror("Command not found"); 
+		perror("Command not found");
 		return ;
 	}
 	shell->pid1 = fork();
@@ -71,14 +71,14 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 		execute_pipeline(shell);
 	}
 	else
-		execute_single_cmd(cmd, shell); //single command - echo works with this already. 
+		execute_single_cmd(cmd, shell); //single command
 	free_array(cmd);
 	deallocate(tokens);
 }
 
 void	take_comm(t_token **tokens, t_shell *shell)
 {
-	char	*command;	
+	char	*command;
 
 	while (1)
 	{
@@ -96,4 +96,16 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		process_commands(command, tokens, shell);
 	}
 	rl_clear_history();
+}
+
+char	*set_pwd(t_shell *shell)
+{
+	char *cwd;
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+	{
+		perror("getcwd");
+		return (NULL);
+	}
+	return (cwd);
 }
