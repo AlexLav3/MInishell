@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/13 03:21:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/13 06:32:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void				input(char *str, t_token **tokens);
 char				**make_args(t_token *tokens);
 char				*set_pwd(t_shell *shell);
 
+void				execute_single_cmd(char **cmd, t_shell *shell);
+
 // get_path
 void				process_commands(char *command, t_token **tokens,
 						t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
-// void				exec_comd(void);
-void				execute_single_cmd(char **cmd, t_shell *shell);
 
 // pipes utils
 int					has_seps(char **cmd, char sep);
@@ -75,23 +75,24 @@ void    			builtin_cd(char **cmd, t_shell *shell);
 
 void 				builtin_pwd(char **cmd, t_shell *shell); //I figured this one out. it was using the one in bin/pwd, but interal variable didn't change.
 //it updates correctly now. 
-bool				ft_export(char **cmd, t_shell *shell);
+void				ft_export(char **cmd, t_shell *shell);
 bool				ft_unset(char **cmd, t_shell *shell);
-//bool				ft_env(t_shell *shell); //working already. 
-void				ft_exit(t_shell *shell);
+//bool				ft_env(t_shell *shell); //working already. - maybe needs a custom one anyway? I think it uses the one in bin rn. 
 
 //env variables
 char				**copy_envp(char **envp);
 void				print_env(t_shell shell);
-
+void				add_env(t_shell *shell, char *var);
 //signals
 void				sig_handle(int sig);
 void				setup_sig(void);
+
 //close & free
 void				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
 void				deallocate(t_token **root);
 bool				check_for_exit(char *command);
+void				ft_exit(t_shell *shell);
 
 //for list tokens
 t_token				*new_token(char *word);
