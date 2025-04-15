@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 14:47:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:50:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	ft_export(char **cmd, t_shell *shell)
 				update_env(shell, var, name);
 			break;
 		}
+		else 
+			print_env(*shell);
 		i++;
 	}
 }
