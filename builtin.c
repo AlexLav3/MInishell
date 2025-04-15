@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 15:45:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 23:16:15 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_export(char **cmd, t_shell *shell)
 	i = 0;
 	while (cmd[i])
 	{
-		//if find equal sign
 		equal = ft_strchr(cmd[i], '=');
 		if (equal)
 		{
@@ -98,9 +97,11 @@ void	ft_export(char **cmd, t_shell *shell)
 
 void	builtin_unset(char **cmd, t_shell *shell)
 {
-	char *var;
-	int pos = 0;
-	int i;
+	char	*var;
+	int		pos;
+	int		i;
+
+	pos = 0;
 	i = 0;
 	while (cmd[i])
 	{

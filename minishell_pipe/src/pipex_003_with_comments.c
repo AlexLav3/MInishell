@@ -121,7 +121,7 @@ void	execute_cmd(char *cmd, char **envp)
 	char	**args;
 	char	*path;
 
-	args = ft_split(cmd, ' ');
+	args = ft_split(cmd, ' ');  //why splitting with space?
 	if (!args || !args[0])
 		pipex_error("split");
 	path = get_path(args[0], envp);
@@ -173,7 +173,7 @@ int	main(int ac, char **av, char **envp)
 {
 	if (ac < 2)
 	{
-		write(2, "Usage: ./pipex \"cmd1\" \"cmd2\" ...\n", 33);
+		write(2, "Usage: ./pipex \"cmd1\" \"cmd2\" ...\n", 33); //slash and not | ?
 		return (1);
 	}
 	create_pipes(&av[1], envp);

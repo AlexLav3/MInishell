@@ -23,7 +23,7 @@ typedef struct s_pipex
 void	pipex_error(char *msg);
 int		cmd_counter(char **cmds);
 void	fd_handle(int i, int cmd_count, t_pipex *px);
-void	which_child(int i, int cmd_count, t_pipex *px, char **cmds, char **envp);
+void	which_child(int i, int cmd_count, t_pipex *px, char **cmds, char **envp); //norminette problem, more than 4 args.
 void	create_pipes(char **cmds, char **envp);
 void	first_child_process(t_pipex *px, char *cmd, char **envp);
 void	last_child_process(t_pipex *px, char *cmd, char **envp);
