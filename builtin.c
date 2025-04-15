@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 14:31:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:47:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ void	builtin_pwd(char **cmd, t_shell *shell)
 void	ft_export(char **cmd, t_shell *shell)
 {
 	char	*var;
+	char	*name;
 	char	*equal;
+	char	*value;
 	int		i;
 
 	i = 0;
@@ -78,10 +80,12 @@ void	ft_export(char **cmd, t_shell *shell)
 		if (equal)
 		{
 			var = ft_strdup(cmd[i]);
-			if(!search_env(shell, var))
+			*equal = '\0';
+			name = cmd[i];
+			if(!search_env(shell, name))
 				add_env(shell, var);
 			else 
-				update_env(shell, var);
+				update_env(shell, var, name);
 			break;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 14:30:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:47:11 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,36 +89,21 @@ int	search_env(t_shell *shell, char *var)
 {
 	int		i;
 	size_t	len;
-	char	*equal;
-	char	*dup;
-	char	*name;
 
-	dup = ft_strdup(var);
 	i = 0;
-	while (dup[i])
-	{
-		equal = ft_strchr(&dup[i], '=');
-		if (equal)
-		{
-			*equal = '\0';
-			name = &dup[i];
-			len = ft_strlen(name);
-			break ;
-		}
-		i++;
-	}
+	len = ft_strlen(var);
 	while (shell->env_var[i])
 	{
-		if (ft_strncmp(shell->env_var[i], name, len) == 0
+		if (ft_strncmp(shell->env_var[i], var, len) == 0
 			&& shell->env_var[i][len] == '=')
-			return (1);
+			return (i);
 		i++;
 	}
 	return (0);
 }
 
-void	update_env(t_shell *shell, char *var)
+void	update_env(t_shell *shell, char *var, char *name)
 {
-	
-	
+	int pos = search_env(shell, name);
+	shell->env_var[pos] = ft_strdup(var);
 }
