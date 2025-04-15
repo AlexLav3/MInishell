@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 14:50:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:45:26 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 {
 	if (!cmd || !cmd[0])
 		return (0);
-	if (ft_strcmp(cmd[0], "cd") == 0)
+	else if (ft_strcmp(cmd[0], "cd") == 0)
 		return (builtin_cd(cmd, shell), 1);
-	if (ft_strcmp(cmd[0], "pwd") == 0)
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (builtin_pwd(cmd, shell), 1);
-	if (ft_strcmp(cmd[0], "export") == 0)
+	else if (ft_strcmp(cmd[0], "export") == 0)
 		return (ft_export(cmd, shell), 1);
-	if (ft_strcmp(cmd[0], "env") == 0)
+	else if (ft_strcmp(cmd[0], "env") == 0)
 		return (print_env(*shell), 1);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		return (builtin_unset(cmd, shell), 1);
 	return (0);
 }
 
@@ -82,15 +84,33 @@ void	ft_export(char **cmd, t_shell *shell)
 			var = ft_strdup(cmd[i]);
 			*equal = '\0';
 			name = cmd[i];
-			if(!search_env(shell, name))
+			if (!search_env(shell, name))
 				add_env(shell, var);
-			else 
+			else
 				update_env(shell, var, name);
-			break;
+			break ;
 		}
-		else 
-			print_env(*shell);
+		i++;
+	}
+	if (!equal)
+		print_env(*shell);
+}
+
+void	builtin_unset(char **cmd, t_shell *shell)
+{
+	char *var;
+	int pos = 0;
+	int i;
+	i = 0;
+	while (cmd[i])
+	{
+		var = cmd[i];
+		pos = search_env(shell, var);
+		if (pos)
+		{
+			shell->env_var[pos] = NULL;
+			break ;
+		}
 		i++;
 	}
 }
-

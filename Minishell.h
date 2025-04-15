@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 14:47:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:30:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,10 @@ void				handle_pipeline(t_shell *shell, int index, int input_fd);
 
 //builtin
 bool				handle_builtin(char **cmd, t_shell *shell);
-// bool				ft_echo(char **cmd); //works already with execute single cmd 
 void    			builtin_cd(char **cmd, t_shell *shell);
-
-void 				builtin_pwd(char **cmd, t_shell *shell); //I figured this one out. it was using the one in bin/pwd, but interal variable didn't change.
-//it updates correctly now. 
+void 				builtin_pwd(char **cmd, t_shell *shell); 
 void				ft_export(char **cmd, t_shell *shell);
-bool				ft_unset(char **cmd, t_shell *shell);
-//bool				ft_env(t_shell *shell); //working already. - maybe needs a custom one anyway? I think it uses the one in bin rn. 
+void				builtin_unset(char **cmd, t_shell *shell);
 
 //env variables
 char				**copy_envp(char **envp);
