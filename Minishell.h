@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/13 06:32:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:57:57 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ bool				ft_unset(char **cmd, t_shell *shell);
 char				**copy_envp(char **envp);
 void				print_env(t_shell shell);
 void				add_env(t_shell *shell, char *var);
+int					search_env(t_shell *shell, char *var);
+void				update_env(t_shell *shell, char *var);
 //signals
 void				sig_handle(int sig);
 void				setup_sig(void);
