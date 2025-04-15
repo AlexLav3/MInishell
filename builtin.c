@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/13 06:51:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:52:04 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ void	ft_export(char **cmd, t_shell *shell)
 		//if find equal sign
 		equal = ft_strchr(cmd[i], '=');
 		if (equal)
+		{
 			var = ft_strdup(cmd[i]);
-		//add to shell for now, but will need to implement if exists, replace.
-		add_env(shell, var);
+			add_env(shell, var);
+			break;
+		}
 		i++;
 	}
 }
@@ -88,13 +90,26 @@ void	add_env(t_shell *shell, char *var)
 	int		count;
 	char	**new_envp;
 	int		i;
+	int		len;
 
 	i = 0;
 	count = 0;
-	new_envp = copy_envp(shell->env_var); //I think there is not enough space in malloc for the new var
 	while (shell->env_var[count])
 		count++;
-	// new_envp[count] = var;
-	// new_envp[count + 1] = NULL;
-	// shell->env_var = new_envp; 
+	len = ft_strlen(var) + count;
+	new_envp = malloc(sizeof(char *) * (len) + 1);
+	while (i < count)
+	{
+		new_envp[i] = ft_strdup(shell->env_var[i]);
+		if (!new_envp[i])
+		{
+			while (i-- > 0)
+				free(new_envp[i]);
+			free(new_envp);
+			return ;
+		}
+		i++;
+	}
+	new_envp[i] = ft_strdup(var);
+	shell->env_var = copy_envp(new_envp);
 }
