@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 14:47:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:00:37 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ int	search_env(t_shell *shell, char *var)
 
 void	update_env(t_shell *shell, char *var, char *name)
 {
-	int pos = search_env(shell, name);
+	int	pos;
+
+	pos = search_env(shell, name);
 	shell->env_var[pos] = ft_strdup(var);
 }

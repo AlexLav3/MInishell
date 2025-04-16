@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/10 03:43:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:06:08 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	**make_args(t_token *tokens)
 	if (!cmd)
 		return (NULL);
 	while (tokens)
-	{	//why?
-		if (tokens->com && tokens->com[0] != '\0') // tokens->com != NULL && !is_sep(tokens->com[0])
+	{
+		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = ft_strdup(tokens->com);
 			if (!cmd[i])
@@ -40,3 +40,6 @@ char	**make_args(t_token *tokens)
 	cmd[i] = NULL;
 	return (cmd);
 }
+// tokens->com != NULL && !is_sep(tokens->com[0])
+//why?
+// we handle pipes and other sep before

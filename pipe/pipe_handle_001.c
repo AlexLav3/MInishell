@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:08:02 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/16 14:19:00 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/16 15:17:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	pipex_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-int		cmd_counter(char **cmds)
+int	cmd_counter(char **cmds)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmds[i])

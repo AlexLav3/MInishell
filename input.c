@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/16 12:39:10 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:10:21 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_token	*new_token(char *word)
 	tokens = malloc(sizeof(t_token));
 	if (!tokens)
 		return (NULL);
-	tokens->com = ft_strdup(word); // f:07/04/25 - create a copy of word,
+	tokens->com = ft_strdup(word);
 	if (!tokens->com)
 	{
 		free(word);
@@ -64,7 +64,7 @@ void	add_token(t_token **head, char *word)
 	t_token	*new;
 	t_token	*tmp;
 
-	new = new_token(word); //we can free the word inside new token.
+	new = new_token(word);
 	if (!new)
 		return ;
 	if (!*head)

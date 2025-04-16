@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/09 16:39:44 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/16 16:09:21 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	free_array(char **arr)
 	arr = NULL;
 }
 
-char	*join_path(const char *dir, const char *cmd)
+char	*join_path(char *dir, char *cmd)
 {
 	char	*tmp;
 	char	*full_path;
