@@ -3,8 +3,10 @@ CC = cc -g
 CFLAGS =  -Ilibft 
 LDFLAGS = -lreadline
 
-SOURCES = main.c init.c input.c utils.c exect.c envp_handle.c get_path.c clean_exit.c for_pipes.c for_pipes_utils.c \
-sig.c builtin.c
+SOURCES = main.c init.c input.c utils.c exect.c\
+		envp_handle.c get_path.c clean_exit.c sig.c builtin.c\
+		pipe/pipe_handle_001.c pipe/pipe_handle_002.c pipe/pipe_prepare.c\
+
 OBJECTS = $(SOURCES:.c=.o)
 
 LIB_FT = libft/libft.a

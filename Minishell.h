@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 15:30:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:25:45 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ typedef struct s_token
 typedef struct s_shell
 {
 	char			**env_var;
-	char			***av;
 	char			*pwd;
-	int				input_fd;
-	int				output_fd;
-	int				pipe_fd[2];
 	pid_t			pid1;
-	pid_t			pipe_pid;
+	int				pipe_fd[2];
+	int				prev_fd[2];
+	pid_t			pid;
+	char			**av;
+	char			**envp;
 	int				exit;
 }					t_shell;
 
@@ -56,17 +56,24 @@ void				process_commands(char *command, t_token **tokens,
 char				*get_cmd_path(char *cmd, t_shell *shell);
 
 // pipes utils
-int					has_seps(char **cmd, char sep);
-int					count_seps(char **cmd, char sep);
-int					count_segment_tokens(char **cmd, int start, char sep);
-void				free_av(char ***av);
+int					token_has_pipe(t_token *tokens);
+char				**make_args_pipes(t_token *tokens);
+// void 				print_cmds(char **cmds);
+
+
 
 // pipes
-void				split_by_pipe(t_shell *shell, char **cmd);
-void				execute_command(char **cmd, int input_fd, int output_fd,
-						t_shell *shell);
-void				execute_pipeline(t_shell *shell);
-void				handle_pipeline(t_shell *shell, int index, int input_fd);
+void				pipex_error(char *msg);
+int					cmd_counter(char **cmds);
+void				fd_handle(int i, int cmd_count, t_shell *px);
+void				which_child(int i, int cmd_count, t_shell *px, char **cmds); //norminette problem, more than 4 args.
+void				create_pipes(char **cmds, t_shell *shell);
+void				first_child_process(t_shell *px, char *cmd);
+void				last_child_process(t_shell *px, char *cmd);
+void				middle_child_process(t_shell *px, char *cmd);
+void				close_pipes_and_wait(t_shell *px);
+void				execute_cmd(char *cmd, t_shell *px);
+
 
 //builtin
 bool				handle_builtin(char **cmd, t_shell *shell);

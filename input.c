@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/09 17:32:36 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/16 12:39:10 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	input(char *str, t_token **tokens)
 	{
 		while (str[i] == ' ' || str[i] == '"')
 			i++;
-		if (is_sep(str[i]))
-			break ;
+		// if (is_sep(str[i]))
+		// 	break ;
 		start = i;
-		while (str[i] && !is_sep(str[i]) && str[i] != ' ' && str[i] != '"' )
+		while (str[i] && str[i] != ' ' && str[i] != '"') // && !is_sep(str[i])
 			i++;
 		word_len = i - start;
 		if (word_len > 0)
