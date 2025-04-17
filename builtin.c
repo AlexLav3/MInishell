@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/15 23:16:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/17 11:21:11 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,13 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (builtin_unset(cmd, shell), 1);
 	return (0);
 }
+/*
+NOTE: Using the cd command without any arguments or
+with more than one argument doesn't affect the current directory path.
+Make sure this edge case is handled in a way that prevents crashes.
 
+simple cd is okay, but cd .. /music will lead to home directory
+*/
 void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;

@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 11:01:44 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:06:29 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*set_pwd(t_shell *shell)
 {
 	char	*cwd;
 
-	cwd = getcwd(NULL, 0); // the buffer needs to be freed // added to clean exit
+	cwd = getcwd(NULL, 0); // the buffer needs to be freed - added to clean exit
 	if (cwd == NULL)
 	{
 		perror("getcwd");

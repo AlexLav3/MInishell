@@ -75,4 +75,17 @@ We can consider different approaches, so I didn't implement it yet.
 
 if something does not work, would be useful if you indicate why.
 
-
+17/Apr - Ferenc:
+edge cases:
+- cd .. /Music goes to Home, when it should not do anything, cd should only have on argument, and stay in the same directory if there is no argument or there is more than one
+- pipe issue due to tokenazation/array
+		prompt> ls -a | wc -l
+		21
+		prompt> ls -a |wc -l
+		ls: cannot access '|wc': No such file or directory
+	these two should have to the same, so we need to separate '|wc' somewhere in the code. 
+	but this may have to be handled on the redirections as well like: echo hello >outfile.txt
+	'>outfile.txt' part will be handle the same way
+idea:
+	create a function which will check the tokens and split those which has | > or other separators 
+	this should be done after tokenazation and before we creating the arrays
