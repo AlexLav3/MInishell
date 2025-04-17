@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/16 14:59:34 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/17 09:58:06 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	close_free(t_token *tokens, t_shell *shell)
 {
 	deallocate(&tokens);
 	free_array(shell->env_var);
+	free(shell->pwd);
 }
 
 //what if instead, we put exit in the exec fun.

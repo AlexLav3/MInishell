@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_prepare.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:48:38 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/16 16:02:08 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/17 09:55:18 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*str_join_free(char *s1, char *s2)
 	return (tmp);
 }
 
-static void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
+void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 {
 	char	*tmp;
 
