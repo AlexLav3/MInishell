@@ -30,7 +30,15 @@ edge cases:
 	a command like : echo stuff"abcdef" $SHLVL'pizza'
 	[echo ] -> [stuff] -> ["abcdef"] -> [""] (special tokens will have "" nodes instead of spaces) -> [$SHLVL] -> ['pizza']
 		-bash behaviour: stuffabcdef 2pizza
-	
+
+ cd - fix spaces in the command line.
+ 		spaces should be counted as part of the string itself, example:
+ 		% cd .. /Music
+		cd: string not in pwd: ..
+		cd ../ Music
+		cd: string not in pwd: ../
+	issue seems to be related to the fact that spaces in our code, the command make another argument.
+
 other issues: 
 - memory leaks 
 
@@ -44,3 +52,7 @@ to start :
 
 in progress:
 - single and double quotes
+
+-----TO DISCUSS-----
+ 
+- split tokens functions and need (disccus if we can find other maybe working, possibly more efficient implementations.)

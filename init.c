@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 14:00:03 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/17 23:34:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*set_pwd(t_shell *shell)
 {
 	char	*cwd;
 
-	cwd = getcwd(NULL, 0); // the buffer needs to be freed - added to clean exit
+	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
 		perror("getcwd");

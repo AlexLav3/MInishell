@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 14:55:46 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/17 23:34:37 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	print_env(t_shell shell);
 void	add_env(t_shell *shell, char *var);
 int		search_env(t_shell *shell, char *var);
 void	update_env(t_shell *shell, char *var, char *name);
+
 //signals
 void	sig_handle(int sig);
 void	setup_sig(void);
@@ -115,6 +116,7 @@ void	add_token(t_token **head, char *word);
 int		is_sep(char c);
 char	*join_path(char *dir, char *cmd);
 int		size_args(t_token *tokens);
+
 //testing
 void	print_list(t_token *tokens);
 
