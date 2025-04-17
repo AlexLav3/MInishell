@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 09:56:12 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/17 11:01:44 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		if (!command)
 		{
 			deallocate(tokens);
-			break ;
+			pipex_error("exit");
 		}
-		if (command && *command)
+		if (ft_strlen(command) > 0 && !(command[0] == ' ' && command[1] != ' '))
 			add_history(command);
 		if (check_for_exit(command))
 			break ;
@@ -51,7 +51,7 @@ char	*set_pwd(t_shell *shell)
 {
 	char	*cwd;
 
-	cwd = getcwd(NULL, 0); // the buffer needs to be freed // added to clean exit free_array(shell->pwd);
+	cwd = getcwd(NULL, 0); // the buffer needs to be freed // added to clean exit
 	if (cwd == NULL)
 	{
 		perror("getcwd");

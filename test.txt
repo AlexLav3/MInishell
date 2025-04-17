@@ -2,3 +2,4 @@ dmsm;dmsm;D
 f;lsnflks
 foll
 Boo
+valgrind -s --suppressions=test.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
