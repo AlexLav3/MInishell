@@ -7,6 +7,9 @@ https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-Writing
 https://medium.com/@muxanz/how-the-shell-works-internally-when-entering-a-command-42f08458870
 https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
+
+old stuff below, probably can be deleted, please review them.
+---------------------------------------------------------------
 //
 actual to-do -main
     handle quotes -> double ok, handle single.
@@ -75,10 +78,16 @@ We can consider different approaches, so I didn't implement it yet.
 
 if something does not work, would be useful if you indicate why.
 
+
+
+
+
+New comments:
 ----------------------
 17/Apr - Ferenc:
+---------------START---------------
+
 edge cases:
-- cd .. /Music goes to Home, when it should not do anything, cd should only have on argument, and stay in the same directory if there is no argument or there is more than one
 - pipe issue due to tokenazation/array
 		prompt> ls -a | wc -l
 		21
@@ -90,6 +99,38 @@ edge cases:
 idea:
 	create a function which will check the tokens and split those which has | > or other separators 
 	this should be done after tokenazation and before we creating the arrays
-Update: new split token functions were added and implemented, tested as well with pipes (redirection needs to be tested once implemented)
+Update:
+new split token functions were added and implemented, tested as well with pipes (redirection needs to be tested once implemented)
+
+Also updated the init.c due to history. Now it should not save command if it started with a single space (same as normal termina).
 
 ---------------------
+
+New to-do list here //please update it if something missed:
+- Ignore \ and ; in the command line (or prevent something)
+- redirections: <, >, <<, >>
+- $? - not clue what this but we need to handle it.
+- also " and ' needs to be handled some way, which I am not sure we do it as they wish...
+
+In progress stuff //updated if they are actually done
+- echo - edges example which I am not sure we need to handle. This maybe something extra and we can skip. (fingers crossed)
+	a command like : echo stuff"abcdef" $SHLVL'pizza'
+	will be expressed as
+	[echo ] -> [stuff] -> ["abcdef"] -> [""] (special tokens will have "" nodes instead of spaces) -> [$SHLVL] -> ['pizza']
+
+	the expander will convert the spaces into "", and remove the spaces at the words
+	the parser will remove the "" nodes, and combine the tokens that should be together	
+
+- env - You said you are working on this, so not much comments. Found the following below, mostly for me to understand what they need to be able to handle. 
+	 We need to be able to modify the environment using the export and unset commands.
+	 We also need to be able to subtitute variable names for by their values if preceded by a dollar sign.
+	 This also means handling single and double quotes, which can be quite tricky.
+
+- cd - cd .. /Music goes to Home, when it should not do anything, cd should only have on argument,
+		and stay in the same directory if there is no argument or there is more than one
+
+Note:
+I think I will start to check the redirections. I am not sure if we need to fix anything else beofe those could work. 
+I will see while I am doing. 
+
+---------------END---------------
