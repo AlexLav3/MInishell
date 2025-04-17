@@ -75,6 +75,7 @@ We can consider different approaches, so I didn't implement it yet.
 
 if something does not work, would be useful if you indicate why.
 
+----------------------
 17/Apr - Ferenc:
 edge cases:
 - cd .. /Music goes to Home, when it should not do anything, cd should only have on argument, and stay in the same directory if there is no argument or there is more than one
@@ -89,3 +90,6 @@ edge cases:
 idea:
 	create a function which will check the tokens and split those which has | > or other separators 
 	this should be done after tokenazation and before we creating the arrays
+Update: new split token functions were added and implemented, tested as well with pipes (redirection needs to be tested once implemented)
+
+---------------------

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/16 16:10:21 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/04/17 14:37:00 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+		// if (is_sep(str[i]))
+		// 	break ;
 void	input(char *str, t_token **tokens)
 {
 	int		i;
@@ -24,8 +26,6 @@ void	input(char *str, t_token **tokens)
 	{
 		while (str[i] == ' ' || str[i] == '"')
 			i++;
-		// if (is_sep(str[i]))
-		// 	break ;
 		start = i;
 		while (str[i] && str[i] != ' ' && str[i] != '"') // && !is_sep(str[i])
 			i++;
@@ -39,6 +39,7 @@ void	input(char *str, t_token **tokens)
 			add_token(tokens, word);
 		}
 	}
+	split_tokens(tokens);
 }
 
 t_token	*new_token(char *word)

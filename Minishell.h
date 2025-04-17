@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:00 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/17 14:55:46 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ char	**make_args(t_token *tokens);
 char	*set_pwd(t_shell *shell);
 
 void	execute_single_cmd(char **cmd, t_shell *shell);
+
+// split tokens
+int		separator_len(char *s);
+void	insert_after_token(t_token *prev, char *word);
+void	split_and_insert_parts(t_token *curr, int i, int len);
+int		split_token_content(t_token *curr);
+void	split_tokens(t_token **tokens);
 
 // get_path
 void	process_commands(char *command, t_token **tokens, t_shell *shell);
