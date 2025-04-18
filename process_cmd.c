@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/17 23:34:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/18 02:13:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
 		return ;
 	}
 	execute_single_cmd(cmd, shell);
-	free_array(cmd);
+	//free_array(cmd);
 }
 
 void	pipe_cmds(char *command, t_token **tokens, t_shell *shell, char **cmds)

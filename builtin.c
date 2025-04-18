@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 23:32:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/18 01:59:45 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,17 @@ void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
 	char	**envp;
+	int		i;
 
+	i = 0;
 	envp = shell->env_var;
+	while (cmd[i])
+		i++;
+	if (i > 2)
+	{
+		printf("invalid directory\n");
+		return ;
+	}
 	if (!cmd[1])
 	{
 		while (*envp)

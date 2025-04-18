@@ -7,6 +7,7 @@ https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-Writing
 https://medium.com/@muxanz/how-the-shell-works-internally-when-entering-a-command-42f08458870
 https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
+⚠️ = important issue (serious problem). even if fixes, check if happens on other edge cases/occasions.
 
 -------------ISSUES AND FIXES-----------------
 
@@ -14,6 +15,12 @@ fixed as far as we can currently tell:
 - Not save command if it started with a single space.
 	impletemented fix: 
 	updated the init.c due to history. 
+	?please clarify - bash: command " ls" appears in history.
+
+	-cd - fixed spaces in the command line. 
+	examples: cd ../ Documents -> invalid 
+			  cd .. /Documents -> invalid  
+			  (as in bash)
 
 - pipe issue due to tokenazation/array
 		prompt> ls -a | wc -l
@@ -30,17 +37,20 @@ edge cases:
 	a command like : echo stuff"abcdef" $SHLVL'pizza'
 	[echo ] -> [stuff] -> ["abcdef"] -> [""] (special tokens will have "" nodes instead of spaces) -> [$SHLVL] -> ['pizza']
 		-bash behaviour: stuffabcdef 2pizza
+		-minishell behaviour: stuff abcdef $ SHLVL'pizza'
 
- cd - fix spaces in the command line.
- 		spaces should be counted as part of the string itself, example:
- 		% cd .. /Music
-		cd: string not in pwd: ..
-		cd ../ Music
-		cd: string not in pwd: ../
-	issue seems to be related to the fact that spaces in our code, the command make another argument.
+		⚠️ minishell: 
+		prompt> echo stuff"abcdef" $SHLVL'pizza'
+		stuff abcdef $ SHLVL'pizza'
+		free(): invalid pointer
+		zsh: IOT instruction (core dumped)  ./minishell - fized the core dump for the moment, however, there is still an issue.	 
+		NOTE: 
+		with gdb, it seems the make args gets called again after echo was already executed. 
+		Additionally, we may have too many free's
+		(we have them basically everywhere lol) ⚠️
 
-other issues: 
-- memory leaks 
+other issues:
+- memory leaks
 
 -----------TO DO LIST-----------
 
