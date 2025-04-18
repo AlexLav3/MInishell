@@ -45,9 +45,8 @@ edge cases:
 		free(): invalid pointer
 		zsh: IOT instruction (core dumped)  ./minishell - fized the core dump for the moment, however, there is still an issue.	 
 		NOTE: 
-		with gdb, it seems the make args gets called again after echo was already executed. 
-		Additionally, we may have too many free's
-		(we have them basically everywhere lol) ⚠️
+		with gdb, it seems the make args gets after we already freed something/args get lost
+		(we have them basically frees everywhere lol) ⚠️
 
 other issues:
 - memory leaks

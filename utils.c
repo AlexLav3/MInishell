@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/18 02:10:59 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/18 02:30:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	free_array(char **arr)
 
 	if (!arr)
 		return ;
+	printf("I am here\n");
 	i = 0;
 	while (arr[i])
 	{
