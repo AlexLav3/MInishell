@@ -1,0 +1,136 @@
+And it shell be light!!
+
+//
+links - sources 
+
+https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf
+https://medium.com/@muxanz/how-the-shell-works-internally-when-entering-a-command-42f08458870
+https://0xax.gitbooks.io/linux-insides/content/SysCall/
+
+
+old stuff below, probably can be deleted, please review them.
+---------------------------------------------------------------
+//
+actual to-do -main
+    handle quotes -> double ok, handle single.
+
+    built in commands:
+    missing: cd, export, unset
+    ok so far: ls, echo, pwd, env, exit, (echo -n doesn't do anything as I see in normal bash, maybe edge cases?)
+
+    piping
+    redirection
+    other commands such as redirections.  
+//
+
+// deleted lines that had no answer needed/were updates /other things I would just say ok to. to keep this readable, and shorter.
+//	feel free to delete questions that are solved, or update them given the new info. Let's try to keep this updated and with needed questions/links/info
+
+// Ferenc 09/05/25 //you can see who made the commit and when on the commits history, not needed to specify.
+questions:
+	In the sig.c  file:
+	- identifier "SIGQUIT" is undefined same goes to SIGQUIT, SIG_IGN.
+		Do we need to add something or it is just on my computer? -all works good on campus, possibly your own computer has different macros/values.
+		read:
+		https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
+		https://en.wikipedia.org/wiki/Signal_(IPC)
+		Signals are defined in the computer itself, we are using relative the macro. no need to define it.
+		SIGQUIT      P1990      Core    Quit from keyboard
+
+	- signal(SIGINT, sig_handle)
+		Dont we need an int in the sig_handle call?  	
+			not at the moment, since the function is only used for one signal. (int sig, is only SITGINT)
+			a better implemenation for the actions may be needed/added later. read additional comment on the file. 
+
+
+	According to the subject, we should have one global variable for signal, do you know anything about it? 
+	I have no clue how that is working. -> yes, I know. will handle later if needed. don't worry, I'll explain it to you once done.
+	the subject says we CAN not we SHOULD. "Use *at most one* global variable" nothing says it's mandatory to.
+
+your questions/comments in the init.c files:
+	- exit:
+		yes, we can check if we can do that, the current one probably only works if the exit typed as first word,
+		but I am not sure that correct, we need to research how exit command acts in terminal 
+		
+		tests results from school computers on behaviour:
+		from the few tests run, appears that exit is taken as a command if it's the only command (eg. ls exit works as ls, saying exit is not valid)
+		feel free to run more tests. (another eg. echo exit, prints exit) If you put a word that is not a command, does not exit, and says command is not found.
+
+	- pid as struct:
+		well, due to pipe I had to change them to structs at the end -> this can be def be done in the tokens to begin with. I was asking you if it's needed.
+
+// pipes and other stuff - this is in the subject. let's try not to make this longer than necessary. We can read the PDF.
+
+we need to create a condition to check if the command line has any of these signs and call different process according to that -> yes, I've been thinking and telling you abt it. 
+We can consider different approaches, so I didn't implement it yet. 
+
+
+// stuff done:
+	take_comm was separated to different parts
+		- created a new function called process_commands which took over the rest of the take_comm
+		- tried to handle pipes, failed, at the end tried to get chatgpt fix it, failed
+			for_pipes.c at the moment is not good -> all of it? You may add comments on what are the issues. + feel free to add 
+				another file for what comes up with gdb, for example. I can check it myself, but since you're implementing it, 
+				it's easier if you do, as I'm not 100% able to understand why you chose some ways to handle things. 
+
+		- builtin.c just a splace where we can do the next parts, not developed yet -> declarations,even if not implemented, pls put in the h file.
+			I moved them to h file. 
+
+if something does not work, would be useful if you indicate why.
+
+
+
+
+
+New comments:
+----------------------
+17/Apr - Ferenc:
+---------------START---------------
+
+edge cases:
+- pipe issue due to tokenazation/array
+		prompt> ls -a | wc -l
+		21
+		prompt> ls -a |wc -l
+		ls: cannot access '|wc': No such file or directory
+	these two should have to the same, so we need to separate '|wc' somewhere in the code. 
+	but this may have to be handled on the redirections as well like: echo hello >outfile.txt
+	'>outfile.txt' part will be handle the same way
+idea:
+	create a function which will check the tokens and split those which has | > or other separators 
+	this should be done after tokenazation and before we creating the arrays
+Update:
+new split token functions were added and implemented, tested as well with pipes (redirection needs to be tested once implemented)
+
+Also updated the init.c due to history. Now it should not save command if it started with a single space (same as normal termina).
+
+---------------------
+
+New to-do list here //please update it if something missed:
+- Ignore \ and ; in the command line (or prevent something)
+- redirections: <, >, <<, >>
+- $? - not clue what this but we need to handle it.
+- also " and ' needs to be handled some way, which I am not sure we do it as they wish...
+
+In progress stuff //updated if they are actually done
+- echo - edges example which I am not sure we need to handle. This maybe something extra and we can skip. (fingers crossed)
+	a command like : echo stuff"abcdef" $SHLVL'pizza'
+	will be expressed as
+	[echo ] -> [stuff] -> ["abcdef"] -> [""] (special tokens will have "" nodes instead of spaces) -> [$SHLVL] -> ['pizza']
+
+	the expander will convert the spaces into "", and remove the spaces at the words
+	the parser will remove the "" nodes, and combine the tokens that should be together	
+
+- env - You said you are working on this, so not much comments. Found the following below, mostly for me to understand what they need to be able to handle. 
+	 We need to be able to modify the environment using the export and unset commands.
+	 We also need to be able to subtitute variable names for by their values if preceded by a dollar sign.
+	 This also means handling single and double quotes, which can be quite tricky.
+
+- cd - cd .. /Music goes to Home, when it should not do anything, cd should only have on argument,
+		and stay in the same directory if there is no argument or there is more than one
+
+Note:
+I think I will start to check the redirections. I am not sure if we need to fix anything else beofe those could work. 
+I will see while I am doing. 
+
+---------------END---------------
