@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/18 02:46:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:37:58 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 		single_cmd(command, tokens, shell, cmd); //wait, you're passing cmd, that has nothing,and make it have something inside of the function itself?
 	else
 		pipe_cmds(command, tokens, shell, cmds);
-	//deallocate(tokens)- isn't this function already called inside of the functions above?
+	deallocate(tokens); //- isn't this function already called inside of the functions above?
 }
 
 void	execute_single_cmd(char **cmd, t_shell *shell)
