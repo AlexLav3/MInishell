@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/21 21:24:13 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 23:01:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 	int		has_pipe;
 
 	has_pipe = token_has_pipe(*tokens);
-	printf("%d\n", has_pipe);
 	if (!has_pipe)
 		single_cmd(command, tokens, shell, cmd); //wait, you're passing cmd, that has nothing,and make it have something inside of the function itself?
 	else
@@ -69,7 +68,6 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	if (!cmd[0] || !cmd)
 		return ;
 	path = get_cmd_path(cmd[0], shell);
-	//printf("cmd: %s\n", cmd[0]);
 	if (!path)
 	{
 		perror("Command not found");

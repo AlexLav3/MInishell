@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 21:32:47 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 22:58:53 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	input(char *str, t_token **tokens)
 		word = ft_substr(str, start, i - start);
 		add_token(tokens, word);
 	}
+	//print_list(*tokens);
 }
 
 t_token	*new_token(char *word)
