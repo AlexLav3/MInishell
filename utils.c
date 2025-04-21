@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 17:32:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:42:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	size_args(t_token *tokens)
 		return (0);
 	while (tmp)
 	{
-		if (tmp->com && !is_sep(tmp->com[0]))
+		if (tmp->com && !is_meta(tmp->com[0]))
 			count++;
 		tmp = tmp->next;
 	}

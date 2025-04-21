@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 17:36:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:44:23 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,15 @@ void	input(char *str, t_token **tokens)
 				return ;
 			ft_strlcpy(word, &str[start], word_len + 1);
 			add_token(tokens, word);
+			i++;
 		}
-		if (word_len > 0)
-		{
-			word = malloc(word_len + 1);
-			if (!word)
-				return ;
-			ft_strlcpy(word, &str[start], word_len + 1);
-			add_token(tokens, word);
-		}
+		start = i;
+		while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"' && str[i] != '\'')
+			i++;
+		word = ft_substr(str, start, i - start);
+		add_token(tokens, word);
+		i++;
 	}
-	split_tokens(tokens);
 }
 
 t_token	*new_token(char *word)

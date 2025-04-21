@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 13:44:55 by fnagy             #+#    #+#             */
-/*   Updated: 2025/04/17 23:22:40 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:41:50 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	separator_len(char *s) // return 1 for | and <, but 2 for << or >>
 {
 	if ((s[0] == '<' && s[1] == '<') || (s[0] == '>' && s[1] == '>'))
 		return (2);
-	else if (is_sep(s[0]))
-		return (1);
+	// else if (is_sep(s[0]))
+	// 	return (1);
 	return (0);
 }
 
