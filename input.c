@@ -6,14 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 17:44:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 18:09:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-		// if (is_sep(str[i]))
-		// 	break ;
 void	input(char *str, t_token **tokens)
 {
 	int		i;
@@ -26,8 +24,6 @@ void	input(char *str, t_token **tokens)
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
-		if(str[i] == '\0')
-			break;
 		start = i;
 		word_len = i - start;
 		if(is_meta(str[i]))
