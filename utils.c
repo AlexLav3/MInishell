@@ -6,18 +6,15 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/18 02:30:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 17:32:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	is_sep(char c)
+int	is_meta(char c)
 {
-	if (c == '<' || c == '$' || c == '|' || c == '>')
-		return (1);
-	else
-		return (0);
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';');
 }
 
 void	print_list(t_token *tokens)
@@ -36,7 +33,6 @@ void	free_array(char **arr)
 
 	if (!arr)
 		return ;
-	printf("I am here\n");
 	i = 0;
 	while (arr[i])
 	{

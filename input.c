@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 14:37:00 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/21 17:36:23 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@ void	input(char *str, t_token **tokens)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ' || str[i] == '"')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
+		if(str[i] == '\0')
+			break;
 		start = i;
-		while (str[i] && str[i] != ' ' && str[i] != '"') // && !is_sep(str[i])
-			i++;
 		word_len = i - start;
+		if(is_meta(str[i]))
+		{
+			word = malloc(word_len + 1);
+			if (!word)
+				return ;
+			ft_strlcpy(word, &str[start], word_len + 1);
+			add_token(tokens, word);
+		}
 		if (word_len > 0)
 		{
 			word = malloc(word_len + 1);
