@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 20:32:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:25:53 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 {
 	if (!cmd || !cmd[0])
 		return (0);
-	for(int i = 0; cmd[i]; i++) //test
-		printf("%s", cmd[i]);
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		return (builtin_cd(cmd, shell), 1);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)

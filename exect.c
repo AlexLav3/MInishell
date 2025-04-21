@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 21:07:30 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:25:39 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ char	**make_args(t_token *tokens)
 					free(cmd[--i]);
 				return (free(cmd), NULL);
 			}
-			printf("command in tokens: %s\n", tokens->com);
 			i++;
 		}
-		//printf("command in tokens: %s\n", tokens->com);
 		tokens = tokens->next;
 	}
 	cmd[i] = NULL;

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 20:56:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:32:47 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ void	input(char *str, t_token **tokens)
 			i++;
 		if(is_meta(str[i]))
 		{
-			word = malloc(2);
-			if (!word)
-				return ;
-			ft_strlcpy(word, &str[i], 2 + 1);
+			start = i;
+			while (str[i] && is_meta(str[i]))
+				i++;
+			word = ft_substr(str, start, i - start);
 			add_token(tokens, word);
-			i++;
 		}
 		if (str[i] == '"')
 		{
@@ -47,7 +46,6 @@ void	input(char *str, t_token **tokens)
 			i++;
 		word = ft_substr(str, start, i - start);
 		add_token(tokens, word);
-		i++;
 	}
 }
 
