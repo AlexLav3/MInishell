@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 17:38:42 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:56:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,3 @@ int	size_args(t_token *tokens)
 	return (count);
 }
 
-int		make_tok(t_token **tokens, char *str, int i)
-{
-	char	*word;
-	int		start;
-
-	start = i;
-	if (is_meta(str[i]))
-	{
-		while (str[i] && is_meta(str[i]))
-			i++;
-	}
-	else if (str[i] == '"')
-	{
-		while (str[i] && str[i] != '"')
-			i++;
-	}
-	word = ft_substr(str, start, i - start);
-	add_token(tokens, word);
-	return i;
-}
