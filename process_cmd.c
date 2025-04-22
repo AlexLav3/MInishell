@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/21 23:01:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 03:41:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 		waitpid(shell->pid1, NULL, 0);
 	free(path);
 }
+
 char	*get_cmd_path(char *cmd, t_shell *shell)
 {
 	char	**paths;

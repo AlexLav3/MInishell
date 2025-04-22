@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 22:58:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:34:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,27 @@ void	input(char *str, t_token **tokens)
 {
 	int		i;
 	char	*word;
-	int		start;
 	int		word_len;
+	int		start;
 
 	i = 0;
+	start = 0;
 	while (str[i])
 	{
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
-		if(is_meta(str[i]))
+		if (is_meta(str[i]) || str[i] == '"')
+			i = make_tok(tokens, str, i);
+		else
 		{
 			start = i;
-			while (str[i] && is_meta(str[i]))
+			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
+				&& str[i] != '\'')
 				i++;
 			word = ft_substr(str, start, i - start);
 			add_token(tokens, word);
 		}
-		if (str[i] == '"')
-		{
-			start = i;
-			while (str[i] && str[i] != '"')
-				i++;
-			word = ft_substr(str, start, i - start);
-			add_token(tokens, word);
-			i++;
-		}
-		start = i;
-		while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"' && str[i] != '\'')
-			i++;
-		word = ft_substr(str, start, i - start);
-		add_token(tokens, word);
+		i++;
 	}
 	//print_list(*tokens);
 }
@@ -72,6 +63,7 @@ void	add_token(t_token **head, char *word)
 {
 	t_token	*new;
 	t_token	*tmp;
+
 	new = new_token(word);
 	if (!new)
 		return ;
