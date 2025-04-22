@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_prepare.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:48:38 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/17 09:55:18 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/22 18:05:41 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	token_has_pipe(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->com && ft_strcmp(tokens->com, "|") == 0)
+		if (tokens->com && is_pipe(tokens->com[0]))
 			return (1);
 		tokens = tokens->next;
 	}
@@ -37,7 +37,7 @@ void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 {
 	char	*tmp;
 
-	if (ft_strncmp(token->com, "|", 2) == 0)
+	if (is_pipe(token->com[0]))
 	{
 		cmds[(*i)++] = *cmd_str;
 		*cmd_str = NULL;

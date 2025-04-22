@@ -6,13 +6,14 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/18 02:42:16 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:59:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
 //array creation
+//cat test.txt | grep "42" | sort | wc -l
 char	**make_args(t_token *tokens)
 {
 	char	**cmd;
@@ -36,9 +37,13 @@ char	**make_args(t_token *tokens)
 			}
 			i++;
 		}
-		printf("command in tokens: %s\n", tokens->com);
 		tokens = tokens->next;
 	}
 	cmd[i] = NULL;
 	return (cmd);
+}
+
+int ft_echo(char **cmd, t_shell *shell)
+{
+	
 }

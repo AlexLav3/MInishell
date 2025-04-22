@@ -3,43 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 14:37:00 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/04/22 17:56:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-		// if (is_sep(str[i]))
-		// 	break ;
 void	input(char *str, t_token **tokens)
 {
 	int		i;
 	char	*word;
-	int		start;
 	int		word_len;
+	int		start;
 
 	i = 0;
+	start = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ' || str[i] == '"')
+		while (str[i] == ' ' || str[i] == '\t')
 			i++;
-		start = i;
-		while (str[i] && str[i] != ' ' && str[i] != '"') // && !is_sep(str[i])
-			i++;
-		word_len = i - start;
-		if (word_len > 0)
+		if (is_meta(str[i]) || str[i] == '"')
+			i = make_tok(tokens, str, i);
+		else
 		{
-			word = malloc(word_len + 1);
-			if (!word)
-				return ;
-			ft_strlcpy(word, &str[start], word_len + 1);
+			start = i;
+			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
+				&& str[i] != '\'')
+				i++;
+			word = ft_substr(str, start, i - start);
 			add_token(tokens, word);
 		}
+		i++;
 	}
-	split_tokens(tokens);
+	//print_list(*tokens);
 }
 
 t_token	*new_token(char *word)
@@ -77,4 +76,25 @@ void	add_token(t_token **head, char *word)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
+}
+
+int		make_tok(t_token **tokens, char *str, int i)
+{
+	char	*word;
+	int		start;
+
+	start = i;
+	if (is_meta(str[i]))
+	{
+		while (str[i] && is_meta(str[i]))
+			i++;
+	}
+	else if (str[i] == '"')
+	{
+		while (str[i] && str[i] != '"')
+			i++;
+	}
+	word = ft_substr(str, start, i - start);
+	add_token(tokens, word);
+	return i;
 }

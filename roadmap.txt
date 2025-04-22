@@ -11,26 +11,6 @@ https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
 -------------ISSUES AND FIXES-----------------
 
-fixed as far as we can currently tell:
-- Not save command if it started with a single space.
-	impletemented fix: 
-	updated the init.c due to history. 
-	?please clarify - bash: command " ls" appears in history.
-
-	-cd - fixed spaces in the command line. 
-	examples: cd ../ Documents -> invalid 
-			  cd .. /Documents -> invalid  
-			  (as in bash)
-
-- pipe issue due to tokenazation/array
-		prompt> ls -a | wc -l
-		21
-		prompt> ls -a |wc -l
-		ls: cannot access '|wc': No such file or directory
-
-		impletemented fix: 
-		new split token functions were added and implemented, tested as well with pipes. 
-
 edge cases:
 
  echo - edges example which I am not sure we need to handle. This maybe something extra and we can skip. (fingers crossed)
@@ -39,22 +19,21 @@ edge cases:
 		-bash behaviour: stuffabcdef 2pizza
 		-minishell behaviour: stuff abcdef $ SHLVL'pizza'
 
-		⚠️ minishell: 
-		prompt> echo stuff"abcdef" $SHLVL'pizza'
-		stuff abcdef $ SHLVL'pizza'
-		free(): invalid pointer
-		zsh: IOT instruction (core dumped)  ./minishell - fized the core dump for the moment, however, there is still an issue.	 
-		NOTE: 
-		with gdb, it seems the make args gets after we already freed something/args get lost
-		(we have them basically frees everywhere lol) ⚠️
+		minishell: 
+		prompt> echo stuff"abcdef" $SHLVL'pizza' 
+		halways works, half not, I will check what's wrong.
+
+% cat test.txt | grep "42 | sort | wc -l 
+elavrich@c3r8s1 ~/Documents/homegit/mini
+pipe dquote> "
 
 other issues:
 - memory leaks
+- minishell should be executable inside the minishell itself 
 
 -----------TO DO LIST-----------
 
 to start :
-- Ignore \ and ; in the command line (or prevent something)
 - redirections: <, >, <<, >>
 - $? 
 - understand + handle dollar sign.
@@ -63,5 +42,3 @@ in progress:
 - single and double quotes
 
 -----TO DISCUSS-----
- 
-- split tokens functions and need (disccus if we can find other maybe working, possibly more efficient implementations.)

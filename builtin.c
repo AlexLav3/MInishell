@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/18 01:59:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:58:48 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 {
 	if (!cmd || !cmd[0])
 		return (0);
-	else if (ft_strcmp(cmd[0], "cd") == 0)
+	if (ft_strcmp(cmd[0], "cd") == 0)
 		return (builtin_cd(cmd, shell), 1);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (builtin_pwd(cmd, shell), 1);
@@ -26,12 +26,11 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (print_env(*shell), 1);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (builtin_unset(cmd, shell), 1);
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		return (ft_echo(cmd, shell), 1);
 	return (0);
 }
-/*
-Using the cd command without any arguments works.
-fix spaces in the command.
-*/
+
 void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/17 23:34:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:35:07 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 			deallocate(tokens);
 			pipex_error("exit");
 		}
-		if (ft_strlen(command) > 0 && !(command[0] == ' ' && command[1] != ' '))
+		if (ft_strlen(command) > 0)
 			add_history(command);
 		if (check_for_exit(command))
 			break ;

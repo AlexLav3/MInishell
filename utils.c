@@ -6,18 +6,20 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 20:22:01 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:17:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	is_sep(char c)
+int	is_meta(char c)
 {
-	if (c == '<' || c == '$' || c == '|' || c == '>')
-		return (1);
-	else
-		return (0);
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';');
+}
+
+int	is_pipe(char c)
+{
+	return (c == '|');
 }
 
 void	print_list(t_token *tokens)
@@ -73,9 +75,10 @@ int	size_args(t_token *tokens)
 		return (0);
 	while (tmp)
 	{
-		if (tmp->com && !is_sep(tmp->com[0]))
+		if (tmp->com && !is_meta(tmp->com[0]))
 			count++;
 		tmp = tmp->next;
 	}
 	return (count);
 }
+
