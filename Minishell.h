@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 19:26:42 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:07:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void				process_commands(char *command, t_token **tokens,
 						t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
 
-void				single_cmd(char *command, t_token **tokens, t_shell *shell,
-						char **cmd);
-void				pipe_cmds(char *command, t_token **tokens, t_shell *shell,
-						char **cmds);
+void				single_cmd(char *command, t_token **tokens, t_shell *shell);
+void				pipe_cmds(char *command, t_token **tokens, t_shell *shell);
 
 // pipes utils
 int					token_has_pipe(t_token *tokens);
