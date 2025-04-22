@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 17:29:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 17:38:42 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ int		make_tok(t_token **tokens, char *str, int i)
 	}
 	word = ft_substr(str, start, i - start);
 	add_token(tokens, word);
-	return i; 
+	return i;
 }

@@ -23,6 +23,10 @@ edge cases:
 		prompt> echo stuff"abcdef" $SHLVL'pizza' 
 		halways works, half not, I will check what's wrong.
 
+% cat test.txt | grep "42 | sort | wc -l 
+elavrich@c3r8s1 ~/Documents/homegit/mini
+pipe dquote> "
+
 other issues:
 - memory leaks
 
