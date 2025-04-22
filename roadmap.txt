@@ -29,6 +29,7 @@ pipe dquote> "
 
 other issues:
 - memory leaks
+- minishell should be executable inside the minishell itself 
 
 -----------TO DO LIST-----------
 

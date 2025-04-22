@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 17:56:43 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:05:35 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 int	is_meta(char c)
 {
 	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';');
+}
+
+int	is_pipe(char c)
+{
+	return (c == '|');
 }
 
 void	print_list(t_token *tokens)
