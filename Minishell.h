@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 18:05:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:07:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_shell
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
-void				input(char *str, t_token **tokens);
+int					input(char *str, t_token **tokens);
 char				**make_args(t_token *tokens);
 char				*set_pwd(t_shell *shell);
 
@@ -62,10 +62,8 @@ void				process_commands(char *command, t_token **tokens,
 						t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
 
-void				single_cmd(char *command, t_token **tokens, t_shell *shell,
-						char **cmd);
-void				pipe_cmds(char *command, t_token **tokens, t_shell *shell,
-						char **cmds);
+void				single_cmd(char *command, t_token **tokens, t_shell *shell);
+void				pipe_cmds(char *command, t_token **tokens, t_shell *shell);
 
 // pipes utils
 int					token_has_pipe(t_token *tokens);

@@ -6,14 +6,15 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/22 18:17:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:09:59 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
+void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 {
+	char **cmd;
 	if (!command || !tokens || !shell)
 		return ;
 	cmd = make_args(*tokens);
@@ -34,8 +35,10 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
 	//free_array(cmd); //temporary fix
 }
 
-void	pipe_cmds(char *command, t_token **tokens, t_shell *shell, char **cmds)
+void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 {
+	char **cmds;
+	
 	cmds = make_args_pipes(*tokens);
 	free(command);
 	if (!cmds)
@@ -49,13 +52,12 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell, char **cmds)
 
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
-	char	**cmd;
 	char	**cmds;
 	int		has_pipe;
 
 	has_pipe = token_has_pipe(*tokens);
 	if (!has_pipe)
-		single_cmd(command, tokens, shell, cmd); //wait, you're passing cmd, that has nothing,and make it have something inside of the function itself?
+		single_cmd(command, tokens, shell);
 	else
 		pipe_cmds(command, tokens, shell, cmds);
 	deallocate(tokens); //- isn't this function already called inside of the functions above?
