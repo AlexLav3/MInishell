@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 18:05:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:26:42 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_shell
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
-void				input(char *str, t_token **tokens);
+int					input(char *str, t_token **tokens);
 char				**make_args(t_token *tokens);
 char				*set_pwd(t_shell *shell);
 

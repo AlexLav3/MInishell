@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/21 20:35:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:59:16 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_shell(t_shell *shell, char **envp)
 void	take_comm(t_token **tokens, t_shell *shell)
 {
 	char	*command;
+	char *line_continued;
 
 	while (1)
 	{
@@ -41,7 +42,8 @@ void	take_comm(t_token **tokens, t_shell *shell)
 			add_history(command);
 		if (check_for_exit(command))
 			break ;
-		input(command, tokens);
+		if (!input(command, tokens))
+			deallocate(tokens);
 		process_commands(command, tokens, shell);
 	}
 	rl_clear_history();

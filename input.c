@@ -6,13 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 19:22:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 19:29:01 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-void	input(char *str, t_token **tokens)
+int		input(char *str, t_token **tokens)
 {
 	int		i;
 	char	*word;
@@ -23,10 +23,12 @@ void	input(char *str, t_token **tokens)
 	start = 0;
 	while (str[i])
 	{
-		while (str[i] == ' ' || str[i] == '\t')
-			i++;
 		if (is_meta(str[i]) || str[i] == '"')
+		{
 			i = make_tok(tokens, str, i);
+			if(!i)
+				return i;
+		}
 		else
 		{
 			start = i;
@@ -39,6 +41,7 @@ void	input(char *str, t_token **tokens)
 		i++;
 	}
 	//print_list(*tokens);
+	return i;
 }
 
 t_token	*new_token(char *word)
@@ -95,7 +98,7 @@ int	make_tok(t_token **tokens, char *str, int i)
 		while (str[i] && str[i] != '"')
 			i++;
 		if (str[i] != '"')
-			return (printf("quote missing\n"), i);
+			return (printf("quote missing\n"), 0);
 		word = ft_substr(str, start, i - start);
 		add_token(tokens, word);
 		return (i++);
