@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 17:12:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:22:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**make_args(t_token *tokens)
 	int		i;
 
 	i = 0;
-	
 	cmd = malloc(sizeof(char *) * (size_args(tokens) + 1));
 	if (!cmd || !tokens)
 		return (NULL);
@@ -58,6 +57,23 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (builtin_unset(cmd, shell), 1);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (ft_echo(cmd), 1);
+		return (ft_echo(cmd, shell), 1);
 	return (0);
+}
+
+int	handle_dollar(char *cmd, t_shell *shell)
+{
+	char	*var;
+	int		idx;
+	char	*env;
+	char 	*value;
+
+	idx = search_env(shell, cmd);
+	if (idx)
+	{
+		env = shell->env_var[idx];
+		value = ft_strchr(env, '=') + 1; // skip to after '='
+		ft_putstr_fd(value, 1);
+	}
+	return (1);
 }

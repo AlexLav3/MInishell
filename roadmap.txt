@@ -42,3 +42,10 @@ in progress:
 - single and double quotes
 
 -----TO DISCUSS-----
+
+
+--dollar sign example
+ % export NAME=alex
+elavrich@c3r7s4 ~/Documents/homegit/met_ext
+ % echo $NAME
+alex

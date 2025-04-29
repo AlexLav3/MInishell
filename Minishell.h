@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 17:13:04 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:22:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,16 @@ void				middle_child_process(t_shell *px, char *cmd);
 void				close_pipes_and_wait(t_shell *px);
 void				execute_cmd(char *cmd, t_shell *px);
 
+//dollar sign
+int 				handle_dollar(char *cmd, t_shell *shell);
+
 //builtin
 bool				handle_builtin(char **cmd, t_shell *shell);
 void				builtin_cd(char **cmd, t_shell *shell);
 void				builtin_pwd(char **cmd, t_shell *shell);
 void				ft_export(char **cmd, t_shell *shell);
 void				builtin_unset(char **cmd, t_shell *shell);
-int					ft_echo(char **cmd);
+int					ft_echo(char **cmd, t_shell *shell);
 
 //env variables
 char				**copy_envp(char **envp);

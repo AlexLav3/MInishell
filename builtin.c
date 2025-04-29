@@ -6,13 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 17:11:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:22:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	ft_echo(char **cmd)
+int	ft_echo(char **cmd, t_shell *shell)
 {
 	int	i;
 	int	n_option;
@@ -26,9 +26,12 @@ int	ft_echo(char **cmd)
 	}
 	while (cmd[i])
 	{
-		ft_putstr_fd(cmd[i], 1);
-		if (cmd[i + 1] && cmd[i][0] != '\0')
+		if (ft_strchr(cmd[i], '$'))
+			handle_dollar(cmd[i], shell);
+		else if (cmd[i + 1] && cmd[i][0] != '\0')
 			write(1, " ", 1);
+		else
+			ft_putstr_fd(cmd[i], 1);
 		i++;
 	}
 	if (n_option == 0)
