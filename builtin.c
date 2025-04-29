@@ -6,29 +6,34 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 17:58:48 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:11:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-bool	handle_builtin(char **cmd, t_shell *shell)
+int	ft_echo(char **cmd)
 {
-	if (!cmd || !cmd[0])
-		return (0);
-	if (ft_strcmp(cmd[0], "cd") == 0)
-		return (builtin_cd(cmd, shell), 1);
-	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (builtin_pwd(cmd, shell), 1);
-	else if (ft_strcmp(cmd[0], "export") == 0)
-		return (ft_export(cmd, shell), 1);
-	else if (ft_strcmp(cmd[0], "env") == 0)
-		return (print_env(*shell), 1);
-	else if (ft_strcmp(cmd[0], "unset") == 0)
-		return (builtin_unset(cmd, shell), 1);
-	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (ft_echo(cmd, shell), 1);
-	return (0);
+	int	i;
+	int	n_option;
+
+	i = 1;
+	n_option = 0;
+	while (cmd[i] && ft_strcmp(cmd[i], "-n") == 0)
+	{
+		n_option = 1;
+		i++;
+	}
+	while (cmd[i])
+	{
+		ft_putstr_fd(cmd[i], 1);
+		if (cmd[i + 1] && cmd[i][0] != '\0')
+			write(1, " ", 1);
+		i++;
+	}
+	if (n_option == 0)
+		write(1, "\n", 1);
+	return i;
 }
 
 void	builtin_cd(char **cmd, t_shell *shell)

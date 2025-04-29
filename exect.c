@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 17:59:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:12:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,21 @@ char	**make_args(t_token *tokens)
 	return (cmd);
 }
 
-int ft_echo(char **cmd, t_shell *shell)
+bool	handle_builtin(char **cmd, t_shell *shell)
 {
-	
+	if (!cmd || !cmd[0])
+		return (0);
+	if (ft_strcmp(cmd[0], "cd") == 0)
+		return (builtin_cd(cmd, shell), 1);
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
+		return (builtin_pwd(cmd, shell), 1);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		return (ft_export(cmd, shell), 1);
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		return (print_env(*shell), 1);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		return (builtin_unset(cmd, shell), 1);
+	else if (ft_strcmp(cmd[0], "echo") == 0)
+		return (ft_echo(cmd), 1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/22 20:07:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/22 20:12:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 	}
 	//printf("exec single cmd passed : %s\n", cmd[0]);
 	execute_single_cmd(cmd, shell);
-	//free_array(cmd); //temporary fix
+	free_array(cmd); //temporary fix
 }
 
 void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
