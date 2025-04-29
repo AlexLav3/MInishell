@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 19:22:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:38:58 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (builtin_unset(cmd, shell), 1);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		return (ft_echo(cmd, shell), 1);
+	else if (ft_strcmp(cmd[0], "$") == 0)
+		return (handle_dollar(cmd[0], shell), 1);
 	return (0);
 }
 
@@ -68,6 +70,11 @@ int	handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char 	*value;
 
+	if(ft_strchr(cmd, '?'))
+	{
+		printf("%d\n", shell->exit_stat);
+		return 0;
+	}
 	idx = search_env(shell, cmd);
 	if (idx)
 	{

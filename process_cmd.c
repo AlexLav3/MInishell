@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/22 20:12:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:40:30 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 void	execute_single_cmd(char **cmd, t_shell *shell)
 {
 	char	*path;
+	int 	status;
 
 	if (!cmd[0] || !cmd)
 		return ;
@@ -87,7 +88,10 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 		}
 	}
 	else
-		waitpid(shell->pid1, NULL, 0);
+	{
+		waitpid(shell->pid1, &status, 0);
+		shell->exit_stat = (status >> 8) & 0xFF;
+	}
 	free(path);
 }
 
