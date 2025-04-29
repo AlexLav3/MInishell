@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 17:12:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/04/29 17:13:04 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_token
 {
 	char			*com;
 	struct s_token	*next;
-	// struct s_token	*prev; //maybe will be needed
 }					t_token;
 
 typedef struct s_shell
