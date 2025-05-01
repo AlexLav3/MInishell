@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 19:18:29 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:03:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	search_env(t_shell *shell, char *var)
 			return (i);
 		i++;
 	}
-	return (-1);
+	return (0);
 }
 
 void	update_env(t_shell *shell, char *var, char *name)

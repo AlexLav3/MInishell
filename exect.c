@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 15:29:19 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:03:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,7 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 	if (!cmd || !cmd[0])
 		return (false);
 	if (ft_strcmp(cmd[0], "cd") == 0)
-	{
-		shell->pid1 = fork();
-		if (shell->pid1 == -1)
-			perror("fork");
-		builtin_cd(cmd, shell);
-		waitpid(shell->pid1, &status, 0);
-		shell->exit_stat = (status >> 8) & 0xFF;
-		return (true);
-	}
+		return (builtin_cd(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (builtin_pwd(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "export") == 0)
@@ -67,8 +59,8 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		return (ft_echo(cmd, shell), true);
-	else if (ft_strcmp(cmd[0], "$") == 0)
-		return (handle_dollar(cmd[0], shell), true);
+	// else if (ft_strcmp(cmd[0], "$") == 0)
+	// 	return (handle_dollar(cmd[0], shell), true);
 	return (false);
 }
 
@@ -79,17 +71,20 @@ int	handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char 	*value;
 
-	if(ft_strchr(cmd, '?'))
-	{
-		printf("%d\n", shell->exit_stat);
-		return 0;
-	}
-	idx = search_env(shell, cmd);
+	idx = search_env(shell, cmd + 1); //shift to skip '$'
+	printf("Index: %d\n", idx);
 	if (idx)
 	{
 		env = shell->env_var[idx];
 		value = ft_strchr(env, '=') + 1; // skip to after '='
+		printf("Value: %s\n", value);
 		ft_putstr_fd(value, 1);
+		return (1);
 	}
-	return (1);
+	else
+	{
+		printf("Variable not found\n");
+		return (0);
+	}
+	return (0);
 }
