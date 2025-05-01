@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 18:28:16 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 22:04:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		return (ft_echo(cmd), true);
-	// else if (ft_strcmp(cmd[0], "$" ) && ft_strcmp(cmd[1], "?" ) == 0)
-	// 	return (handle_dollar(cmd[0], shell), true);
+	// else if (ft_strcmp(cmd[0], "$?" ) == 0)
 	return (false);
 }
 
@@ -85,7 +84,7 @@ char 	*handle_dollar(char *cmd, t_shell *shell)
 	idx = search_env(shell, cmd + 1); // shift to skip '$'
 	if (idx >= 0)
 	{
-		env = shell->env_var[idx];
+		env = shell->env_var[idx];	
 		value = ft_strchr(env, '=');
 		if (!value)
 			return (ft_strdup(""));
