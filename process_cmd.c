@@ -3,20 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/22 20:10:44 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:20:25 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-void	single_cmd(char *command, t_token **tokens, t_shell *shell)
+// changed due to REDIR
+void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
 {
-	char **cmd;
-	if (!command || !tokens || !shell)
-		return ;
 	cmd = make_args(*tokens);
 	free(command);
 	if (!cmd)
@@ -30,15 +28,12 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 		deallocate(tokens);
 		return ;
 	}
-	//printf("exec single cmd passed : %s\n", cmd[0]);
 	execute_single_cmd(cmd, shell);
-	//free_array(cmd); //temporary fix
+	free_array(cmd);
 }
-
-void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
+// changed due to REDIR
+void	pipe_cmds(char *command, t_token **tokens, t_shell *shell, char **cmds)
 {
-	char **cmds;
-	
 	cmds = make_args_pipes(*tokens);
 	free(command);
 	if (!cmds)
@@ -49,19 +44,31 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 	create_pipes(cmds, shell);
 	free_array(cmds);
 }
-
+// changed due to REDIR
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
+	char	**cmd;
 	char	**cmds;
 	int		has_pipe;
-
+	int		has_redir;
+	
 	has_pipe = token_has_pipe(*tokens);
+	has_redir = token_has_redir(*tokens);
 	if (!has_pipe)
-		single_cmd(command, tokens, shell);
+	{
+		if (has_redir)
+			single_cmd_with_redir(command, tokens, shell);
+		else
+			single_cmd(command, tokens, shell, cmd);
+	}
 	else
-		pipe_cmds(command, tokens, shell, cmds);
-	deallocate(tokens); //- isn't this function already called inside of the functions above?
-	deallocate(tokens); //- isn't this function already called inside of the functions above?
+	{
+		if (has_redir)
+			pipe_cmds_with_redir(command, tokens, shell); // need to be devloped
+		else
+			pipe_cmds(command, tokens, shell, cmds);		
+	}
+	deallocate(tokens);
 }
 
 void	execute_single_cmd(char **cmd, t_shell *shell)

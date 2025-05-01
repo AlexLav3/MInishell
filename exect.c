@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/22 17:59:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:26:55 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ char	**make_args(t_token *tokens)
 
 int ft_echo(char **cmd, t_shell *shell)
 {
-	
+	// temp fix
+	(void)cmd;
+	(void)shell;
+	return 0;
 }
