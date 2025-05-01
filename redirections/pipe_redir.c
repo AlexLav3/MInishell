@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:07:11 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/01 14:29:12 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/01 15:34:35 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	handle_last_redir_child(t_shell *shell, t_shell *px, char *cmd)
 {
 	if (dup2(px->pipe_fd[0], STDIN_FILENO) == -1)
 		pipex_error("dup2 pipe in");
-
 	if (shell->redir_out != -1)
 	{
 		if (dup2(shell->redir_out, STDOUT_FILENO) == -1)
