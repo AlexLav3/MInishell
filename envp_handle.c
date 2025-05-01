@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 16:03:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 18:13:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	search_env(t_shell *shell, char *var)
 	size_t	len;
 
 	i = 0;
+	if(!var)
+		return 0;
 	len = ft_strlen(var);
 	while (shell->env_var[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/01 16:50:58 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 17:54:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // changed due to REDIR
 void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
 {
-	cmd = make_args(*tokens);
+	cmd = make_args(*tokens, shell);
 	free(command);
 	if (!cmd)
 	{
