@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 16:21:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:31:47 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,15 @@ int	make_tok(t_token **tokens, char *str, int i)
 			printf("checking: %c\n", str[i]);
 			i++;
 		}
-		if (str[i] != '"')
+		if (str[i] == '\0')
+		{
+			printf("not quote: %c\n", str[i]);
 			return (printf("quote missing\n"), 0);
+		}
 		word = ft_substr(str, start, i - start);
 		add_token(tokens, word);
-		return (i++);
+		i++;
+		return (i);
 	}
 	word = ft_substr(str, start, i - start);
 	add_token(tokens, word);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/01 14:50:46 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/01 16:32:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 	int		has_pipe;
 	int		has_redir;
 	
-	print_list(*tokens); // just for testing
+	//print_list(*tokens); // just for testing
 	has_pipe = token_has_pipe(*tokens);
 	has_redir = token_has_redir(*tokens);
 	if (!has_pipe)
