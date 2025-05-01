@@ -52,10 +52,15 @@ redir added and it works as long as the command line is separated properly.
 	prompt> ls -a>> out.txt ==== works
 	prompt> ls -a>>out.txt ==== does not work
 		prompt> ls -a>>out.txt === it prints a strange way
-		token value: ls
-		token value: -a
-		token value: >
-		token value: ut.txt
+			token value: ls
+			token value: -a
+			token value: >
+			token value: ut.txt
+		prompt> ls -a>out.txt
+			token value: ls
+			token value: -a
+			token value: out.txt
+			out.txt
 
 002
 exit with space(s) does not work, should it?
