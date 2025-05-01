@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 14:30:29 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/01 16:52:17 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ typedef struct s_token
 {
 	char			*com;
 	struct s_token	*next;
-	// struct s_token	*prev; //maybe will be needed
 }					t_token;
 
 typedef struct s_shell
 {
 	char			**env_var;
+	int				exit_stat;
 	char			*pwd;
 	pid_t			pid1;
 	int				pipe_fd[2];
@@ -87,6 +87,9 @@ void				last_child_process(t_shell *px, char *cmd);
 void				middle_child_process(t_shell *px, char *cmd);
 void				close_pipes_and_wait(t_shell *px);
 void				execute_cmd(char *cmd, t_shell *px);
+
+//dollar sign
+int 				handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
 int					is_redir(const char *s);

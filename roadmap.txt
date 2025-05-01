@@ -41,6 +41,12 @@ to start :
 in progress:
 - single and double quotes
 
+--dollar sign example
+ % export NAME=alex
+elavrich@c3r7s4 ~/Documents/homegit/met_ext
+ % echo $NAME
+alex
+
 -----TO DISCUSS-----
 
 new stuff added:
