@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/29 19:40:30 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 14:28:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 		single_cmd(command, tokens, shell);
 	else
 		pipe_cmds(command, tokens, shell);
-	deallocate(tokens); //- isn't this function already called inside of the functions above?
+	deallocate(tokens);
 }
 
 void	execute_single_cmd(char **cmd, t_shell *shell)
 {
 	char	*path;
-	int 	status;
+	int 	status = 0;
 
 	if (!cmd[0] || !cmd)
 		return ;
@@ -91,6 +91,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	{
 		waitpid(shell->pid1, &status, 0);
 		shell->exit_stat = (status >> 8) & 0xFF;
+		printf("exit status: %d\n", shell->exit_stat);
 	}
 	free(path);
 }

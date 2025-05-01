@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/29 19:38:58 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 15:29:19 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,32 @@ char	**make_args(t_token *tokens)
 
 bool	handle_builtin(char **cmd, t_shell *shell)
 {
+	int status = 0;
 	if (!cmd || !cmd[0])
-		return (0);
+		return (false);
 	if (ft_strcmp(cmd[0], "cd") == 0)
-		return (builtin_cd(cmd, shell), 1);
+	{
+		shell->pid1 = fork();
+		if (shell->pid1 == -1)
+			perror("fork");
+		builtin_cd(cmd, shell);
+		waitpid(shell->pid1, &status, 0);
+		shell->exit_stat = (status >> 8) & 0xFF;
+		return (true);
+	}
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (builtin_pwd(cmd, shell), 1);
+		return (builtin_pwd(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		return (ft_export(cmd, shell), 1);
+		return (ft_export(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		return (print_env(*shell), 1);
+		return (print_env(*shell), true);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		return (builtin_unset(cmd, shell), 1);
+		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (ft_echo(cmd, shell), 1);
+		return (ft_echo(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "$") == 0)
-		return (handle_dollar(cmd[0], shell), 1);
-	return (0);
+		return (handle_dollar(cmd[0], shell), true);
+	return (false);
 }
 
 int	handle_dollar(char *cmd, t_shell *shell)
