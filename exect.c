@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 16:03:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/01 16:11:13 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		return (ft_echo(cmd, shell), true);
-	// else if (ft_strcmp(cmd[0], "$") == 0)
+	// else if (ft_strcmp(cmd[0], "$" ) && ft_strcmp(cmd[1], "?" ) == 0)
 	// 	return (handle_dollar(cmd[0], shell), true);
 	return (false);
 }
@@ -69,22 +69,18 @@ int	handle_dollar(char *cmd, t_shell *shell)
 	char	*var;
 	int		idx;
 	char	*env;
+	const char *str = cmd;
 	char 	*value;
 
 	idx = search_env(shell, cmd + 1); //shift to skip '$'
-	printf("Index: %d\n", idx);
 	if (idx)
 	{
 		env = shell->env_var[idx];
 		value = ft_strchr(env, '=') + 1; // skip to after '='
-		printf("Value: %s\n", value);
 		ft_putstr_fd(value, 1);
 		return (1);
 	}
 	else
-	{
-		printf("Variable not found\n");
-		return (0);
-	}
+		return (printf("Variable not found\n"), 0);
 	return (0);
 }
