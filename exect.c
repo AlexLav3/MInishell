@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 22:04:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:51:26 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		}
 		tokens = tokens->next;
 	}
+	cmd[i++] = NULL;
 	return (cmd);
 }
 
