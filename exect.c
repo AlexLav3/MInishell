@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/07 20:51:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:59:17 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,11 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	{
 		if (tokens->com && tokens->com[0] != '\0')
 		{
+			cmd[i] = ft_strdup(tokens->com);
 			if (!tokens->literal && ft_strchr(tokens->com, '$'))
-			{
-				cmd[i] = ft_strdup(tokens->com);
 				cmd[i] = handle_dollar(cmd[i], shell);
-			}
 			else
 			{
-				cmd[i] = ft_strdup(tokens->com);
 				if (!cmd[i])
 				{
 					while (i > 0)
