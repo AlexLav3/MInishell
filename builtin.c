@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 21:12:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 22:53:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_echo(char **cmd, t_shell *shell)
 
 	i = 1;
 	n_option = 0;
+	shell->exit_stat = 0;
 	while (cmd[i] && ft_strcmp(cmd[i], "-n") == 0)
 	{
 		n_option = 1;
@@ -39,7 +40,6 @@ int	ft_echo(char **cmd, t_shell *shell)
 		if (write(1, "\n", 1) == -1)
 			shell->exit_stat = 1;
 	}
-	shell->exit_stat = 0;
 	return (i);
 }
 
@@ -107,8 +107,6 @@ void	builtin_pwd(char **cmd, t_shell *shell)
 	}
 	else 
 		shell->exit_stat = 0;
-	//printf("custom function; %s\n", shell->pwd);
-	//used to check if it was using the custom function or not.
 	printf("%s\n", shell->pwd);
 }
 

@@ -6,13 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 18:13:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 22:54:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-// printing envp
+// printing envp - NEEDS TO BE IN APHRABETIC ORDER
 void	print_env(t_shell shell)
 {
 	int	i;
