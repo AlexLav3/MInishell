@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 23:17:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:41:40 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ char	**make_args(t_token *tokens, t_shell *shell)
 
 bool	handle_builtin(char **cmd, t_shell *shell)
 {
-	int	status;
-
-	status = 0;
 	if (!cmd || !cmd[0])
 		return (false);
 	if (ft_strcmp(cmd[0], "cd") == 0)
