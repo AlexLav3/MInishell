@@ -6,15 +6,16 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/08 20:58:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:09:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
 // changed due to REDIR
-void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
+void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 {
+	char **cmd;
 	cmd = make_args(*tokens, shell);
 	free(command);
 	if (!cmd)
@@ -33,8 +34,9 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell, char **cmd)
 	free_array(cmd);
 }
 // changed due to REDIR
-void	pipe_cmds(char *command, t_token **tokens, t_shell *shell, char **cmds)
+void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 {
+	char **cmds;
 	cmds = make_args_pipes(*tokens);
 	free(command);
 	if (!cmds)
@@ -48,8 +50,6 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell, char **cmds)
 // changed due to REDIR
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
-	char	**cmd;
-	char	**cmds;
 	int		has_pipe;
 	int		has_redir;
 	
@@ -61,14 +61,14 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 		if (has_redir)
 			single_cmd_with_redir(command, tokens, shell);
 		else
-			single_cmd(command, tokens, shell, cmd);
+			single_cmd(command, tokens, shell);
 	}
 	else
 	{
 		if (has_redir)
 			pipe_cmds_with_redir(command, tokens, shell); // need to be devloped
 		else
-			pipe_cmds(command, tokens, shell, cmds);		
+			pipe_cmds(command, tokens, shell);
 	}
 	deallocate(tokens);
 }
