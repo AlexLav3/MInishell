@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 20:53:22 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 23:17:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,14 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = ft_strdup(tokens->com);
+			if (!cmd[i])
+			{
+				while (i > 0)
+					free(cmd[--i]);
+				return (free(cmd), NULL);
+			}
 			if (!tokens->literal && ft_strchr(tokens->com, '$'))
 				cmd[i] = handle_dollar(cmd[i], shell);
-			else
-			{
-				if (!cmd[i])
-				{
-					while (i > 0)
-						free(cmd[--i]);
-					return (free(cmd), NULL);
-				}
-			}
 			i++;
 		}
 		tokens = tokens->next;
@@ -76,8 +73,8 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char	*value;
 
-	if (!cmd || cmd[0] != '$') // sanity check
-		return (ft_strdup(cmd));
+	// if (!cmd || cmd[0] != '$') // sanity check
+	// 	return (ft_strdup(cmd));
 	idx = search_env(shell, cmd + 1); // shift to skip '$'
 	if (idx >= 0)
 	{
