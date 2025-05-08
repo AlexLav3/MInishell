@@ -6,31 +6,41 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 18:28:46 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:12:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int	ft_echo(char **cmd)
+int	ft_echo(char **cmd, t_shell *shell)
 {
 	int	i;
 	int	n_option;
 
 	i = 1;
 	n_option = 0;
-	
-	while (cmd[i])
+	while (cmd[i] && ft_strcmp(cmd[i], "-n") == 0)
 	{
-		if (cmd[i + 1] && cmd[i][0] == '\0')
-			write(1, " ", 1);
-		else
-			ft_putstr_fd(cmd[i], 1);
+		n_option = 1;
 		i++;
 	}
-	if (n_option == 0)
-		write(1, "\n", 1);
-	return i;
+	while (cmd[i])
+	{
+		ft_putstr_fd(cmd[i], 1);
+		if (cmd[i + 1])
+		{
+			if (write(1, " ", 1) == -1)
+				shell->exit_stat = 1;
+		}
+		i++;
+	}
+	if (n_option)
+	{
+		if (write(1, "\n", 1) == -1)
+			shell->exit_stat = 1;
+	}
+	shell->exit_stat = 0;
+	return (i);
 }
 
 void	builtin_cd(char **cmd, t_shell *shell)
@@ -64,16 +74,39 @@ void	builtin_cd(char **cmd, t_shell *shell)
 		path = cmd[1];
 	if (!path)
 		return ;
-	if (chdir(path) != 0)
-		perror("cd");
+	if (!is_valid_directory(path))
+	{
+		shell->exit_stat = 1;
+		return ;
+	}
+	if (is_valid_directory(path))
+	{
+		if (chdir(path) != 0)
+		{
+			perror("cd");
+			shell->exit_stat = 1;
+			return ;
+		}
+	}
 	else
 		shell->pwd = set_pwd(shell);
+	shell->exit_stat = 0;
 }
 
 void	builtin_pwd(char **cmd, t_shell *shell)
 {
 	if (!shell->pwd)
+	{
+		shell->exit_stat = 128;
 		return ;
+	}
+	if(!is_valid_directory(shell->pwd))
+	{
+		shell->exit_stat = 1;
+		return ;
+	}
+	else 
+		shell->exit_stat = 0;
 	//printf("custom function; %s\n", shell->pwd);
 	//used to check if it was using the custom function or not.
 	printf("%s\n", shell->pwd);

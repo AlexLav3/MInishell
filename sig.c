@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/04/16 15:16:43 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/08 21:07:36 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sig_handle(int sig)
 	rl_redisplay();
 }
 
-void	setup_sig(void)
+void	setup_sig()
 {
 	signal(SIGINT, sig_handle);
 	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+ slash

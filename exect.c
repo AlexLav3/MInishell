@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/07 20:59:17 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 20:53:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 						free(cmd[--i]);
 					return (free(cmd), NULL);
 				}
-			}	
+			}
 			i++;
 		}
 		tokens = tokens->next;
@@ -65,12 +65,12 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (ft_echo(cmd), true);
+		return (ft_echo(cmd, shell), true);
 	// else if (ft_strcmp(cmd[0], "$?" ) == 0)
 	return (false);
 }
 
-char 	*handle_dollar(char *cmd, t_shell *shell)
+char	*handle_dollar(char *cmd, t_shell *shell)
 {
 	int		idx;
 	char	*env;
@@ -78,17 +78,24 @@ char 	*handle_dollar(char *cmd, t_shell *shell)
 
 	if (!cmd || cmd[0] != '$') // sanity check
 		return (ft_strdup(cmd));
-
 	idx = search_env(shell, cmd + 1); // shift to skip '$'
 	if (idx >= 0)
 	{
-		env = shell->env_var[idx];	
+		env = shell->env_var[idx];
 		value = ft_strchr(env, '=');
 		if (!value)
 			return (ft_strdup(""));
-
-		return (ft_strdup(value + 1)); 
+		return (ft_strdup(value + 1));
 	}
 	else
 		return (ft_strdup(""));
+}
+
+int	is_valid_directory(char *path)
+{
+	if (access(path, F_OK) == -1)
+		return (perror("cd: No such file or directory"), 0);
+	if (access(path, X_OK) == -1)
+		return (perror("cd: Permission denied"), 0);
+	return (1);
 }

@@ -19,57 +19,32 @@ edge cases:
 		-bash behaviour: stuffabcdef 2pizza
 		-minishell behaviour: stuff abcdef $ SHLVL'pizza'
 
-		minishell: 
-		prompt> echo stuff"abcdef" $SHLVL'pizza' 
-		halways works, half not, I will check what's wrong.
-
-% cat test.txt | grep "42 | sort | wc -l 
-elavrich@c3r8s1 ~/Documents/homegit/mini
-pipe dquote> "
 
 other issues:
 - memory leaks
 - minishell should be executable inside the minishell itself 
 
 -----------TO DO LIST-----------
-
-to start :
-- redirections: <, >, <<, >>
-- $? 
-- understand + handle dollar sign.
-
-in progress:
-- single and double quotes
-
---dollar sign example
- % export NAME=alex
-elavrich@c3r7s4 ~/Documents/homegit/met_ext
- % echo $NAME
-alex
+WIP - $?
 
 -----TO DISCUSS-----
 
-new stuff added:
 
-001
-redir added and it works as long as the command line is separated properly. 
-	prompt> ls -a >> out.txt ==== works
-	prompt> ls -a >>out.txt ==== does not work
-	prompt> ls -a>> out.txt ==== works
-	prompt> ls -a>>out.txt ==== does not work
-		prompt> ls -a>>out.txt === it prints a strange way
-			token value: ls
-			token value: -a
-			token value: >
-			token value: ut.txt
-		prompt> ls -a>out.txt
-			token value: ls
-			token value: -a
-			token value: out.txt
-			out.txt
+EXIT STATUSES
+0: Success—Indicates that the command or program executed successfully without any errors.
 
-002
-exit with space(s) does not work, should it?
+1: General Error—A catch-all exit code for a variety of general errors. Often used when the command or program encounters an error, but no specific exit code is available for the situation.
 
-003
-update makefile and	add BIN for o files? 
+2: Misuse of shell built-ins—Indicates incorrect usage of shell built-in commands or misuse of shell syntax.
+
+126: Command cannot execute—The command was found, but it could not be executed, possibly due to insufficient permissions or other issues.
+
+127: Command not found—The command was not found in the system's PATH, indicating that either the command does not exist or the PATH variable is incorrectly set.
+
+128: Invalid exit argument—Returned when a script exits with an invalid argument. This usually indicates an error in the script itself.
+
+128 + N: Fatal error signal N—Indicates that the command or program was terminated by a fatal error signal. For example, an exit code of 137 (128 + 9) means that the command was terminated by a SIGKILL signal.
+
+130: Script terminated by Control-C—Indicates that the command or script was terminated by the user using Control-C (SIGINT signal).
+
+255: Exit status out of range—Returned when the exit status is outside the valid range (0 to 254).

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 18:07:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:07:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,10 @@ void				builtin_cd(char **cmd, t_shell *shell);
 void				builtin_pwd(char **cmd, t_shell *shell);
 void				ft_export(char **cmd, t_shell *shell);
 void				builtin_unset(char **cmd, t_shell *shell);
-int					ft_echo(char **cmd);
+int					ft_echo(char **cmd, t_shell *shell);
+
+//builtin utils
+int					is_valid_directory(char *path);
 
 //env variables
 char				**copy_envp(char **envp);
@@ -135,7 +138,7 @@ void				update_env(t_shell *shell, char *var, char *name);
 
 //signals
 void				sig_handle(int sig);
-void				setup_sig(void);
+void				setup_sig();
 
 //close & free
 void				close_free(t_token *tokens, t_shell *shell);
