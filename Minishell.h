@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 23:09:41 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 19:50:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void				update_env(t_shell *shell, char *var, char *name);
 
 //signals
 void				sig_handle(int sig);
-void				setup_sig();
+void				setup_sig(void);
 
 //close & free
 void				close_free(t_token *tokens, t_shell *shell);
@@ -155,6 +155,8 @@ char				*join_path(char *dir, char *cmd);
 int					size_args(t_token *tokens);
 int					make_tok(t_token **tokens, char *str, int i);
 int					is_pipe(char c);
+int					size_cmd_arg(char **cmd);
+
 //testing
 void				print_list(t_token *tokens);
 

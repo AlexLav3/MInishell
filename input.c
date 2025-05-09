@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 17:31:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:02:04 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	add_token(t_token **head, char *word, int literal)
 	}
 	if(literal)
 		new->literal = true;
-	printf("new->com, tokens->literal: %s %d\n", new->com, new->literal);
+	//printf("new->com, tokens->literal: %s %d\n", new->com, new->literal);
 	return;
 }
 

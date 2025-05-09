@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 14:14:39 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/09 19:49:44 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,15 @@ int	size_args(t_token *tokens)
 		tmp = tmp->next;
 	}
 	return (count);
+}
+
+int size_cmd_arg(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+	return (i);
 }
 

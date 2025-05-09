@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 23:41:40 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:11:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
 		return (ft_echo(cmd, shell), true);
-	// else if (ft_strcmp(cmd[0], "$?" ) == 0)
+	else if (ft_strcmp(cmd[0], "$?") == 0)
+		return (printf("%d\n", shell->exit_stat), true);
 	return (false);
 }
 
@@ -70,13 +71,16 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char	*value;
 
-	// if (!cmd || cmd[0] != '$') // sanity check
-	// 	return (ft_strdup(cmd));
+	//printf("cmd: %s\n", cmd);
+	if (!cmd || cmd[1] == '?') // check for $?
+		return (ft_strdup(cmd));
 	idx = search_env(shell, cmd + 1); // shift to skip '$'
 	if (idx >= 0)
 	{
 		env = shell->env_var[idx];
+		//printf("env: %s\n", env);
 		value = ft_strchr(env, '=');
+		// printf("value: %s\n", value);
 		if (!value)
 			return (ft_strdup(""));
 		return (ft_strdup(value + 1));

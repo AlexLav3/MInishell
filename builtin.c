@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 22:53:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:10:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_echo(char **cmd, t_shell *shell)
 		}
 		i++;
 	}
-	if (n_option)
+	if (n_option || cmd[i] == NULL)
 	{
 		if (write(1, "\n", 1) == -1)
 			shell->exit_stat = 1;
@@ -127,7 +127,7 @@ void	ft_export(char **cmd, t_shell *shell)
 			var = ft_strdup(cmd[i]);
 			*equal = '\0';
 			name = cmd[i];
-			if (!search_env(shell, name))
+			if (search_env(shell, name) >= 0)
 				add_env(shell, var);
 			else
 				update_env(shell, var, name);
@@ -151,7 +151,7 @@ void	builtin_unset(char **cmd, t_shell *shell)
 	{
 		var = cmd[i];
 		pos = search_env(shell, var);
-		if (pos)
+		if (pos >= 0)
 		{
 			shell->env_var[pos] = NULL;
 			break ;

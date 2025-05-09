@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/08 23:13:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:02:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 	}
 	if (handle_builtin(cmd, shell))
 	{
-		printf("shell->exit_stat: %d\n", shell->exit_stat); //testing
+		//printf("shell->exit_stat: %d\n", shell->exit_stat); //testing
 		free_array(cmd);
 		deallocate(tokens);
 		return ;
@@ -85,7 +85,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	{
 		perror("Command not found");
 		shell->exit_stat = 127;
-		printf("shell->exit_stat: %d\n", shell->exit_stat); //testing
+		//printf("shell->exit_stat: %d\n", shell->exit_stat); //testing
 		return ;
 	}
 	shell->pid1 = fork();
@@ -103,7 +103,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	{
 		waitpid(shell->pid1, &status, 0);
     	shell->exit_stat = WEXITSTATUS(status);
-		printf("Exit status: %d\n", shell->exit_stat);
+		//printf("Exit status: %d\n", shell->exit_stat);
 	}
 	free(path);
 }
