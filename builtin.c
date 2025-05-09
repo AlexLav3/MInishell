@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:10:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:16:27 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	ft_export(char **cmd, t_shell *shell)
 			var = ft_strdup(cmd[i]);
 			*equal = '\0';
 			name = cmd[i];
-			if (search_env(shell, name) >= 0)
+			if (search_env(shell, name) < 0)
 				add_env(shell, var);
 			else
 				update_env(shell, var, name);
