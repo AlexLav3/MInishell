@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:59:13 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 23:28:41 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 char	**make_args(t_token *tokens, t_shell *shell)
 {
 	char	**cmd;
+	char	*pos;
 	int		i;
+	char	*expanded;
 
 	i = 0;
 	cmd = malloc(sizeof(char *) * (size_args(tokens) + 1));
@@ -34,10 +36,15 @@ char	**make_args(t_token *tokens, t_shell *shell)
 					free(cmd[--i]);
 				return (free(cmd), NULL);
 			}
-			if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)	
-				cmd[i] = handle_dollar(cmd[i], shell);
+			if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
+			{
+				pos = ft_strchr(tokens->com, '$');
+				expanded = handle_dollar(ft_strchr(tokens->com, '$'), shell);
+				if (expanded)
+					cmd[i] = ft_strjoin(strndup(tokens->com, pos - tokens->com),
+							expanded);
+			}
 			i++;
-			//printf("STRCHR %s\n", ft_strchr(tokens->com, '$'));
 		}
 		tokens = tokens->next;
 	}
@@ -74,22 +81,19 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	int		i;
 
 	i = 0;
-	//printf("cmd: %s\n", cmd);
-	if (!cmd || cmd[1] == '?') // check for $?
+	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
 	while (cmd[i])
 	{
-		if(cmd[i] == '$')
-			break; 
+		if (cmd[i] == '$')
+			break ;
 		i++;
-	}	
-	idx = search_env(shell, cmd + (i+1)); // shift to skip '$'
+	}
+	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{
 		env = shell->env_var[idx];
-		//printf("env: %s\n", env);
 		value = ft_strchr(env, '=');
-		// printf("value: %s\n", value);
 		if (!value)
 			return (ft_strdup(""));
 		return (ft_strdup(value + 1));

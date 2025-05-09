@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 21:19:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 21:44:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_echo(char **cmd, t_shell *shell)
 
 	i = 1;
 	n_option = 0;
-	shell->exit_stat = 0;
 	while (cmd[i] && ft_strcmp(cmd[i], "-n") == 0)
 	{
 		n_option = 1;
@@ -29,17 +28,11 @@ int	ft_echo(char **cmd, t_shell *shell)
 	{
 		ft_putstr_fd(cmd[i], 1);
 		if (cmd[i + 1])
-		{
-			if (write(1, " ", 1) == -1)
-				shell->exit_stat = 1;
-		}
+			write(1, " ", 1);
 		i++;
 	}
 	if (n_option || cmd[i] == NULL)
-	{
-		if (write(1, "\n", 1) == -1)
-			shell->exit_stat = 1;
-	}
+		write(1, "\n", 1);
 	return (i);
 }
 
