@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:02:04 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:43:53 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ int	input(char *str, t_token **tokens)
 			start = i;
 			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
 				&& str[i] != '\'')
-				i++;
+					i++;
 			word = ft_substr(str, start, i - start);
 			add_token(tokens, word, 0);
 		}
 	}
-	//print_list(*tokens);
+	print_list(*tokens);
 	return (i);
 }
 

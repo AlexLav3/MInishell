@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:11:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 20:59:13 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ char	**make_args(t_token *tokens, t_shell *shell)
 					free(cmd[--i]);
 				return (free(cmd), NULL);
 			}
-			if (!tokens->literal && ft_strchr(tokens->com, '$'))
+			if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)	
 				cmd[i] = handle_dollar(cmd[i], shell);
 			i++;
+			//printf("STRCHR %s\n", ft_strchr(tokens->com, '$'));
 		}
 		tokens = tokens->next;
 	}
@@ -70,11 +71,19 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	int		idx;
 	char	*env;
 	char	*value;
+	int		i;
 
+	i = 0;
 	//printf("cmd: %s\n", cmd);
 	if (!cmd || cmd[1] == '?') // check for $?
 		return (ft_strdup(cmd));
-	idx = search_env(shell, cmd + 1); // shift to skip '$'
+	while (cmd[i])
+	{
+		if(cmd[i] == '$')
+			break; 
+		i++;
+	}	
+	idx = search_env(shell, cmd + (i+1)); // shift to skip '$'
 	if (idx >= 0)
 	{
 		env = shell->env_var[idx];
