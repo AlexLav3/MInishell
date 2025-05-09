@@ -1,4 +1,0 @@
-//number of arguments
-//create function for errors for the exit status ( 4 less lines + avoiding repetition)
-//check exit with spaces
-//
