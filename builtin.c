@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:16:27 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 21:19:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,46 +47,18 @@ void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
 	char	**envp;
-	int		i;
-
-	i = 0;
+	
 	envp = shell->env_var;
-	while (cmd[i])
-		i++;
-	if (i > 2)
-	{
-		printf("invalid directory\n");
+	if(size_cmd_arg(cmd) > 2)
 		return ;
-	}
 	if (!cmd[1])
-	{
-		while (*envp)
-		{
-			if (ft_strncmp(*envp, "HOME=", 5) == 0)
-			{
-				path = *envp + 5;
-				break ;
-			}
-			envp++;
-		}
-	}
+		path = get_cmd_path(cmd[0], shell);
 	else
 		path = cmd[1];
-	if (!path)
-		return ;
-	if (!is_valid_directory(path))
+	if (!path || !is_valid_directory(path) || chdir(path) != 0)
 	{
 		shell->exit_stat = 1;
 		return ;
-	}
-	if (is_valid_directory(path))
-	{
-		if (chdir(path) != 0)
-		{
-			perror("cd");
-			shell->exit_stat = 1;
-			return ;
-		}
 	}
 	else
 		shell->pwd = set_pwd(shell);
@@ -95,17 +67,12 @@ void	builtin_cd(char **cmd, t_shell *shell)
 
 void	builtin_pwd(char **cmd, t_shell *shell)
 {
-	if (!shell->pwd)
+	if (!shell->pwd || !is_valid_directory(shell->pwd))
 	{
 		shell->exit_stat = 128;
 		return ;
 	}
-	if(!is_valid_directory(shell->pwd))
-	{
-		shell->exit_stat = 1;
-		return ;
-	}
-	else 
+	else
 		shell->exit_stat = 0;
 	printf("%s\n", shell->pwd);
 }
