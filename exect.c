@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 23:28:41 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/09 23:37:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	{
 		if (tokens->com && tokens->com[0] != '\0')
 		{
-			cmd[i] = ft_strdup(tokens->com);
-			if (!cmd[i])
-			{
-				while (i > 0)
-					free(cmd[--i]);
-				return (free(cmd), NULL);
-			}
-			if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
-			{
-				pos = ft_strchr(tokens->com, '$');
-				expanded = handle_dollar(ft_strchr(tokens->com, '$'), shell);
-				if (expanded)
-					cmd[i] = ft_strjoin(strndup(tokens->com, pos - tokens->com),
-							expanded);
-			}
+			cmd[i] = toks_to_args(tokens, *cmd, shell);
 			i++;
 		}
 		tokens = tokens->next;
@@ -109,4 +95,23 @@ int	is_valid_directory(char *path)
 	if (access(path, X_OK) == -1)
 		return (perror("cd: Permission denied"), 0);
 	return (1);
+}
+
+char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
+{
+	char *pos;
+	char	*expanded;
+
+
+	cmd = ft_strdup(tokens->com);
+	if (!cmd)
+		return (free(cmd), NULL);
+	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
+	{
+		pos = ft_strchr(tokens->com, '$');
+		expanded = handle_dollar(ft_strchr(tokens->com, '$'), shell);
+		if (expanded)
+			return ( ft_strjoin(strndup(tokens->com, pos - tokens->com), expanded));
+	}
+	return cmd;
 }
