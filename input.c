@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/15 20:49:46 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/16 00:15:05 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	input(char *str, t_token **tokens)
 	{
 		if (str[i] == ' ')
 			i++;
-		if (str[i] == '\'')
+		else if (str[i] == '\'')
 			i = handle_single_q(tokens, str, i);
-		if (is_meta(str[i]) || str[i] == '"')
+		else if (is_meta(str[i]) || str[i] == '"')
 			i = make_tok(tokens, str, i);
 		else
 		{
@@ -101,10 +101,15 @@ int	make_tok(t_token **tokens, char *str, int i)
 		while (str[i] && str[i] != '"')
 			i++;
 		if (str[i] == '\0')
-			return (printf("quote missing\n"), 0);
+			return (printf("quote missing\n"), i);
 		word = ft_substr(str, start, i - start);
-		printf("word: %s \n", word);
-		add_token(tokens, word, 0);
+		if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
+		{
+			char *cleaned = ft_substr(word, 1, ft_strlen(word) - 2);
+			add_token(tokens, cleaned, 0);
+		}
+		else
+			add_token(tokens, word, 0);
 		i++;
 		return (i);
 	}

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/15 23:39:35 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:48:58 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,7 @@ int	search_env(t_shell *shell, char *var)
 	if(!var)
 		return 0;
 	while(var[len])
-	{
-		if(var[len] == '\''|| var[len] == '"')
-			break;
 		len++;
-	}
 	printf("var search: %s\n", var);
 	while (shell->env_var[i])
 	{

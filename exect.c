@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/15 23:31:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:50:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,7 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 		pos = ft_strchr(tokens->com, '$');
 		expanded = handle_dollar(ft_strchr(tokens->com, '$'), shell);
 		if (expanded)
-		{
-			printf("cmd here: %s\n", ft_strjoin(strndup(tokens->com, pos - tokens->com), expanded));
-			return (ft_strjoin(strndup(tokens->com, pos - tokens->com), expanded));
-		}
+			return (ft_strjoin(strndup(tokens->com, pos - tokens->com), expanded));	
 	}
 	return cmd;
 }
