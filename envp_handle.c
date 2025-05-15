@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:09:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/15 23:39:35 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,18 @@ void	add_env(t_shell *shell, char *var)
 int	search_env(t_shell *shell, char *var)
 {
 	int		i;
-	size_t	len;
+	size_t	len = 0;
 
 	i = 0;
 	if(!var)
 		return 0;
-	len = ft_strlen(var);
+	while(var[len])
+	{
+		if(var[len] == '\''|| var[len] == '"')
+			break;
+		len++;
+	}
+	printf("var search: %s\n", var);
 	while (shell->env_var[i])
 	{
 		if (ft_strncmp(shell->env_var[i], var, len) == 0
