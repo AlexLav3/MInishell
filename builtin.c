@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/15 21:31:17 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/16 03:24:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,15 @@ void	builtin_unset(char **cmd, t_shell *shell)
 		}
 		i++;
 	}
+}
+
+void ft_exit(char **cmd, t_shell *shell)
+{
+	if(size_cmd_arg(cmd) > 1)
+	{
+		printf("too many args\n");
+		return;
+	}
+	else 
+		shell->exit = 1;
 }

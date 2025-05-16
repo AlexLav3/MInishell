@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/16 00:15:05 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/16 03:10:26 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@ int	input(char *str, t_token **tokens)
 	start = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ')
+		while (str[i] == ' ')
 			i++;
-		else if (str[i] == '\'')
+		if (str[i] == '\'')
 			i = handle_single_q(tokens, str, i);
 		else if (is_meta(str[i]) || str[i] == '"')
 			i = make_tok(tokens, str, i);
+		else if (str[i] == '\0')
+			break;
 		else
 		{
 			start = i;
-			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
-				&& str[i] != '\'')
-					i++;
+			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"' && str[i] != '\'' && str[i] != '\0')
+				i++;
 			word = ft_substr(str, start, i - start);
 			add_token(tokens, word, 0);
 		}

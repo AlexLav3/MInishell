@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/09 20:02:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/16 03:11:38 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 	}
 	if (handle_builtin(cmd, shell))
 	{
-		//printf("shell->exit_stat: %d\n", shell->exit_stat); //testing
 		free_array(cmd);
 		deallocate(tokens);
 		return ;
@@ -47,13 +46,12 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 	create_pipes(cmds, shell);
 	free_array(cmds);
 }
-// changed due to REDIR
+
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
 	int		has_pipe;
 	int		has_redir;
 	
-	//print_list(*tokens); // just for testing
 	has_pipe = token_has_pipe(*tokens);
 	has_redir = token_has_redir(*tokens);
 	if (!has_pipe)
@@ -85,7 +83,6 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	{
 		perror("Command not found");
 		shell->exit_stat = 127;
-		//printf("shell->exit_stat: %d\n", shell->exit_stat); //testing
 		return ;
 	}
 	shell->pid1 = fork();
@@ -103,7 +100,6 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	{
 		waitpid(shell->pid1, &status, 0);
     	shell->exit_stat = WEXITSTATUS(status);
-		//printf("Exit status: %d\n", shell->exit_stat);
 	}
 	free(path);
 }

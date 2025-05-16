@@ -1,10 +1,55 @@
 //number of arguments
 //create function for errors for the exit status ( 4 less lines + avoiding repetition)
-//check exit with spaces
-// % echo gd$USER
-gdelavrich
-// % echo "'$USER'"
-'elavrich'
-elavrich@c3r7s1 ~/Documents/homegit/mini
- % echo '"$USER"'
-"$USER"
+//check exit with spaces - EXIT TAKES ARGUMENTS
+
+--edge cases 
+    -not ok for sure: 
+    echo "''$USER''"
+    result:
+        '
+    expected:
+        ''elavrich''
+
+    echo "''"$USER"''"
+    elavrich
+    expected:
+    ''elavrich''
+
+--unsure
+   1. echo "'$USER' - diff than bash, but quote missing can be handled however we want. ok?
+    tokens com: echo
+    quote missing
+   
+    -- lol? - almost or ok?
+    2. echo '$USER'"
+    tokens com: echo
+    tokens com: $USER
+    quote missing
+    $USER
+    
+    -idk
+    3 .echo "'$USER - ok? sane as 1.
+    tokens com: echo
+    quote missing
+    
+    --bash behavior:
+    1 . echo "'$USER' 
+    elavrich@c3r7s3 ~/Documents/homegit/mini
+     dquote> "
+    'elavrich'
+
+    2. echo '$USER'"
+    elavrich@c3r7s3 ~/Documents/homegit/mini
+     dquote> "
+    $USER
+
+    3.  echo "'$USER
+    elavrich@c3r7s3 ~/Documents/homegit/mini
+     dquote> "
+    'elavrich
+
+    -- ok: 
+    echo ''$USER''
+    echo '"'$USER'"'
+    echo '"$USER'
+    echo gd$USER

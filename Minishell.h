@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/15 19:58:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/16 03:23:40 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void				builtin_pwd(char **cmd, t_shell *shell);
 void				ft_export(char **cmd, t_shell *shell);
 void				builtin_unset(char **cmd, t_shell *shell);
 int					ft_echo(char **cmd, t_shell *shell);
+void 				ft_exit(char **cmd, t_shell *shell);
 
 //builtin utils
 int					is_valid_directory(char *path);
@@ -142,8 +143,6 @@ void				setup_sig(void);
 void				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
 void				deallocate(t_token **root);
-bool				check_for_exit(char *command);
-void				ft_exit(t_shell *shell);
 
 //for list tokens
 t_token				*new_token(char *word);

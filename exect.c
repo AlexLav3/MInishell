@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/15 23:50:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/16 03:23:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (tokens)
 	{
-		if (tokens->com && tokens->com[0] != '\0')
+		if (tokens->com && tokens->com[0] != '\0'&& tokens->com[0] != ' ')
 		{
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
 			i++;
@@ -56,6 +56,8 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (ft_echo(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "$?") == 0)
 		return (printf("%d\n", shell->exit_stat), true);
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		return (ft_exit(cmd, shell), true);
 	return (false);
 }
 
