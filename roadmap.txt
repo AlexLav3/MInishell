@@ -17,15 +17,14 @@ edge cases:
 	a command like : echo stuff"abcdef" $SHLVL'pizza'
 	[echo ] -> [stuff] -> ["abcdef"] -> [""] (special tokens will have "" nodes instead of spaces) -> [$SHLVL] -> ['pizza']
 		-bash behaviour: stuffabcdef 2pizza
-		-minishell behaviour: stuff abcdef $ SHLVL'pizza'
+		-minishell behaviour: stuff abcdef 2 pizza
 
 
 other issues:
 - memory leaks
-- minishell should be executable inside the minishell itself 
+- minishell should be executable inside the minishell itself ?
 
 -----------TO DO LIST-----------
-WIP - $?
 
 -----TO DISCUSS-----
 

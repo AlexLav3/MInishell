@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:25:52 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:59:48 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
+	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL )
 	{
 		pos = ft_strchr(tokens->com, '$');
 		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);

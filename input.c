@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:20:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 09:00:03 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int	handle_single_q(t_token **tokens, char *str, int i)
 	if (str[i] == '\0')
 		return (printf("single quote missing\n"), -1);
 	word = ft_substr(str, start, i - start);
-	add_token(tokens, word, 1);
+	//printf("word: %s\n", word);
+	if(word)
+		add_token(tokens, word, 1);
 	i++;
 	return (i);
 }
