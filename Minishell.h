@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:19:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:36:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ typedef struct s_shell
 	int				redir_out;
 }					t_shell;
 
-void	heredoc_do(t_token *tokens, t_shell *shell, char *delimiter);
-void	readirs(int dir, t_shell *shell, char *com);
+void				heredoc_do(t_token *tokens, t_shell *shell,
+						char *delimiter);
+void				readirs(int dir, t_shell *shell, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);

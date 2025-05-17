@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 01:56:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:47:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,32 +61,4 @@ char	*join_path(char *dir, char *cmd)
 	if (!full_path)
 		return (NULL);
 	return (full_path);
-}
-
-int	size_args(t_token *tokens)
-{
-	t_token	*tmp;
-	int		count;
-
-	count = 0;
-	tmp = tokens;
-	if (tokens == NULL)
-		return (0);
-	while (tmp)
-	{
-		if (tmp->com && !is_meta(tmp->com[0]))
-			count++;
-		tmp = tmp->next;
-	}
-	return (count);
-}
-
-int	size_cmd_arg(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-		i++;
-	return (i);
 }

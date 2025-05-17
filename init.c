@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/16 03:33:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:40:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	init_shell(t_shell *shell, char **envp)
 	if (!shell->env_var)
 	{
 		perror("Failed to copy envp");
-		exit(EXIT_FAILURE); // or however we need to handle it later
+		exit(EXIT_FAILURE);
 	}
 	shell->pwd = set_pwd(shell);
 }
@@ -31,8 +31,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 
 	while (!shell->exit)
 	{
-		
-		command = readline("prompt> ");	
+		command = readline("prompt> ");
 		if (!command)
 		{
 			deallocate(tokens);

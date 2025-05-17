@@ -6,16 +6,16 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/16 03:11:38 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:44:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-// changed due to REDIR
 void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 {
-	char **cmd;
+	char	**cmd;
+
 	cmd = make_args(*tokens, shell);
 	free(command);
 	if (!cmd)
@@ -32,10 +32,11 @@ void	single_cmd(char *command, t_token **tokens, t_shell *shell)
 	execute_single_cmd(cmd, shell);
 	free_array(cmd);
 }
-// changed due to REDIR
+
 void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 {
-	char **cmds;
+	char	**cmds;
+
 	cmds = make_args_pipes(*tokens);
 	free(command);
 	if (!cmds)
@@ -49,9 +50,9 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
-	int		has_pipe;
-	int		has_redir;
-	
+	int	has_pipe;
+	int	has_redir;
+
 	has_pipe = token_has_pipe(*tokens);
 	has_redir = token_has_redir(*tokens);
 	if (!has_pipe)
@@ -64,7 +65,7 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 	else
 	{
 		if (has_redir)
-			pipe_cmds_with_redir(command, tokens, shell); // need to be devloped
+			pipe_cmds_with_redir(command, tokens, shell);
 		else
 			pipe_cmds(command, tokens, shell);
 	}
@@ -74,8 +75,9 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 void	execute_single_cmd(char **cmd, t_shell *shell)
 {
 	char	*path;
-	int 	status = 0;
+	int		status;
 
+	status = 0;
 	if (!cmd[0] || !cmd)
 		return ;
 	path = get_cmd_path(cmd[0], shell);
@@ -99,7 +101,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	else
 	{
 		waitpid(shell->pid1, &status, 0);
-    	shell->exit_stat = WEXITSTATUS(status);
+		shell->exit_stat = WEXITSTATUS(status);
 	}
 	free(path);
 }

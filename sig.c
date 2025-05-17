@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/08 21:07:36 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:45:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	sig_handle(int sig)
 	rl_redisplay();
 }
 
-void	setup_sig()
+void	setup_sig(void)
 {
 	signal(SIGINT, sig_handle);
-	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+ slash
+	signal(SIGQUIT, SIG_IGN);
 }

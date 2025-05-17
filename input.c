@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 02:29:42 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:43:03 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,20 @@ int	input(char *str, t_token **tokens)
 		if (str[i] == '\'')
 		{
 			i = handle_single_q(tokens, str, i);
-			if(i < 0)
-				break;
+			if (i < 0)
+				break ;
 		}
 		else if (is_meta(str[i]) || str[i] == '"')
 		{
 			i = make_tok(tokens, str, i);
-			if(i < 0)
-				break;
+			if (i < 0)
+				break ;
 		}
-		else if (str[i] == '\0')
-			break;
 		else
 		{
 			start = i;
-			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"' && str[i] != '\'' && str[i] != '\0')
+			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
+				&& str[i] != '\'' && str[i] != '\0')
 				i++;
 			word = ft_substr(str, start, i - start);
 			add_token(tokens, word, 0);
@@ -74,7 +73,7 @@ void	add_token(t_token **head, char *word, int literal)
 {
 	t_token	*new;
 	t_token	*tmp;
-	
+
 	new = new_token(word);
 	if (!new)
 		return ;
@@ -87,9 +86,9 @@ void	add_token(t_token **head, char *word, int literal)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	if(literal)
+	if (literal)
 		new->literal = true;
-	return;
+	return ;
 }
 
 int	make_tok(t_token **tokens, char *str, int i)
@@ -98,7 +97,6 @@ int	make_tok(t_token **tokens, char *str, int i)
 	char	*word;
 
 	start = i;
-	
 	if (str[i] == '"')
 	{
 		start = ++i;
@@ -123,7 +121,7 @@ int	handle_single_q(t_token **tokens, char *str, int i)
 {
 	int		start;
 	char	*word;
-	
+
 	start = ++i;
 	while (str[i] && str[i] != '\'')
 		i++;

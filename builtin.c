@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 02:25:10 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:37:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_echo(char **cmd, t_shell *shell)
 
 	i = 1;
 	n_option = 0;
-	
 	while (cmd[i] && ft_strcmp(cmd[i], "-n") == 0)
 	{
 		n_option = 1;
@@ -28,9 +27,10 @@ int	ft_echo(char **cmd, t_shell *shell)
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], 1);
-		if(cmd[i + 1] && cmd[i][0] != '\'' )
+		if (cmd[i + 1] && cmd[i][0] != '\'')
 		{
-			if (cmd[i + 1][0] != '\'' && cmd[i + 1][0] != '\"' && cmd[i][0] != '\"')
+			if (cmd[i + 1][0] != '\'' && cmd[i + 1][0] != '\"'
+				&& cmd[i][0] != '\"')
 				write(1, " ", 1);
 		}
 		i++;
@@ -44,9 +44,9 @@ void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
 	char	**envp;
-	
+
 	envp = shell->env_var;
-	if(size_cmd_arg(cmd) > 2)
+	if (size_cmd_arg(cmd) > 2)
 		return ;
 	if (!cmd[1])
 		path = get_cmd_path(cmd[0], shell);
@@ -122,15 +122,4 @@ void	builtin_unset(char **cmd, t_shell *shell)
 		}
 		i++;
 	}
-}
-
-void ft_exit(char **cmd, t_shell *shell)
-{
-	if(size_cmd_arg(cmd) > 1)
-	{
-		printf("too many args\n");
-		return;
-	}
-	else 
-		shell->exit = 1;
 }

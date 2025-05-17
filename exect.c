@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 02:22:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:40:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ int	is_valid_directory(char *path)
 
 char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
-	char 	*pos;
-	char	*expanded;
+	char	*pos;
+	char	*exp;
 
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
@@ -111,9 +111,10 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
 	{
 		pos = ft_strchr(tokens->com, '$');
-		expanded = handle_dollar(ft_strchr(tokens->com, '$'), shell);
-		if (expanded)
-			return (ft_strjoin(strndup(tokens->com, pos - tokens->com), expanded));	
+		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
+		if (exp)
+			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
+					exp));
 	}
-	return cmd;
+	return (cmd);
 }

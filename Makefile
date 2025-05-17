@@ -8,7 +8,7 @@ SOURCES = main.c init.c input.c utils.c exect.c process_cmd.c\
 		pipe/pipe_handle_001.c pipe/pipe_handle_002.c pipe/pipe_prepare.c\
 		split_tokens/split_tokens.c\
 		redirections/redir_utils.c	redirections/pipe_redir.c redirections/exc_pipes.c \
-		redirections/redir.c redirections/parse_handle.c 
+		redirections/redir.c redirections/parse_handle.c counters.c
 
 
 OBJECTS = $(SOURCES:.c=.o)

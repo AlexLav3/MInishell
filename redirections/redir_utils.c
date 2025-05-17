@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:55:44 by fnagy             #+#    #+#             */
-/*   Updated: 2025/05/17 06:48:44 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:48:05 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@ int	is_redir(const char *s)
 {
 	return (ft_strcmp(s, "<") == 0 || ft_strcmp(s, ">") == 0 || \
 	ft_strcmp(s, ">>") == 0);
-}
-
-int	count_args(t_token *tokens)
-{
-	int	count;
-
-	count = 0;
-	while (tokens)
-	{
-		if (!is_redir(tokens->com))
-			count++;
-		else if (tokens->next)
-			tokens = tokens->next;
-		tokens = tokens->next;
-	}
-	return (count);
 }
 
 int	token_has_redir(t_token *tokens)

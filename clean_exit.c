@@ -6,13 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/16 03:25:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:47:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-// to deaclocate nodes (well, tokens)
 void	deallocate(t_token **root)
 {
 	t_token	*curr;
@@ -39,14 +38,13 @@ void	close_free(t_token *tokens, t_shell *shell)
 	free(shell->pwd);
 }
 
-// bool	check_for_exit(char *command) //wrong!! 
-// {
-// 	printf("%d\n",ft_strcmp(command, "exit"));
-// 	if (ft_strcmp(command, "exit") >= 0)
-// 	{
-// 		free(command);
-// 		return (true);
-// 	}
-// 	return (false);
-// }
-
+void	ft_exit(char **cmd, t_shell *shell)
+{
+	if (size_cmd_arg(cmd) > 1)
+	{
+		printf("too many args\n");
+		return ;
+	}
+	else
+		shell->exit = 1;
+}
