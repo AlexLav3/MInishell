@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:07:11 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/01 15:34:35 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 06:48:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ void	handle_last_redir_child(t_shell *shell, t_shell *px, char *cmd)
 
 void	strip_redirection_tokens(t_token **tokens)
 {
-	t_token	*tmp = *tokens;
-	t_token	*prev = NULL;
+	t_token	*tmp;
+	t_token	*prev;
 	t_token	*next;
 
+	tmp = *tokens;
+	prev = NULL;
 	while (tmp)
 	{
 		if (is_redir(tmp->com) && tmp->next)
@@ -57,10 +59,6 @@ void	strip_redirection_tokens(t_token **tokens)
 				prev->next = next;
 			else
 				*tokens = next;
-			free(tmp->next->com);
-			free(tmp->next);
-			free(tmp->com);
-			free(tmp);
 			tmp = next;
 		}
 		else
@@ -78,39 +76,12 @@ void	init_pipex(t_shell *px, t_shell *shell)
 	px->pipe_fd[1] = -1;
 }
 
-void	execute_piped_commands(t_shell *px, char **cmds, int cmd_count, t_shell *shell)
-{
-	int	i;
-
-	i = -1;
-	while (++i < cmd_count)
-	{
-		if (i < cmd_count - 1 && pipe(px->pipe_fd) == -1)
-			pipex_error("pipe failed");
-		px->pid = fork();
-		if (px->pid == -1)
-			pipex_error("fork failed");
-		if (px->pid == 0)
-		{
-			if (i == 0)
-				handle_first_redir_child(shell, px, cmds[i]);
-			else if (i == cmd_count - 1)
-				handle_last_redir_child(shell, px, cmds[i]);
-			else
-				middle_child_process(px, cmds[i]);
-			exit(0);
-		}
-		fd_handle(i, cmd_count, px);
-	}
-	close_pipes_and_wait(px);
-}
-
 void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 {
 	t_shell	px;
 	char	**cmds;
 	int		cmd_count;
-	char 	**args;
+	char	**args;
 
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);
