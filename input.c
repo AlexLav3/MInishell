@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/16 03:10:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 02:29:42 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,17 @@ int	input(char *str, t_token **tokens)
 		while (str[i] == ' ')
 			i++;
 		if (str[i] == '\'')
+		{
 			i = handle_single_q(tokens, str, i);
+			if(i < 0)
+				break;
+		}
 		else if (is_meta(str[i]) || str[i] == '"')
+		{
 			i = make_tok(tokens, str, i);
+			if(i < 0)
+				break;
+		}
 		else if (str[i] == '\0')
 			break;
 		else
@@ -51,7 +59,6 @@ t_token	*new_token(char *word)
 	if (!tokens)
 		return (NULL);
 	tokens->com = ft_strdup(word);
-	printf("tokens com: %s\n", tokens->com);
 	tokens->literal = false;
 	if (!tokens->com)
 	{
@@ -91,32 +98,25 @@ int	make_tok(t_token **tokens, char *str, int i)
 	char	*word;
 
 	start = i;
-	if (is_meta(str[i]))
-	{
-		while (str[i] && is_meta(str[i]))
-			i++;
-	}
-	else if (str[i] == '"')
+	
+	if (str[i] == '"')
 	{
 		start = ++i;
 		while (str[i] && str[i] != '"')
 			i++;
 		if (str[i] == '\0')
-			return (printf("quote missing\n"), i);
+			return (printf("double quote missing\n"), -1);
 		word = ft_substr(str, start, i - start);
-		if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
-		{
-			char *cleaned = ft_substr(word, 1, ft_strlen(word) - 2);
-			add_token(tokens, cleaned, 0);
-		}
-		else
-			add_token(tokens, word, 0);
-		i++;
-		return (i);
+		add_token(tokens, word, 0);
 	}
-	word = ft_substr(str, start, i - start);
-	add_token(tokens, word, 0);
-	return (i);
+	else if (is_meta(str[i]))
+	{
+		while (str[i] && is_meta(str[i]))
+			i++;
+		word = ft_substr(str, start, i - start);
+		add_token(tokens, word, 0);
+	}
+	return (++i);
 }
 
 int	handle_single_q(t_token **tokens, char *str, int i)
@@ -128,7 +128,7 @@ int	handle_single_q(t_token **tokens, char *str, int i)
 	while (str[i] && str[i] != '\'')
 		i++;
 	if (str[i] == '\0')
-		return (printf("quote missing\n"), 0);
+		return (printf("single quote missing\n"), -1);
 	word = ft_substr(str, start, i - start);
 	add_token(tokens, word, 1);
 	i++;

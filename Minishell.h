@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/16 03:23:40 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 01:48:07 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,6 @@ int					size_cmd_arg(char **cmd);
 void				print_list(t_token *tokens);
 
 // test if all is good
-char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
+char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 
 #endif

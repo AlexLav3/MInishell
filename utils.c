@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:40:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 01:56:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_meta(char c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&' || c == ';');
+	return (c == '|' || c == '<' || c == '>' || c == ';');
 }
 
 int	is_pipe(char c)
@@ -38,7 +38,6 @@ void	free_array(char **arr)
 
 	if (!arr)
 		return ;
-	//printf("I am here\n");
 	i = 0;
 	while (arr[i])
 	{
@@ -82,7 +81,7 @@ int	size_args(t_token *tokens)
 	return (count);
 }
 
-int size_cmd_arg(char **cmd)
+int	size_cmd_arg(char **cmd)
 {
 	int	i;
 
