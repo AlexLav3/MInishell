@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 12:04:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 21:17:59 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,9 @@ int	make_tok(t_token **tokens, char *str, int i)
 			i++;
 		if (str[i] == '\0')
 			return (printf("double quote missing\n"), -1);
-		if(i > start)
-		{		
-			i++;
-			word = ft_substr(str, start, i - start);
-			add_token(tokens, word, 0);
-		}
+		i++;
+		word = ft_substr(str, start, i - start);
+		add_token(tokens, word, 0);
 		return (++i);
 	}
 	else if (is_meta(str[i]))
@@ -81,13 +78,9 @@ int	handle_single_q(t_token **tokens, char *str, int i)
 		i++;
 	if (str[i] == '\0')
 		return (printf("single quote missing\n"), -1);
-	if(i > start)
-	{
-		word = ft_substr(str, start, i - start);		
-		if(word)
-			add_token(tokens, word, 1);
-		printf("word: %s\n", word);
-	}
+	word = ft_substr(str, start, i - start);
+	add_token(tokens, word, 1);
+	printf("word: %s\n", word);
 	i++;
 	return (i);
 }
