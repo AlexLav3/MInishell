@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/01 14:06:04 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/17 07:58:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-// to deaclocate nodes (well, tokens)
 void	deallocate(t_token **root)
 {
 	t_token	*curr;
@@ -32,6 +31,22 @@ void	deallocate(t_token **root)
 	*root = NULL;
 }
 
+void	free_array(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	arr = NULL;
+}
+
 void	close_free(t_token *tokens, t_shell *shell)
 {
 	deallocate(&tokens);
@@ -39,12 +54,13 @@ void	close_free(t_token *tokens, t_shell *shell)
 	free(shell->pwd);
 }
 
-bool	check_for_exit(char *command)
+void	ft_exit(char **cmd, t_shell *shell)
 {
-	if (ft_strcmp(command, "exit") == 0)
+	if (size_cmd_arg(cmd) > 1)
 	{
-		free(command);
-		return (true);
+		printf("too many args\n");
+		return ;
 	}
-	return (false);
+	else
+		shell->exit = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:16:27 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:37:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_echo(char **cmd, t_shell *shell)
 
 	i = 1;
 	n_option = 0;
-	shell->exit_stat = 0;
 	while (cmd[i] && ft_strcmp(cmd[i], "-n") == 0)
 	{
 		n_option = 1;
@@ -28,18 +27,16 @@ int	ft_echo(char **cmd, t_shell *shell)
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], 1);
-		if (cmd[i + 1])
+		if (cmd[i + 1] && cmd[i][0] != '\'')
 		{
-			if (write(1, " ", 1) == -1)
-				shell->exit_stat = 1;
+			if (cmd[i + 1][0] != '\'' && cmd[i + 1][0] != '\"'
+				&& cmd[i][0] != '\"')
+				write(1, " ", 1);
 		}
 		i++;
 	}
 	if (n_option || cmd[i] == NULL)
-	{
-		if (write(1, "\n", 1) == -1)
-			shell->exit_stat = 1;
-	}
+		write(1, "\n", 1);
 	return (i);
 }
 
@@ -47,46 +44,18 @@ void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
 	char	**envp;
-	int		i;
 
-	i = 0;
 	envp = shell->env_var;
-	while (cmd[i])
-		i++;
-	if (i > 2)
-	{
-		printf("invalid directory\n");
+	if (size_cmd_arg(cmd) > 2)
 		return ;
-	}
 	if (!cmd[1])
-	{
-		while (*envp)
-		{
-			if (ft_strncmp(*envp, "HOME=", 5) == 0)
-			{
-				path = *envp + 5;
-				break ;
-			}
-			envp++;
-		}
-	}
+		path = get_cmd_path(cmd[0], shell);
 	else
 		path = cmd[1];
-	if (!path)
-		return ;
-	if (!is_valid_directory(path))
+	if (!path || !is_valid_directory(path) || chdir(path) != 0)
 	{
 		shell->exit_stat = 1;
 		return ;
-	}
-	if (is_valid_directory(path))
-	{
-		if (chdir(path) != 0)
-		{
-			perror("cd");
-			shell->exit_stat = 1;
-			return ;
-		}
 	}
 	else
 		shell->pwd = set_pwd(shell);
@@ -95,17 +64,12 @@ void	builtin_cd(char **cmd, t_shell *shell)
 
 void	builtin_pwd(char **cmd, t_shell *shell)
 {
-	if (!shell->pwd)
+	if (!shell->pwd || !is_valid_directory(shell->pwd))
 	{
 		shell->exit_stat = 128;
 		return ;
 	}
-	if(!is_valid_directory(shell->pwd))
-	{
-		shell->exit_stat = 1;
-		return ;
-	}
-	else 
+	else
 		shell->exit_stat = 0;
 	printf("%s\n", shell->pwd);
 }

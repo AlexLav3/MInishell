@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 19:50:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:02:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# define IN_FILE 1
+# define OUT_FILE 2
 
 typedef struct s_token
 {
@@ -48,6 +51,12 @@ typedef struct s_shell
 	int				redir_in;
 	int				redir_out;
 }					t_shell;
+
+int					simple_word(t_token **tokens, char *str, int i);
+
+void				heredoc_do(t_token *tokens, t_shell *shell,
+						char *delimiter);
+void				readirs(int dir, t_shell *shell, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
@@ -95,6 +104,7 @@ void				execute_cmd(char *cmd, t_shell *px);
 char				*handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
+int					handle_redirection_token(t_token *tokens, t_shell *shell);
 int					is_redir(const char *s);
 int					count_args(t_token *tokens);
 int					token_has_redir(t_token *tokens);
@@ -123,6 +133,7 @@ void				builtin_pwd(char **cmd, t_shell *shell);
 void				ft_export(char **cmd, t_shell *shell);
 void				builtin_unset(char **cmd, t_shell *shell);
 int					ft_echo(char **cmd, t_shell *shell);
+void				ft_exit(char **cmd, t_shell *shell);
 
 //builtin utils
 int					is_valid_directory(char *path);
@@ -142,8 +153,6 @@ void				setup_sig(void);
 void				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
 void				deallocate(t_token **root);
-bool				check_for_exit(char *command);
-void				ft_exit(t_shell *shell);
 
 //for list tokens
 t_token				*new_token(char *word);
@@ -156,6 +165,7 @@ int					size_args(t_token *tokens);
 int					make_tok(t_token **tokens, char *str, int i);
 int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
+char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 
 //testing
 void				print_list(t_token *tokens);

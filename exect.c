@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:11:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:03:44 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 char	**make_args(t_token *tokens, t_shell *shell)
 {
 	char	**cmd;
+	char	*pos;
 	int		i;
+	char	*expanded;
 
 	i = 0;
 	cmd = malloc(sizeof(char *) * (size_args(tokens) + 1));
@@ -27,15 +29,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	{
 		if (tokens->com && tokens->com[0] != '\0')
 		{
-			cmd[i] = ft_strdup(tokens->com);
-			if (!cmd[i])
-			{
-				while (i > 0)
-					free(cmd[--i]);
-				return (free(cmd), NULL);
-			}
-			if (!tokens->literal && ft_strchr(tokens->com, '$'))
-				cmd[i] = handle_dollar(cmd[i], shell);
+			cmd[i] = toks_to_args(tokens, *cmd, shell);
 			i++;
 		}
 		tokens = tokens->next;
@@ -62,6 +56,8 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 		return (ft_echo(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "$?") == 0)
 		return (printf("%d\n", shell->exit_stat), true);
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		return (ft_exit(cmd, shell), true);
 	return (false);
 }
 
@@ -70,17 +66,22 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	int		idx;
 	char	*env;
 	char	*value;
+	int		i;
 
-	//printf("cmd: %s\n", cmd);
-	if (!cmd || cmd[1] == '?') // check for $?
+	i = 0;
+	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
-	idx = search_env(shell, cmd + 1); // shift to skip '$'
+	while (cmd[i])
+	{
+		if (cmd[i] == '$')
+			break ;
+		i++;
+	}
+	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{
 		env = shell->env_var[idx];
-		//printf("env: %s\n", env);
 		value = ft_strchr(env, '=');
-		// printf("value: %s\n", value);
 		if (!value)
 			return (ft_strdup(""));
 		return (ft_strdup(value + 1));
@@ -96,4 +97,23 @@ int	is_valid_directory(char *path)
 	if (access(path, X_OK) == -1)
 		return (perror("cd: Permission denied"), 0);
 	return (1);
+}
+
+char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
+{
+	char	*pos;
+	char	*exp;
+
+	cmd = ft_strdup(tokens->com);
+	if (!cmd)
+		return (free(cmd), NULL);
+	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
+	{
+		pos = ft_strchr(tokens->com, '$');
+		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
+		if (exp)
+			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
+					exp));
+	}
+	return (cmd);
 }

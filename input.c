@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/09 20:02:04 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:02:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,27 @@ int	input(char *str, t_token **tokens)
 	int		i;
 	char	*word;
 	int		word_len;
-	int		start;
 
 	i = 0;
-	start = 0;
 	while (str[i])
 	{
-		if (str[i] == ' ')
+		while (str[i] == ' ')
 			i++;
 		if (str[i] == '\'')
+		{
 			i = handle_single_q(tokens, str, i);
-		if (is_meta(str[i]) || str[i] == '"')
+			if (i < 0)
+				break ;
+		}
+		else if (is_meta(str[i]) || str[i] == '"')
 		{
 			i = make_tok(tokens, str, i);
-			if (!i)
-				return (i);
+			if (i < 0)
+				break ;
 		}
 		else
-		{
-			start = i;
-			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
-				&& str[i] != '\'')
-				i++;
-			word = ft_substr(str, start, i - start);
-			add_token(tokens, word, 0);
-		}
+			i = simple_word(tokens, str, i);
 	}
-	//print_list(*tokens);
 	return (i);
 }
 
@@ -83,10 +77,9 @@ void	add_token(t_token **head, char *word, int literal)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	if(literal)
+	if (literal)
 		new->literal = true;
-	//printf("new->com, tokens->literal: %s %d\n", new->com, new->literal);
-	return;
+	return ;
 }
 
 int	make_tok(t_token **tokens, char *str, int i)
@@ -95,38 +88,36 @@ int	make_tok(t_token **tokens, char *str, int i)
 	char	*word;
 
 	start = i;
-	if (is_meta(str[i]))
-	{
-		while (str[i] && is_meta(str[i]))
-			i++;
-	}
-	else if (str[i] == '"')
+	if (str[i] == '"')
 	{
 		start = ++i;
 		while (str[i] && str[i] != '"')
 			i++;
 		if (str[i] == '\0')
-			return (printf("quote missing\n"), 0);
+			return (printf("double quote missing\n"), -1);
 		word = ft_substr(str, start, i - start);
 		add_token(tokens, word, 0);
-		i++;
-		return (i);
 	}
-	word = ft_substr(str, start, i - start);
-	add_token(tokens, word, 0);
-	return (i);
+	else if (is_meta(str[i]))
+	{
+		while (str[i] && is_meta(str[i]))
+			i++;
+		word = ft_substr(str, start, i - start);
+		add_token(tokens, word, 0);
+	}
+	return (++i);
 }
 
 int	handle_single_q(t_token **tokens, char *str, int i)
 {
 	int		start;
 	char	*word;
-	
+
 	start = ++i;
 	while (str[i] && str[i] != '\'')
 		i++;
 	if (str[i] == '\0')
-		return (printf("quote missing\n"), 0);
+		return (printf("single quote missing\n"), -1);
 	word = ft_substr(str, start, i - start);
 	add_token(tokens, word, 1);
 	i++;
