@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:40:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:03:44 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	{
 		if (tokens->com && tokens->com[0] != '\0')
 		{
-			printf("tokens com in tks to args: %s\n", tokens->com);
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
 			i++;
 		}

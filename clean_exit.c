@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:47:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 07:58:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void	deallocate(t_token **root)
 		free(token);
 	}
 	*root = NULL;
+}
+
+void	free_array(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	arr = NULL;
 }
 
 void	close_free(t_token *tokens, t_shell *shell)

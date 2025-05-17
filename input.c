@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:43:03 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:02:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ int	input(char *str, t_token **tokens)
 	int		i;
 	char	*word;
 	int		word_len;
-	int		start;
 
 	i = 0;
-	start = 0;
 	while (str[i])
 	{
 		while (str[i] == ' ')
@@ -38,14 +36,7 @@ int	input(char *str, t_token **tokens)
 				break ;
 		}
 		else
-		{
-			start = i;
-			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
-				&& str[i] != '\'' && str[i] != '\0')
-				i++;
-			word = ft_substr(str, start, i - start);
-			add_token(tokens, word, 0);
-		}
+			i = simple_word(tokens, str, i);
 	}
 	return (i);
 }

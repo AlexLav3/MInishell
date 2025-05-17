@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:47:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/17 08:04:57 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,6 @@ void	print_list(t_token *tokens)
 	}
 }
 
-void	free_array(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-	arr = NULL;
-}
-
 char	*join_path(char *dir, char *cmd)
 {
 	char	*tmp;
@@ -61,4 +45,18 @@ char	*join_path(char *dir, char *cmd)
 	if (!full_path)
 		return (NULL);
 	return (full_path);
+}
+
+int	simple_word(t_token **tokens, char *str, int i)
+{
+	char	*word;
+	int		start;
+
+	start = i;
+	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
+		&& str[i] != '\'' && str[i] != '\0')
+		i++;
+	word = ft_substr(str, start, i - start);
+	add_token(tokens, word, 0);
+	return (i);
 }
