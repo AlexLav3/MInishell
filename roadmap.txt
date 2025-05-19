@@ -68,7 +68,7 @@ other issues:
 --------------------18-05-26 notes ------------------------
 
 Memory leak: 
-Do we still have memory leak? It looked okay now when I have run valgrind. Can we delete notes above?
+Do we still have memory leak? It looked okay now when I have run valgrind. Can we delete notes above? no. we still have them
 
 HEREDOC:
 heredoc examples to check:
@@ -112,7 +112,7 @@ tokens com: -a
 tokens com: |
 tokens com: c
 tokens com: -l
-command not found: No such file or directory
+command not found: No such file or directory - not supposed to work 
 
 B is missing from bash
 prompt> grep "bash" << EOF | sort
@@ -123,7 +123,7 @@ tokens com: "
 tokens com: <<
 tokens com: EOF
 tokens com: |
-tokens com: sort
+tokens com: sort -leave quotes related issues aside for now
 
 HISTORY:
 Strange behaviour with the history.
