@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:55:44 by fnagy             #+#    #+#             */
-/*   Updated: 2025/05/17 07:48:05 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:23:26 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_redir(const char *s)
 {
 	return (ft_strcmp(s, "<") == 0 || ft_strcmp(s, ">") == 0 || \
-	ft_strcmp(s, ">>") == 0);
+	ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<<") == 0);
 }
 
 int	token_has_redir(t_token *tokens)
