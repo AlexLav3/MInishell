@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:40:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:02:52 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	take_comm(t_token **tokens, t_shell *shell)
 
 	while (!shell->exit)
 	{
+		signal(SIGINT, handle_sigint_prompt);
+		signal(SIGQUIT, SIG_IGN);
 		command = readline("prompt> ");
 		if (!command)
 		{

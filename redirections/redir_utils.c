@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 12:55:44 by fnagy             #+#    #+#             */
-/*   Updated: 2025/05/19 16:23:26 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:05:40 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	single_cmd_with_redir(char *command, t_token **tokens, t_shell *shell)
 	free_array(args);
 	reset_redirection(shell);
 }
+
 
 void	reset_redirection(t_shell *shell)
 {
