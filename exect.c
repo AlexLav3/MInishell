@@ -6,27 +6,16 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/20 12:14:46 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:24:04 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-void	execute_single_cmd(char **cmd, t_shell *shell)
+static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 {
-	char	*path;
-	int		status;
+	int	status;
 
-	status = 0;
-	if (!cmd[0] || !cmd)
-		return ;
-	path = get_cmd_path(cmd[0], shell);
-	if (!path)
-	{
-		perror("Command not found");
-		shell->exit_stat = 127;
-		return ;
-	}
 	shell->pid1 = fork();
 	if (shell->pid1 == -1)
 		perror("fork");
@@ -43,6 +32,22 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 		waitpid(shell->pid1, &status, 0);
 		shell->exit_stat = WEXITSTATUS(status);
 	}
+}
+
+void	execute_single_cmd(char **cmd, t_shell *shell)
+{
+	char	*path;
+
+	if (!cmd[0] || !cmd)
+		return ;
+	path = get_cmd_path(cmd[0], shell);
+	if (!path)
+	{
+		perror("Command not found");
+		shell->exit_stat = 127;
+		return ;
+	}
+	exec_fork_and_wait(path, cmd, shell);
 	free(path);
 }
 
