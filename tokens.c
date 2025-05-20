@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:48:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:15:24 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token	*new_token(char *word)
 	if (!tokens)
 		return (NULL);
 	tokens->com = ft_strdup(word);
-    printf("tokens com: %s\n", tokens->com);
+	printf("tokens com: %s\n", tokens->com);
 	tokens->literal = false;
 	if (!tokens->com)
 	{

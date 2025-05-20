@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/20 12:03:57 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:13:22 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,18 @@
 // 	signal(SIGQUIT, SIG_IGN);
 // }
 
-void setup_shell_signals(void)
+void	setup_shell_signals(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = handle_sigint_prompt;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-
 	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+
 }
 
-
-void handle_sigint_prompt(int sig)
+void	handle_sigint_prompt(int sig)
 {
 	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);
@@ -49,11 +47,10 @@ void handle_sigint_prompt(int sig)
 	rl_redisplay();
 }
 
-
 // heredoc
-void setup_heredoc_signals(void)
+void	setup_heredoc_signals(void)
 {
-	struct sigaction sa;
+	struct sigaction	sa;
 
 	sa.sa_handler = handle_sigint_heredoc;
 	sigemptyset(&sa.sa_mask);
@@ -61,7 +58,7 @@ void setup_heredoc_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-void handle_sigint_heredoc(int sig)
+void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	write(2, "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:41:21 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/20 12:05:14 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:10:23 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	heredoc_child_process(int write_fd, char *delimiter)
 {
-	char *line;
+	char	*line;
 
 	signal(SIGINT, handle_sigint_heredoc); // custom: just exit(130)
 	signal(SIGQUIT, SIG_IGN);
-
 	while (1)
 	{
 		line = readline("heredoc> ");
@@ -32,7 +31,6 @@ void	heredoc_child_process(int write_fd, char *delimiter)
 	close(write_fd);
 	exit(0);
 }
-
 
 static int	init_heredoc_pipe(int pipe_fd[2])
 {

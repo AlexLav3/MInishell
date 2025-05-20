@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/20 12:02:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:14:08 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
-
 
 # define IN_FILE 1
 # define OUT_FILE 2
@@ -128,7 +127,7 @@ void				execute_piped_commands(t_shell *px, char **cmds,
 						int cmd_count, t_shell *shell);
 
 void				heredoc_child_process(int write_fd, char *delimiter);
-void 				setup_shell_signals(void);
+void				setup_shell_signals(void);
 void				handle_sigint_prompt(int sig);
 void				setup_heredoc_signals(void);
 void				handle_sigint_heredoc(int sig);
