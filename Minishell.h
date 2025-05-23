@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/23 20:41:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:45:01 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	char			**env_var;
+	int				var_len;
 	int				exit_stat;
 	char			*pwd;
 	pid_t			pid1;

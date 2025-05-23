@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/23 21:23:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:47:10 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char	*value;
 	int		i;
-	int		var_len;
 
-	var_len = 0;
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
@@ -75,9 +73,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		value = ft_strchr(env, '=');
 		if (!value)
 			return (ft_strdup(""));
-		while (cmd[1 + var_len] && cmd[1 + var_len] != '\'')
-			var_len++;
-		return (ft_strjoin(ft_strdup(value + 1), ft_strdup(cmd + 1 + var_len)));
+		return (ft_strjoin(ft_strdup(value + 1), ft_strdup(cmd + 1 + shell->var_len)));
 	}
 	else
 		return (ft_strdup(""));
