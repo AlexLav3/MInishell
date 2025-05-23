@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:26:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:33:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
 
 # define IN_FILE 1
 # define OUT_FILE 2
@@ -30,7 +30,7 @@
 typedef struct s_token
 {
 	char			*com;
-	char 			*builder;
+	char			*builder;
 	struct s_token	*next;
 	bool			literal;
 }					t_token;

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:26:05 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:33:23 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	add_token(t_token **head, char *word, int literal)
 {
 	t_token	*new;
 	t_token	*tmp;
-	
+
 	new = new_token(word);
 	if (!new)
 		return ;

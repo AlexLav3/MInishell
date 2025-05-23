@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:20:34 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:33:37 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	make_tok(t_token **tokens, char *str, int i)
 	int		start;
 	char	*chunk;
 	char	*builder;
-	int		literal_only = 0;
+	int		literal_only;
 
+	literal_only = 0;
 	builder = ft_strdup("");
 	start = i;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
@@ -94,13 +95,13 @@ int	make_tok(t_token **tokens, char *str, int i)
 //	TO RE-DO WITH NEW IMPLEMENTATION
 // int	handle_single_q(t_token **tokens, char *str, int i)
 // {
-// 
+//
 // 	return (i);
 // }
 
 // int	simple_word(t_token **tokens, char *str, int i)
 // {
-// 
+//
 // 	return (i);
 // }
 
