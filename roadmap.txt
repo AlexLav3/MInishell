@@ -70,7 +70,6 @@ other issues:
 Memory leak: 
 Do we still have memory leak? It looked okay now when I have run valgrind. Can we delete notes above?
 - no. we still have them
-update: I do not see leak, pls let me know how you can replicate it. thanks
 
 HEREDOC:
 heredoc examples to check:
@@ -127,6 +126,3 @@ tokens com: EOF
 tokens com: |
 tokens com: sort -leave quotes related issues aside for now
 
------------------------------------------------------------
-
-question of the display of ^C when we press ctrl+c. Terminal specific or code related.
