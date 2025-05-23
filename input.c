@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/23 20:44:58 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:50:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,38 +92,16 @@ int	make_tok(t_token **tokens, char *str, int i)
 	return (i);
 }
 
-//	TO RE-DO CORRECTLY
+//	TO RE-DO WITH NEW IMPLEMENTATION
 // int	handle_single_q(t_token **tokens, char *str, int i)
 // {
-// 	int		start;
-// 	char	*chunk;
-
-// 	start = i;
-// 	if (str[i] == '\'')
-// 	{
-// 		start = ++i;
-// 		while (str[i] && str[i] != '\'')
-// 			i++;
-// 		if (!str[i])
-// 			return (printf("Unclosed single quote\n"), -1);
-// 		chunk = ft_substr(str, start, i - start);
-// 		builder = join_and_free(builder, chunk);
-// 		i++;
-// 	}
+// 
 // 	return (i);
 // }
 
 // int	simple_word(t_token **tokens, char *str, int i)
 // {
-// 	char	*word;
-// 	int		start;
-
-// 	start = i;
-// 	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
-// 		&& str[i] != '\'' && str[i] != '\0')
-// 		i++;
-// 	word = ft_substr(str, start, i - start);
-// 	add_token(tokens, word, 0);
+// 
 // 	return (i);
 // }
 
