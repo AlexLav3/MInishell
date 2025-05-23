@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:48:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:20:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_token	*new_token(char *word)
 	if (!tokens)
 		return (NULL);
 	tokens->com = ft_strdup(word);
-    printf("tokens com: %s\n", tokens->com);
 	tokens->literal = false;
 	if (!tokens->com)
 	{
@@ -36,7 +35,7 @@ void	add_token(t_token **head, char *word, int literal)
 {
 	t_token	*new;
 	t_token	*tmp;
-
+	
 	new = new_token(word);
 	if (!new)
 		return ;

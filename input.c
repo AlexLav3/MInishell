@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/23 21:50:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/24 00:20:34 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	make_tok(t_token **tokens, char *str, int i)
 	int		start;
 	char	*chunk;
 	char	*builder;
-	int		literal_only = 1;
+	int		literal_only = 0;
 
 	builder = ft_strdup("");
 	start = i;
@@ -56,6 +56,7 @@ int	make_tok(t_token **tokens, char *str, int i)
 	{
 		if (str[i] == '\'')
 		{
+			literal_only = 1;
 			start = ++i;
 			while (str[i] && str[i] != '\'')
 				i++;
@@ -67,7 +68,6 @@ int	make_tok(t_token **tokens, char *str, int i)
 		}
 		else if (str[i] == '"')
 		{
-			literal_only = 0;
 			start = ++i;
 			while (str[i] && str[i] != '"')
 				i++;
@@ -79,7 +79,6 @@ int	make_tok(t_token **tokens, char *str, int i)
 		}
 		else
 		{
-			literal_only = 0;
 			start = i;
 			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
 				&& str[i] != '"')
