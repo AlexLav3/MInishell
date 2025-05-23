@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/20 12:14:08 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/24 00:26:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 typedef struct s_token
 {
 	char			*com;
+	char 			*builder;
 	struct s_token	*next;
 	bool			literal;
 }					t_token;
@@ -37,6 +38,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	char			**env_var;
+	int				var_len;
 	int				exit_stat;
 	char			*pwd;
 	pid_t			pid1;
@@ -53,6 +55,7 @@ typedef struct s_shell
 	int				redir_out;
 }					t_shell;
 
+char				*join_and_free(char *s1, char *s2);
 int					simple_word(t_token **tokens, char *str, int i);
 
 void				heredoc_do(t_shell *shell, char *delimiter);
