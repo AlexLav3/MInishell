@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:43:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:16:09 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_echo(char **cmd, t_shell *shell)
 		ft_putstr_fd(cmd[i], 1);
 		if (cmd[i + 1] && (cmd[i][0] != '\'' && cmd[i][0] != '"'))
 		{
-			if (cmd[i + 1][0] != '\'' && cmd[i+ 1][0] != '"' )
+			if (cmd[i + 1][0] != '\'' && cmd[i + 1][0] != '"' )
 				write(1, " ", 1);
 		}
 		i++;

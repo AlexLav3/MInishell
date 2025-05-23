@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:43:20 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 06:51:05 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:10:42 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../Minishell.h>
+#include "../Minishell.h"
 
 void	fill_args_and_handle_redir(t_token *tokens, t_shell *shell, char **args)
 {
@@ -64,5 +64,46 @@ void	apply_redirection(t_shell *shell)
 			exit(EXIT_FAILURE);
 		}
 		close(shell->redir_out);
+	}
+}
+
+int	handle_redirection_token(t_token *tokens, t_shell *shell)
+{
+	char	*delimiter;
+
+	if (ft_strcmp(tokens->com, "<") == 0 && tokens->next)
+		return (readirs(1, shell, tokens->next->com), 1);
+	else if (ft_strcmp(tokens->com, ">") == 0 && tokens->next)
+		return (readirs(2, shell, tokens->next->com), 1);
+	else if (ft_strcmp(tokens->com, ">>") == 0 && tokens->next)
+	{
+		shell->outfile = ft_strtrim(tokens->next->com, " \n\t");
+		shell->redir_out = open(shell->outfile, O_WRONLY | O_CREAT | O_APPEND,
+				0644);
+		if (shell->redir_out < 0)
+			perror("redir: ");
+		return (1);
+	}
+	else if (ft_strcmp(tokens->com, "<<") == 0 && tokens->next->com)
+		return (heredoc_do(shell, tokens->next->com), 1);
+	return (0);
+}
+
+void	readirs(int dir, t_shell *shell, char *com)
+{
+	if (dir == IN_FILE)
+	{
+		shell->infile = ft_strtrim(com, " \n\t");
+		shell->redir_in = open(shell->infile, O_RDONLY);
+		if (shell->redir_in < 0)
+			perror("redir: ");
+	}
+	else if (dir == OUT_FILE)
+	{
+		shell->outfile = ft_strtrim(com, " \n\t");
+		shell->redir_out = open(shell->outfile, O_WRONLY | O_CREAT | O_TRUNC,
+				0644);
+		if (shell->redir_out < 0)
+			perror("redir: ");
 	}
 }
