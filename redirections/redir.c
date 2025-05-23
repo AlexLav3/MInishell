@@ -3,77 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:41:21 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:29:47 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:10:23 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../Minishell.h>
+#include "../Minishell.h"
 
-int	handle_redirection_token(t_token *tokens, t_shell *shell)
+void	heredoc_child_process(int write_fd, char *delimiter)
 {
-	char	*delimiter;
-
-	if (ft_strcmp(tokens->com, "<") == 0 && tokens->next)
-		return (readirs(1, shell, tokens->next->com), 1);
-	else if (ft_strcmp(tokens->com, ">") == 0 && tokens->next)
-		return (readirs(2, shell, tokens->next->com), 1);
-	else if (ft_strcmp(tokens->com, ">>") == 0 && tokens->next)
-	{
-		shell->outfile = ft_strtrim(tokens->next->com, " \n\t");
-		shell->redir_out = open(shell->outfile, O_WRONLY | O_CREAT | O_APPEND,
-				0644);
-		if (shell->redir_out < 0)
-			perror("redir: ");
-		return (1);
-	}
-	else if (ft_strcmp(tokens->com, "<<") == 0 && tokens->next->com)
-		return (heredoc_do(tokens, shell, tokens->next->com), 1);
-	return (0);
-}
-
-void	heredoc_do(t_token *tokens, t_shell *shell, char *delimiter)
-{
-	t_shell	px;
 	char	*line;
 
-	px.envp = shell->env_var;
-	px.pipe_fd[1] = -1;
-	if (pipe(px.pipe_fd) == -1)
-	{
-		pipex_error("Error creating pipe");
-		return ;
-	}
+	signal(SIGINT, handle_sigint_heredoc); // custom: just exit(130)
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
 		if (!line || ft_strcmp(line, delimiter) == 0)
 			break ;
-		write(px.pipe_fd[1], line, ft_strlen(line));
-		write(px.pipe_fd[1], "\n", 1);
+		write(write_fd, line, ft_strlen(line));
+		write(write_fd, "\n", 1);
 		free(line);
 	}
-	close(px.pipe_fd[1]);
-	shell->redir_in = px.pipe_fd[0];
+	free(line); // Free NULL if !line if it breaks out from while
+	close(write_fd);
+	exit(0);
 }
 
-void	readirs(int dir, t_shell *shell, char *com)
+static int	init_heredoc_pipe(int pipe_fd[2])
 {
-	if (dir == IN_FILE)
+	if (pipe(pipe_fd) == -1)
 	{
-		shell->infile = ft_strtrim(com, " \n\t");
-		shell->redir_in = open(shell->infile, O_RDONLY);
-		if (shell->redir_in < 0)
-			perror("redir: ");
+		pipex_error("Error creating pipe");
+		return (-1);
 	}
-	else if (dir == OUT_FILE)
+	return (0);
+}
+
+static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
 	{
-		shell->outfile = ft_strtrim(com, " \n\t");
-		shell->redir_out = open(shell->outfile, O_WRONLY | O_CREAT | O_TRUNC,
-				0644);
-		if (shell->redir_out < 0)
-			perror("redir: ");
+		pipex_error("fork failed");
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		return (-1);
 	}
+	if (pid == 0)
+	{
+		close(pipe_fd[0]);
+		heredoc_child_process(pipe_fd[1], delimiter);
+	}
+	return (pid);
+}
+
+static void	handle_heredoc_parent(t_shell *shell, int pipe_fd[2], pid_t pid)
+{
+	int	status;
+
+	close(pipe_fd[1]);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		shell->exit_stat = 130;
+		close(pipe_fd[0]);
+		shell->redir_in = -1;
+	}
+	else
+		shell->redir_in = pipe_fd[0];
+}
+
+void	heredoc_do(t_shell *shell, char *delimiter)
+{
+	int		pipe_fd[2];
+	pid_t	pid;
+
+	if (init_heredoc_pipe(pipe_fd) == -1)
+		return ;
+	pid = create_heredoc_child(pipe_fd, delimiter);
+	if (pid == -1)
+		return ;
+	if (pid > 0)
+		handle_heredoc_parent(shell, pipe_fd, pid);
 }

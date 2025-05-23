@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exc_pipes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:38:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 06:51:01 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:05:40 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../Minishell.h>
+#include "../Minishell.h"
 
 void	execute_single_redir(char **cmd, t_shell *shell)
 {

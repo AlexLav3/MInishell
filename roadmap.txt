@@ -68,7 +68,8 @@ other issues:
 --------------------18-05-26 notes ------------------------
 
 Memory leak: 
-Do we still have memory leak? It looked okay now when I have run valgrind. Can we delete notes above? no. we still have them
+Do we still have memory leak? It looked okay now when I have run valgrind. Can we delete notes above?
+- no. we still have them
 
 HEREDOC:
 heredoc examples to check:
@@ -125,10 +126,3 @@ tokens com: EOF
 tokens com: |
 tokens com: sort -leave quotes related issues aside for now
 
-HISTORY:
-Strange behaviour with the history.
-If you go back with up arrow you will access the last commands, as you should.
-But if you delete anything from that command line it will automatically update it in history.
-
-
------------------------------------------------------------
