@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:59:48 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/23 21:23:21 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL )
+	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
 	{
 		pos = ft_strchr(tokens->com, '$');
 		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
@@ -62,16 +62,12 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char	*value;
 	int		i;
+	int		var_len;
 
+	var_len = 0;
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
-	while (cmd[i])
-	{
-		if (cmd[i] == '$')
-			break ;
-		i++;
-	}
 	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{
@@ -79,22 +75,10 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		value = ft_strchr(env, '=');
 		if (!value)
 			return (ft_strdup(""));
-		return (ft_strdup(value + 1));
+		while (cmd[1 + var_len] && cmd[1 + var_len] != '\'')
+			var_len++;
+		return (ft_strjoin(ft_strdup(value + 1), ft_strdup(cmd + 1 + var_len)));
 	}
 	else
 		return (ft_strdup(""));
-}
-
-int	simple_word(t_token **tokens, char *str, int i)
-{
-	char	*word;
-	int		start;
-
-	start = i;
-	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"'
-		&& str[i] != '\'' && str[i] != '\0')
-		i++;
-	word = ft_substr(str, start, i - start);
-	add_token(tokens, word, 0);
-	return (i);
 }

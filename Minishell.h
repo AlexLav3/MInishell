@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:02:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/23 20:41:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_shell
 	int				redir_out;
 }					t_shell;
 
+char				*join_and_free(char *s1, char *s2);
 int					simple_word(t_token **tokens, char *str, int i);
 
 void				heredoc_do(t_token *tokens, t_shell *shell,

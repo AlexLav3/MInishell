@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:43:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/23 20:45:53 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ int	ft_echo(char **cmd, t_shell *shell)
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], 1);
-		if (cmd[i + 1] && (cmd[i][0] != '\'' && cmd[i][0] != '"'))
-		{
-			if (cmd[i + 1][0] != '\'' && cmd[i+ 1][0] != '"' )
-				write(1, " ", 1);
-		}
+		if (cmd[i + 1])
+			write(1, " ", 1);
 		i++;
 	}
 	if (n_option || cmd[i] == NULL)
