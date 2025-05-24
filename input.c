@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:33:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/24 22:43:35 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	make_tok(t_token **tokens, char *str, int i)
 		else if (str[i] == '"')
 		{
 			start = ++i;
-			while (str[i] && str[i] != '"')
+			while (str[i] && str[i] != '"') && !is_meta(str[i])
 				i++;
 			if (!str[i])
 				return (printf("Unclosed double quote\n"), -1);
