@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/25 15:06:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/25 16:33:18 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
 	char	*exp;
-
+	char 	*res;
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
@@ -50,8 +50,11 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 		pos = ft_strchr(tokens->com, '$');
 		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
 		if (exp)
+		{
 			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
 					exp));
+		}
+			
 	}
 	return (cmd);
 }
@@ -88,6 +91,6 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 	}
 	else
-	return (ft_strdup(""));
+		return (ft_strdup(""));
 }
 
