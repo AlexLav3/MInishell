@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/16 03:39:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/25 20:20:01 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
-	t_token	*token;
+	t_shell		shell;
+	t_token		*token;
 
 	(void)argv;
 	token = NULL;
 	if (argc > 1)
 		return (printf("This program does not take any arguments\n"),
-			EXIT_FAILURE);
+				EXIT_FAILURE);
 	init_shell(&shell, envp);
 	setup_sig();
 	if (!shell.exit)

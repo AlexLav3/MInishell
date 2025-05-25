@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/25 16:33:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/25 21:28:35 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (tokens)
 	{
+		printf("tokens com: %s\n", tokens->com);
 		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
@@ -45,6 +46,8 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
+	printf("literal: %d\n", tokens->literal);
+	
 	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
 	{
 		pos = ft_strchr(tokens->com, '$');
@@ -71,6 +74,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
+	printf("cmd here: %s\n", cmd);
 	while(cmd[i])
 	{
 		if(cmd[i] == '$')

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:19:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/25 20:47:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,20 @@
 # define IN_FILE 1
 # define OUT_FILE 2
 
+# define SINGLE_Q 3
+# define DOUBLE_Q 4
+
+typedef struct token_b
+{
+	char			*builder;
+	char			*chunk;
+	int				literal;
+}					t_token_b;
+
 typedef struct s_token
 {
 	char			*com;
-	char 			*builder;
+	char			*builder;
 	struct s_token	*next;
 	bool			literal;
 }					t_token;
@@ -54,8 +64,14 @@ typedef struct s_shell
 	int				redir_out;
 }					t_shell;
 
+//token builder test
+
+int					handle_q(t_token_b **tks, char *str, int i);
+int					simple_word(t_token_b **tks, char *str, int i);
+int					handle_double_q(t_token_b **tks, char *str, int i);
+//
+
 char				*join_and_free(char *s1, char *s2);
-int					simple_word(t_token **tokens, char *str, int i);
 
 void				heredoc_do(t_token *tokens, t_shell *shell,
 						char *delimiter);

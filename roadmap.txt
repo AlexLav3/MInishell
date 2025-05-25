@@ -18,6 +18,9 @@ edge cases:
 	[echo ] -> [stuff] -> ["abcdef"] -> [""] (special tokens will have "" nodes instead of spaces) -> [$SHLVL] -> ['pizza']
 		-bash behaviour: stuffabcdef 2pizza
 		-minishell behaviour: stuff abcdef 2 pizza
+to fix:
+
+echo "$USER $USER"'hi'
 
 
 other issues:

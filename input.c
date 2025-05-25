@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:20:34 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/25 21:28:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,64 +45,65 @@ int	input(char *str, t_token **tokens)
 
 int	make_tok(t_token **tokens, char *str, int i)
 {
-	int		start;
-	char	*chunk;
-	char	*builder;
-	int		literal_only = 0;
+	char		*chunk;
+	char		*builder;
+	t_token_b	*tks;
 
-	builder = ft_strdup("");
-	start = i;
+	tks = malloc(sizeof(t_token_b));
+	tks->builder = ft_strdup("");
+	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' || str[i] == '"')
 		{
-			literal_only = 1;
-			start = ++i;
-			while (str[i] && str[i] != '\'')
-				i++;
-			if (!str[i])
-				return (printf("Unclosed single quote\n"), -1);
-			chunk = ft_substr(str, start, i - start);
-			builder = join_and_free(builder, chunk);
-			i++;
-		}
-		else if (str[i] == '"')
-		{
-			start = ++i;
-			while (str[i] && str[i] != '"')
-				i++;
-			if (!str[i])
-				return (printf("Unclosed double quote\n"), -1);
-			chunk = ft_substr(str, start, i - start);
-			builder = join_and_free(builder, chunk);
-			i++;
+			i = handle_q(&tks, str, i);
+			if (i < 0)
+				return (-1);
 		}
 		else
-		{
-			start = i;
-			while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
-				&& str[i] != '"')
-				i++;
-			chunk = ft_substr(str, start, i - start);
-			builder = join_and_free(builder, chunk);
-		}
+			i = simple_word(&tks, str, i);	
 	}
-	add_token(tokens, builder, literal_only);
+	add_token(tokens, tks->builder, tks->literal);
 	return (i);
 }
 
-//	TO RE-DO WITH NEW IMPLEMENTATION
-// int	handle_single_q(t_token **tokens, char *str, int i)
-// {
-// 
-// 	return (i);
-// }
+int	handle_q(t_token_b **tks, char *str, int i)
+{
+	int	start;
+	int tmp = i;
+	start = ++i;
+	if (str[tmp] == '\'')
+	{
+		(*tks)->literal = 1;
+		while (str[i] && str[i] != '\'')
+			i++;
+	}
+	else if (str[tmp] == '"')
+	{
+		while (str[i] && str[i] != '"')
+			i++;
+	}
+	if (!str[i])
+		return (printf("Unclosed quote\n"), -1);
+	(*tks)->chunk = ft_substr(str, start, i - start);
+	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	i++;
+	return (i);
+}
 
-// int	simple_word(t_token **tokens, char *str, int i)
-// {
-// 
-// 	return (i);
-// }
+int	simple_word(t_token_b **tks, char *str, int i)
+{
+	int	start;
+
+	start = i;
+	(*tks)->literal = 0;
+	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
+		&& str[i] != '"')
+		i++;
+	(*tks)->chunk = ft_substr(str, start, i - start);
+	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	return (i);
+}
 
 char	*join_and_free(char *s1, char *s2)
 {
