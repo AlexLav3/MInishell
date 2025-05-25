@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:23:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/25 12:37:07 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,18 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*env;
 	char	*value;
 	int		i;
-
+	int k = 0;
+	
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
+	printf("passing:%s\n", cmd);
+	while(cmd[i])
+	{
+		if(cmd[i] == '$')
+			break;
+		i++;
+	}
 	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{
@@ -73,7 +81,11 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		value = ft_strchr(env, '=');
 		if (!value)
 			return (ft_strdup(""));
-		return (ft_strjoin(ft_strdup(value + 1), ft_strdup(cmd + 1 + shell->var_len)));
+		char *suf = ft_strdup(cmd + (i + 1) + shell->var_len);
+		printf("suf:%s\n", suf);
+		if(ft_strchr(suf, '$') != NULL)
+			suf = handle_dollar(&suf[k], shell);
+		return (ft_strjoin(ft_strdup(value + 1), suf));
 	}
 	else
 		return (ft_strdup(""));
