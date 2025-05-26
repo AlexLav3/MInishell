@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 10:29:14 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/26 13:00:23 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	}
 	exec_fork_and_wait(path, cmd, shell);
 	free(path);
-}
+}git 
 
 bool	handle_builtin(char **cmd, t_shell *shell)
 {
