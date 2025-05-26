@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/25 20:47:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:22:28 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ int					handle_double_q(t_token_b **tks, char *str, int i);
 //
 
 char				*join_and_free(char *s1, char *s2);
-
-void				heredoc_do(t_token *tokens, t_shell *shell,
-						char *delimiter);
+void				heredoc_do(t_shell *shell, char *delimiter);
 void				readirs(int dir, t_shell *shell, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
@@ -144,6 +142,12 @@ void				strip_redirection_tokens(t_token **tokens);
 void				init_pipex(t_shell *px, t_shell *shell);
 void				execute_piped_commands(t_shell *px, char **cmds,
 						int cmd_count, t_shell *shell);
+
+void				heredoc_child_process(int write_fd, char *delimiter);
+void				setup_shell_signals(void);
+void				handle_sigint_prompt(int sig);
+void				setup_heredoc_signals(void);
+void				handle_sigint_heredoc(int sig);
 
 //builtin
 bool				handle_builtin(char **cmd, t_shell *shell);

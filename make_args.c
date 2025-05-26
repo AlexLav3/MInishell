@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/25 21:28:35 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/26 11:56:54 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,59 +42,59 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
 	char	*exp;
-	char 	*res;
+	char	*res;
+
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
 	printf("literal: %d\n", tokens->literal);
-	
 	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
 	{
 		pos = ft_strchr(tokens->com, '$');
 		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
 		if (exp)
-		{
 			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
 					exp));
-		}
-			
 	}
 	return (cmd);
 }
 
-char	*handle_dollar(char *cmd, t_shell *shell)
+static char	*expand_env(char *cmd, t_shell *shell, int i)
 {
 	int		idx;
-	char	*env;
 	char	*value;
-	char 	*suf;
-	int		i;
+	char	*suf;
 	char	*prefix;
-	
-	i = 0;
+	char	*tmp;
+
+	prefix = ft_substr(cmd, 0, i);
+	idx = search_env(shell, cmd + (i + 1));
+	if (idx < 0) // if it comes back with -1
+		return (free(prefix), ft_strdup(""));
+	value = ft_strchr(shell->env_var[idx], '=' );
+	if (!value)
+		return (free(prefix), ft_strdup(""));
+	value++;
+	suf = ft_strdup(cmd + (i + 1) + shell->var_len);
+	if (ft_strchr(suf, '$'))
+	{
+		tmp = handle_dollar(suf, shell); // free old suf and not lose pointer
+		free(suf);
+		suf = tmp;
+	}
+	return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
+}
+
+char	*handle_dollar(char *cmd, t_shell *shell)
+{
+	int	i;
+
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
 	printf("cmd here: %s\n", cmd);
-	while(cmd[i])
-	{
-		if(cmd[i] == '$')
-			break;
-		i++;
-	}
-	prefix = ft_substr(cmd, 0, i);
-	idx = search_env(shell, cmd + (i + 1));
-	if (idx >= 0)
-	{
-		env = shell->env_var[idx];
-		value = ft_strchr(env, '=') + 1;
-		if (!value)
-			return (ft_strdup(""));
-		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
-		if(ft_strchr(suf, '$') != NULL)
-			suf = handle_dollar(suf, shell);
-		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
-	}
-	else
-		return (ft_strdup(""));
+	i = 0;
+	while (cmd[i])
+		if (cmd[i++] == '$')
+			break ;
+	return (expand_env(cmd, shell, i - 1));
 }
-

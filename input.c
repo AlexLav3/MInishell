@@ -3,20 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/25 21:28:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/26 12:32:18 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+static int	handle_meta(char *str, t_token **tokens, int i)
+{
+	int start;
+	char *word;
+
+	start = i;
+	while (str[i] && is_meta(str[i]))
+		i++;
+	word = ft_substr(str, start, i - start);
+	if (!word)
+    	return (-1);
+	add_token(tokens, word, 0);
+	free(word);
+	return (i);
+}
+
 int	input(char *str, t_token **tokens)
 {
 	int		i;
-	char	*word;
-	int		start;
 
 	i = 0;
 	while (str[i])
@@ -26,13 +40,7 @@ int	input(char *str, t_token **tokens)
 		if (!str[i])
 			break ;
 		if (is_meta(str[i]))
-		{
-			start = i;
-			while (str[i] && is_meta(str[i]))
-				i++;
-			word = ft_substr(str, start, i - start);
-			add_token(tokens, word, 0);
-		}
+			i = handle_meta(str, tokens, i); //separated for norminette
 		else
 		{
 			i = make_tok(tokens, str, i);
@@ -50,7 +58,14 @@ int	make_tok(t_token **tokens, char *str, int i)
 	t_token_b	*tks;
 
 	tks = malloc(sizeof(t_token_b));
+	if (!tks) // secure malloc
+		return (-1);
 	tks->builder = ft_strdup("");
+	if (!tks->builder) // secure malloc
+	{
+		free(tks);
+		return (-1);
+	}
 	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
@@ -58,12 +73,16 @@ int	make_tok(t_token **tokens, char *str, int i)
 		{
 			i = handle_q(&tks, str, i);
 			if (i < 0)
+				free(tks->builder);
+				free(tks);
 				return (-1);
 		}
 		else
 			i = simple_word(&tks, str, i);	
 	}
 	add_token(tokens, tks->builder, tks->literal);
+	free(tks->builder);
+	free(tks);
 	return (i);
 }
 
