@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/23 20:45:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/27 11:50:02 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,51 +70,56 @@ void	builtin_pwd(char **cmd, t_shell *shell)
 	printf("%s\n", shell->pwd);
 }
 
+// updating function due to leaks
 void	ft_export(char **cmd, t_shell *shell)
 {
 	char	*var;
 	char	*name;
 	char	*equal;
-	char	*value;
 	int		i;
 
-	i = 0;
+	i = 1;
 	while (cmd[i])
 	{
 		equal = ft_strchr(cmd[i], '=');
 		if (equal)
 		{
 			var = ft_strdup(cmd[i]);
+			if (!var)
+                return;
 			*equal = '\0';
 			name = cmd[i];
 			if (search_env(shell, name) < 0)
 				add_env(shell, var);
 			else
 				update_env(shell, var, name);
-			break ;
+			free(var);
+			*equal = '=';			
 		}
 		i++;
 	}
-	if (!equal)
+	if (i == 1)
 		print_env(*shell);
 }
 
-void	builtin_unset(char **cmd, t_shell *shell)
+// shift the array
+void builtin_unset(char **cmd, t_shell *shell)
 {
-	char	*var;
-	int		pos;
-	int		i;
-
-	pos = 0;
-	i = 0;
+	int pos;
+	int i;
+	
+	i = 1;
 	while (cmd[i])
 	{
-		var = cmd[i];
-		pos = search_env(shell, var);
+		pos = search_env(shell, cmd[i]);
 		if (pos >= 0)
 		{
-			shell->env_var[pos] = NULL;
-			break ;
+			free(shell->env_var[pos]);
+			while (shell->env_var[pos]) // Shift left
+			{
+				shell->env_var[pos] = shell->env_var[pos + 1];
+				pos++;
+			}
 		}
 		i++;
 	}

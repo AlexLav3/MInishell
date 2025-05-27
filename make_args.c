@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 13:24:24 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 10:59:04 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	return (cmd);
 }
 
+static char *expand_variable(char *token_com, char *exp, char *cmd, char *pos)
+{
+	char *prefix;
+	char *result;
+	
+	prefix = strndup(token_com, pos - token_com);
+	if (!prefix)
+		return (free(exp), free(cmd), NULL);
+	result = ft_strjoin(prefix, exp);
+	free(prefix);
+	free(exp);
+	free(cmd);
+	return result;
+}
+
 char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
@@ -53,7 +68,7 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 		pos = ft_strchr(tokens->com, '$');
 		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
 		if (exp)
-			return (ft_strjoin(strndup(tokens->com, pos - tokens->com), exp));
+			return expand_variable(tokens->com, exp, cmd, pos); // created a sep function becuase we need to free cmd and exp after use. 
 	}
 	return (cmd);
 }
