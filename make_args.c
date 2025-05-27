@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 12:25:16 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 13:26:06 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (tokens)
 	{
-		printf("tokens com: %s\n", tokens->com);
+		// printf("tokens com: %s\n", tokens->com);
 		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
@@ -63,7 +63,7 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	printf("literal: %d\n", tokens->literal);
+	// printf("literal: %d\n", tokens->literal);
 	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
 	{
 		pos = ft_strchr(tokens->com, '$');
@@ -95,18 +95,18 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	int		idx;
 	char	*env;
 	char	*value;
-	char	*suf;
+	char 	*suf;
 	int		i;
 	char	*prefix;
-
+	
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
 	printf("cmd here: %s\n", cmd);
-	while (cmd[i])
+	while(cmd[i])
 	{
-		if (cmd[i] == '$')
-			break ;
+		if(cmd[i] == '$')
+			break;
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
@@ -118,7 +118,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		if (!value)
 			return (ft_strdup(""));
 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
-		if (ft_strchr(suf, '$') != NULL)
+		if(ft_strchr(suf, '$') != NULL)
 			suf = handle_dollar(suf, shell);
 		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 	}
