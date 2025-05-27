@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 11:18:39 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:11:01 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ void	add_env(t_shell *shell, char *var)
 	int		count;
 	char	**new_envp;
 	int		i;
-	// int		len;
 
 	i = 0;
 	count = 0;
 	while (shell->env_var[count])
 		count++;
-	// len = ft_strlen(var) + count;
-	new_envp = malloc(sizeof(char *) * (count + 2)); // new_envp = malloc(sizeof(char *) * (len) + 1);
+	// allocate space for count + 2 pointers
+	// (old env + new var + NULL terminator),
+	// not sum of string lengths.
+	new_envp = malloc(sizeof(char *) * (count + 2));
 	if (!new_envp)
 		return ;
 	while (i < count)
@@ -85,7 +86,6 @@ void	add_env(t_shell *shell, char *var)
 	new_envp[i++] = ft_strdup(var);
 	new_envp[i] = NULL;
 	i = 0;
-	// shell->env_var = copy_envp(new_envp);
 	while (shell->env_var[i])
 		free(shell->env_var[i++]);
 	free(shell->env_var);
@@ -122,7 +122,7 @@ void	update_env(t_shell *shell, char *var, char *name)
 {
 	int	pos;
 
-	pos = search_env(shell, name); // pos >= 0 handle
+	pos = search_env(shell, name);
 	if (pos >= 0)
 	{
 		free(shell->env_var[pos]);

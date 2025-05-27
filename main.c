@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 12:17:06 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:19:32 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	token = NULL;
 	if (argc > 1)
 		return (printf("This program does not take any arguments\n"),
-				EXIT_FAILURE);
+			EXIT_FAILURE);
 	init_shell(&shell, envp);
 	// setup_sig();
 	setup_shell_signals();

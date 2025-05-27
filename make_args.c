@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 10:59:04 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:25:16 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	return (cmd);
 }
 
-static char *expand_variable(char *token_com, char *exp, char *cmd, char *pos)
+//created a sep function becuase we need to free cmd and exp after use. 
+static char	*expand_variable(char *token_com, char *exp, char *cmd, char *pos)
 {
-	char *prefix;
-	char *result;
-	
+	char	*prefix;
+	char	*result;
+
 	prefix = strndup(token_com, pos - token_com);
 	if (!prefix)
 		return (free(exp), free(cmd), NULL);
@@ -50,7 +51,7 @@ static char *expand_variable(char *token_com, char *exp, char *cmd, char *pos)
 	free(prefix);
 	free(exp);
 	free(cmd);
-	return result;
+	return (result);
 }
 
 char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
@@ -68,11 +69,11 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 		pos = ft_strchr(tokens->com, '$');
 		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
 		if (exp)
-			return expand_variable(tokens->com, exp, cmd, pos); // created a sep function becuase we need to free cmd and exp after use. 
+			return (expand_variable(tokens->com, exp, cmd, pos));
 	}
 	return (cmd);
 }
-// still in progress part
+
 static char	*get_env_value(t_shell *shell, char *name)
 {
 	int		idx;
@@ -94,18 +95,18 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	int		idx;
 	char	*env;
 	char	*value;
-	char 	*suf;
+	char	*suf;
 	int		i;
 	char	*prefix;
-	
+
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
 	printf("cmd here: %s\n", cmd);
-	while(cmd[i])
+	while (cmd[i])
 	{
-		if(cmd[i] == '$')
-			break;
+		if (cmd[i] == '$')
+			break ;
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
@@ -117,7 +118,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		if (!value)
 			return (ft_strdup(""));
 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
-		if(ft_strchr(suf, '$') != NULL)
+		if (ft_strchr(suf, '$') != NULL)
 			suf = handle_dollar(suf, shell);
 		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 	}

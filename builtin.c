@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 11:50:02 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:03:43 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_export(char **cmd, t_shell *shell)
 		{
 			var = ft_strdup(cmd[i]);
 			if (!var)
-                return;
+				return ;
 			*equal = '\0';
 			name = cmd[i];
 			if (search_env(shell, name) < 0)
@@ -94,7 +94,7 @@ void	ft_export(char **cmd, t_shell *shell)
 			else
 				update_env(shell, var, name);
 			free(var);
-			*equal = '=';			
+			*equal = '=';
 		}
 		i++;
 	}
@@ -103,11 +103,11 @@ void	ft_export(char **cmd, t_shell *shell)
 }
 
 // shift the array
-void builtin_unset(char **cmd, t_shell *shell)
+void	builtin_unset(char **cmd, t_shell *shell)
 {
-	int pos;
-	int i;
-	
+	int	pos;
+	int	i;
+
 	i = 1;
 	while (cmd[i])
 	{

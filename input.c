@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 13:01:33 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:17:55 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 static int	handle_meta(char *str, t_token **tokens, int i)
 {
-	int start;
-	char *word;
+	int		start;
+	char	*word;
 
 	start = i;
 	while (str[i] && is_meta(str[i]))
 		i++;
 	word = ft_substr(str, start, i - start);
 	if (!word)
-    	return (-1);
+		return (-1);
 	add_token(tokens, word, 0);
 	free(word);
 	return (i);
@@ -73,12 +73,14 @@ int	make_tok(t_token **tokens, char *str, int i)
 		{
 			i = handle_q(&tks, str, i);
 			if (i < 0)
+			{
 				free(tks->builder);
 				free(tks);
 				return (-1);
+			}
 		}
 		else
-			i = simple_word(&tks, str, i);	
+			i = simple_word(&tks, str, i);
 	}
 	add_token(tokens, tks->builder, tks->literal);
 	free(tks->builder);
@@ -89,7 +91,9 @@ int	make_tok(t_token **tokens, char *str, int i)
 int	handle_q(t_token_b **tks, char *str, int i)
 {
 	int	start;
-	int tmp = i;
+	int	tmp;
+
+	tmp = i;
 	start = ++i;
 	if (str[tmp] == '\'')
 	{

@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 13:01:15 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/27 12:12:28 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,3 @@ int	is_valid_directory(char *path)
 		return (perror("cd: Permission denied"), 0);
 	return (1);
 }
-
