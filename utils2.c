@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/05/30 14:50:31 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:59:39 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,14 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 	if (ft_strchr(suf, '$') != NULL)
 		suf = expand_nested_dollar(suf, shell);
 	return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
+}
+
+char	*join_and_free(char *s1, char *s2)
+{
+	char	*joined;
+
+	joined = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (joined);
 }
