@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 12:17:55 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:06:23 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	input(char *str, t_token **tokens)
 
 int	make_tok(t_token **tokens, char *str, int i)
 {
-	char		*chunk;
-	char		*builder;
 	t_token_b	*tks;
 
 	tks = malloc(sizeof(t_token_b));
@@ -62,10 +60,7 @@ int	make_tok(t_token **tokens, char *str, int i)
 		return (-1);
 	tks->builder = ft_strdup("");
 	if (!tks->builder) // secure malloc
-	{
-		free(tks);
-		return (-1);
-	}
+		return (free(tks), -1);
 	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
@@ -73,19 +68,13 @@ int	make_tok(t_token **tokens, char *str, int i)
 		{
 			i = handle_q(&tks, str, i);
 			if (i < 0)
-			{
-				free(tks->builder);
-				free(tks);
-				return (-1);
-			}
+				return (free(tks->builder), free(tks), -1);
 		}
 		else
 			i = simple_word(&tks, str, i);
 	}
 	add_token(tokens, tks->builder, tks->literal);
-	free(tks->builder);
-	free(tks);
-	return (i);
+	return (free(tks->builder), free(tks), i);
 }
 
 int	handle_q(t_token_b **tks, char *str, int i)
