@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 11:01:55 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 13:51:28 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,62 +26,41 @@ void	print_env(t_shell shell)
 		printf("%s\n", shell.env_var[i++]);
 }
 
-char	**copy_envp(char **envp)
+char	**copy_envp(char **envp, char *new_var)
 {
 	int		count;
-	int		i;
 	char	**copy;
 
 	count = 0;
-	i = 0;
 	while (envp[count])
 		count++;
-	copy = malloc(sizeof(char *) * (count + 1));
+	copy = malloc(sizeof(char *) * (count + 1 + (new_var != NULL)));
 	if (!copy)
 		return (NULL);
-	while (i < count)
+	if (!copy_env_vars(copy, envp, count))
+		return (free(copy), NULL);
+	if (new_var)
 	{
-		copy[i] = ft_strdup(envp[i]);
-		if (!copy[i])
+		copy[count] = ft_strdup(new_var);
+		if (!copy[count])
 		{
-			while (i-- > 0)
-				free(copy[i]);
-			free(copy);
-			return (NULL);
+			while (count-- > 0)
+				free(copy[count]);
+			return (free(copy), NULL);
 		}
-		i++;
 	}
-	copy[count] = NULL;
+	copy[count + (new_var != NULL)] = NULL;
 	return (copy);
 }
 
 void	add_env(t_shell *shell, char *var)
 {
-	int		count;
 	char	**new_envp;
 	int		i;
 
-	i = 0;
-	count = 0;
-	while (shell->env_var[count])
-		count++;
-	new_envp = malloc(sizeof(char *) * (count + 2));
+	new_envp = copy_envp(shell->env_var, var);
 	if (!new_envp)
 		return ;
-	while (i < count)
-	{
-		new_envp[i] = ft_strdup(shell->env_var[i]);
-		if (!new_envp[i])
-		{
-			while (i-- > 0)
-				free(new_envp[i]);
-			free(new_envp);
-			return ;
-		}
-		i++;
-	}
-	new_envp[i++] = ft_strdup(var);
-	new_envp[i] = NULL;
 	i = 0;
 	while (shell->env_var[i])
 		free(shell->env_var[i++]);

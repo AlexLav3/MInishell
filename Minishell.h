@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 12:40:34 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 13:11:39 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void				ft_exit(char **cmd, t_shell *shell);
 int					is_valid_directory(char *path);
 
 //env variables
-char				**copy_envp(char **envp);
+char				**copy_envp(char **envp, char *new_var);
 void				print_env(t_shell shell);
 void				add_env(t_shell *shell, char *var);
 int					search_env(t_shell *shell, char *var);
@@ -192,6 +192,7 @@ char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 
 // utils2
 void				set_var(char **cmd, t_shell *shell, char *equal, int i);
+int					copy_env_vars(char **dest, char **src, int count);
 
 //testing
 void				print_list(t_token *tokens);
