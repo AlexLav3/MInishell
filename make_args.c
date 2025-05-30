@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 14:54:59 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 15:02:18 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	int		idx;
 	int		i;
 	char	*prefix;
-	
+
 	i = 0;
 	if (ft_strcmp(cmd, "$?") == 0)
 		return (ft_itoa(shell->exit_stat));
-	while(cmd[i])
+	while (cmd[i])
 	{
-		if(cmd[i] == '$')
-			break;
+		if (cmd[i] == '$')
+			break ;
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
@@ -110,7 +110,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	if (idx >= 0)
 	{
 		shell->env_idx = idx;
-		return process_env_var(cmd, shell, prefix, i);
+		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
 		return (free(prefix), ft_strdup(""));
