@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 12:11:01 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 11:01:55 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ void	add_env(t_shell *shell, char *var)
 	count = 0;
 	while (shell->env_var[count])
 		count++;
-	// allocate space for count + 2 pointers
-	// (old env + new var + NULL terminator),
-	// not sum of string lengths.
 	new_envp = malloc(sizeof(char *) * (count + 2));
 	if (!new_envp)
 		return ;

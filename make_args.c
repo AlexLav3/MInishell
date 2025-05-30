@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 13:26:06 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 11:38:01 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char 	*suf;
 	int		i;
 	char	*prefix;
+	char	*tmp;
 	
 	i = 0;
-	if (!cmd || cmd[1] == '?')
-		return (ft_strdup(cmd));
-	printf("cmd here: %s\n", cmd);
+	if (ft_strcmp(cmd, "$?") == 0)
+		return (ft_itoa(shell->exit_stat));
 	while(cmd[i])
 	{
 		if(cmd[i] == '$')
@@ -114,14 +114,25 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	if (idx >= 0)
 	{
 		env = shell->env_var[idx];
-		value = ft_strchr(env, '=') + 1;
+		value = ft_strchr(env, '=');
 		if (!value)
+		{
+			free(prefix);
 			return (ft_strdup(""));
+		}
+		value = value + 1;
 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
 		if(ft_strchr(suf, '$') != NULL)
-			suf = handle_dollar(suf, shell);
+			{
+				tmp = handle_dollar(suf, shell);
+				free(suf);
+				suf = tmp;
+			}
 		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 	}
 	else
+	{
+		free(prefix);
 		return (ft_strdup(""));
+	}
 }
