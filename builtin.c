@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 12:57:54 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 12:39:33 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,8 @@ void	builtin_pwd(char **cmd, t_shell *shell)
 	printf("%s\n", shell->pwd);
 }
 
-// updating function due to leaks
 void	ft_export(char **cmd, t_shell *shell)
 {
-	char	*var;
-	char	*name;
 	char	*equal;
 	int		i;
 
@@ -83,24 +80,43 @@ void	ft_export(char **cmd, t_shell *shell)
 	{
 		equal = ft_strchr(cmd[i], '=');
 		if (equal)
-		{
-			var = ft_strdup(cmd[i]);
-			if (!var)
-				return ;
-			*equal = '\0';
-			name = cmd[i];
-			if (search_env(shell, name) < 0)
-				add_env(shell, var);
-			else
-				update_env(shell, var, name);
-			free(var);
-			*equal = '=';
-		}
+			set_var(cmd, shell, equal, i);
 		i++;
 	}
 	if (i == 1)
 		print_env(*shell);
 }
+
+// void	ft_export(char **cmd, t_shell *shell)
+// {
+// 	char	*var;
+// 	char	*name;
+// 	char	*equal;
+// 	int		i;
+
+// 	i = 1;
+// 	while (cmd[i])
+// 	{
+// 		equal = ft_strchr(cmd[i], '=');
+// 		if (equal)
+// 		{
+// 			var = ft_strdup(cmd[i]);
+// 			if (!var)
+// 				return ;
+// 			*equal = '\0';
+// 			name = cmd[i];
+// 			if (search_env(shell, name) < 0)
+// 				add_env(shell, var);
+// 			else
+// 				update_env(shell, var, name);
+// 			free(var);
+// 			*equal = '=';
+// 		}
+// 		i++;
+// 	}
+// 	if (i == 1)
+// 		print_env(*shell);
+// }
 
 // shift the array
 void builtin_unset(char **cmd, t_shell *shell)

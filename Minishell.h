@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 12:22:28 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 12:40:34 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,9 @@ int					make_tok(t_token **tokens, char *str, int i);
 int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
 char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
+
+// utils2
+void				set_var(char **cmd, t_shell *shell, char *equal, int i);
 
 //testing
 void				print_list(t_token *tokens);
