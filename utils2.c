@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/05/30 13:31:06 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:50:31 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,30 @@ int	copy_env_vars(char **dest, char **src, int count)
 		i++;
 	}
 	return (1);
+}
+
+char	*expand_nested_dollar(char *suf, t_shell *shell)
+{
+	char	*tmp;
+
+	tmp = handle_dollar(suf, shell);
+	free(suf);
+	return (tmp);
+}
+
+char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
+{
+	char	*env;
+	char	*value;
+	char	*suf;
+
+	env = shell->env_var[shell->env_idx];
+	value = ft_strchr(env, '=');
+	if (!value)
+		return (free(prefix), ft_strdup(""));
+	value = value + 1;
+	suf = ft_strdup(cmd + (i + 1) + shell->var_len);
+	if (ft_strchr(suf, '$') != NULL)
+		suf = expand_nested_dollar(suf, shell);
+	return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 }

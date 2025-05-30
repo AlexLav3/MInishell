@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 14:06:23 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:12:31 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	make_tok(t_token **tokens, char *str, int i)
 	t_token_b	*tks;
 
 	tks = malloc(sizeof(t_token_b));
-	if (!tks) // secure malloc
+	if (!tks)
 		return (-1);
 	tks->builder = ft_strdup("");
-	if (!tks->builder) // secure malloc
+	if (!tks->builder)
 		return (free(tks), -1);
 	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))

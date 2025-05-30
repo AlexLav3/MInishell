@@ -6,7 +6,7 @@
 /*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 13:11:39 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:50:19 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_shell
 	char			*outfile;
 	int				redir_in;
 	int				redir_out;
+	int				env_idx;
 }					t_shell;
 
 //token builder test
@@ -193,6 +194,7 @@ char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 // utils2
 void				set_var(char **cmd, t_shell *shell, char *equal, int i);
 int					copy_env_vars(char **dest, char **src, int count);
+char				*process_env_var(char *cmd, t_shell *shell, char *prefix, int i);
 
 //testing
 void				print_list(t_token *tokens);
