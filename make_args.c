@@ -98,7 +98,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 
 	i = 0;
 	if (ft_strcmp(cmd, "$?") == 0)
-		return (ft_itoa(shell->exit_stat));
+		return (ft_itoa(shell->exit_stat)); //doing it here already? that's more execution part then args creation
 	while (cmd[i])
 	{
 		if (cmd[i] == '$')
