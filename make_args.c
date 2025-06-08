@@ -44,11 +44,11 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	char 	*res = ft_strdup("");	
 	int 	i = 0;
 	int 	in_single = 0;
-	int start = 0;
+	int 	start = 0;
 
 	while (tokens->com[i])
 	{
-		else if (tokens->com[i] == '\'')
+		if (tokens->com[i] == '\'')
 		{
 			in_single = 1;
 			i++;
@@ -64,16 +64,17 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 		}
 		if (tokens->com[i] == '$' && !in_single)
 		{
+			printf("I am here\n");
 			pos = &tokens->com[i];
-			exp = handle_dollar(pos, shell);
+			exp = handle_dollar(pos, shell); //need to check single quotes in this function as well
 			if (exp)
 			{
 				return (ft_strjoin(strndup(res, pos -res),
 					exp));
 			}
 		}
-		else
-			return (res = ft_strdup(tokens->com));
+		else 
+			res = join_and_free(res, char_to_str(tokens->com[i]));
 		i++;
 	}
 	return (res);

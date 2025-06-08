@@ -62,9 +62,10 @@ typedef struct s_shell
 	int				redir_out;
 }					t_shell;
 
-//token builder test
+char 				*char_to_str(char c);
 
-int					handle_q(char *str, int i);
+//token builder test
+int					handle_q(t_token_b **tks, char *str, int i);
 int					simple_word(t_token_b **tks, char *str, int i);
 int					handle_double_q(t_token_b **tks, char *str, int i);
 //
