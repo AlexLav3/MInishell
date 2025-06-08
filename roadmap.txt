@@ -126,3 +126,35 @@ tokens com: EOF
 tokens com: |
 tokens com: sort -leave quotes related issues aside for now
 
+
+------------------------------------------------------------------
+Comment updates from slack about changes
+
+builtin.c --> ft_export
+	So this part was easy, just took out a part of the while loop and placed it into a separate function called set_var, which can be found utils2.c
+
+envp_handle.c --> add_env
+	Okay, this was trickier.
+	So, as you mentioned yesterday copy_envp, I decided to go back to it. But it required a bit of modification due to the leak, and also because we use it in the init.c function.
+	Now the copy_envp can copy env in the init, but also be used if there is a new Var.
+	We call it with NULL in init, shell->env_var = copy_envp(envp, NULL);
+	or with the new variable in add_env, new_envp = copy_envp(shell->env_var, var);
+	A fast test showed no leaks, but I will test it again later once I finish with the rest of Norminette.
+	I created a helper function called copy_env_vars and placed it in utils2.c. This actually makes the copy from envp to copy. While the copy_envp function handles the new variable after that, and added to the end.
+	So maybe we should rename these functions a bit for more clarity? :thinking_face:
+
+input.c --> make_tok
+	Removed the unused variables.
+	Added the frees to the returns, saving some lines.
+	return (free(tks), -1);
+	return (free(tks->builder), free(tks), -1);
+	return (free(tks->builder), free(tks), i);
+	no extra function was needed for this (edited) 
+
+make_args.c --> handle_dollar
+	Okay, so this was a bit harder due to the many variables.
+	I managed to pass the if condition body to a helper function by using an extra struct variable, so the function has no more than 4.
+	process_env_var(cmd, shell, prefix, i); was added to utils2.c
+	apart the shell->env_idx = idx; line, there is no change in the function logic.
+
+-------------------------------------------------------------------
