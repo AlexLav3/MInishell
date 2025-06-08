@@ -31,7 +31,7 @@ int	input(char *str, t_token **tokens)
 			while (str[i] && is_meta(str[i]))
 				i++;
 			word = ft_substr(str, start, i - start);
-			add_token(tokens, word, 0);
+			add_token(tokens, word);
 		}
 		else
 		{
@@ -51,19 +51,18 @@ int	make_tok(t_token **tokens, char *str, int i)
 
 	tks = malloc(sizeof(t_token_b));
 	tks->builder = ft_strdup("");
-	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
-		if (str[i] == '\'' || str[i] == '"')
-		{
-			i = handle_q(&tks, str, i);
-			if (i < 0)
-				return (-1);
-		}
-		else
+		// if (str[i] == '\'' || str[i] == '"')
+		// {
+		// 	i = handle_q(&tks, str, i);
+		// 	if (i < 0)
+		// 		return (-1);
+		// }
+		// else
 			i = simple_word(&tks, str, i);	
 	}
-	add_token(tokens, tks->builder, tks->literal);
+	add_token(tokens, tks->builder);
 	return (i);
 }
 
@@ -74,7 +73,6 @@ int	handle_q(t_token_b **tks, char *str, int i)
 	start = ++i;
 	if (str[tmp] == '\'')
 	{
-		(*tks)->literal = 1;
 		while (str[i] && str[i] != '\'')
 			i++;
 	}
@@ -96,9 +94,7 @@ int	simple_word(t_token_b **tks, char *str, int i)
 	int	start;
 
 	start = i;
-	(*tks)->literal = 0;
-	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
-		&& str[i] != '"')
+	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 		i++;
 	(*tks)->chunk = ft_substr(str, start, i - start);
 	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);

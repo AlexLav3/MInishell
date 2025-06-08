@@ -33,7 +33,6 @@ typedef struct token_b
 {
 	char			*builder;
 	char			*chunk;
-	int				literal;
 }					t_token_b;
 
 typedef struct s_token
@@ -41,7 +40,6 @@ typedef struct s_token
 	char			*com;
 	char			*builder;
 	struct s_token	*next;
-	bool			literal;
 }					t_token;
 
 typedef struct s_shell
@@ -175,7 +173,7 @@ void				deallocate(t_token **root);
 
 //for list tokens
 t_token				*new_token(char *word);
-void				add_token(t_token **head, char *word, int literal);
+void				add_token(t_token **head, char *word);
 
 //utils
 int					is_meta(char c);

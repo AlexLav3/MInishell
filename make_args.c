@@ -26,7 +26,6 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (tokens)
 	{
-		printf("tokens com: %s\n", tokens->com);
 		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
@@ -42,22 +41,38 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
 	char	*exp;
-	char 	*res;
+	char 	*res;	
+	int 	i = 0;
+	int 	in_single = 0;
+	int 	in_double = 0;
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	printf("literal: %d\n", tokens->literal);
-	
-	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
+	while (tokens->com[i])
 	{
-		pos = ft_strchr(tokens->com, '$');
-		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
-		if (exp)
+		if (tokens->com[i] == '\'')
 		{
-			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
-					exp));
+			in_single = 1;
+			i++; 
+			while (tokens->com[i] && tokens->com[i] != '\'')
+				i++;
+			if (tokens->com[i] == '\'')
+			{
+				in_single = 0;
+				i++;
+			}
 		}
-			
+		if (tokens->com[i] == '$' && !in_single)
+		{
+			pos = &tokens->com[i];
+			exp = handle_dollar(pos, shell);
+			if (exp)
+			{
+				return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
+					exp));
+			}
+		}
+		i++;
 	}
 	return (cmd);
 }
@@ -74,7 +89,6 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	i = 0;
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
-	printf("cmd here: %s\n", cmd);
 	while(cmd[i])
 	{
 		if(cmd[i] == '$')
