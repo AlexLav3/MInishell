@@ -96,6 +96,8 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	{
 		if(cmd[i] == '$')
 			break;
+		if(cmd[i] == '\'')
+			return ft_strdup(cmd);
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
