@@ -41,21 +41,21 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
 	char	*exp;
-	char 	*res;	
+	char 	*res = ft_strdup("");	
 	int 	i = 0;
 	int 	in_single = 0;
-	int 	in_double = 0;
-	cmd = ft_strdup(tokens->com);
-	if (!cmd)
-		return (free(cmd), NULL);
+	int start = 0;
+
 	while (tokens->com[i])
 	{
-		if (tokens->com[i] == '\'')
+		else if (tokens->com[i] == '\'')
 		{
 			in_single = 1;
-			i++; 
+			i++;
+			start = i;
 			while (tokens->com[i] && tokens->com[i] != '\'')
 				i++;
+			res = join_and_free(res, ft_substr(tokens->com, start, i - start));
 			if (tokens->com[i] == '\'')
 			{
 				in_single = 0;
@@ -68,13 +68,15 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 			exp = handle_dollar(pos, shell);
 			if (exp)
 			{
-				return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
+				return (ft_strjoin(strndup(res, pos -res),
 					exp));
 			}
 		}
+		else
+			return (res = ft_strdup(tokens->com));
 		i++;
 	}
-	return (cmd);
+	return (res);
 }
 
 char	*handle_dollar(char *cmd, t_shell *shell)

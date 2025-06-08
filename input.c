@@ -53,23 +53,17 @@ int	make_tok(t_token **tokens, char *str, int i)
 	tks->builder = ft_strdup("");
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
-		// if (str[i] == '\'' || str[i] == '"')
-		// {
-		// 	i = handle_q(&tks, str, i);
-		// 	if (i < 0)
-		// 		return (-1);
-		// }
-		// else
-			i = simple_word(&tks, str, i);	
+		i = simple_word(&tks, str, i);	
 	}
 	add_token(tokens, tks->builder);
 	return (i);
 }
 
-int	handle_q(t_token_b **tks, char *str, int i)
+int	handle_q(char *str, int i)
 {
 	int	start;
 	int tmp = i;
+	char *res;
 	start = ++i;
 	if (str[tmp] == '\'')
 	{
@@ -83,8 +77,7 @@ int	handle_q(t_token_b **tks, char *str, int i)
 	}
 	if (!str[i])
 		return (printf("Unclosed quote\n"), -1);
-	(*tks)->chunk = ft_substr(str, start, i - start);
-	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	res = ft_substr(str, start, i - start);
 	i++;
 	return (i);
 }

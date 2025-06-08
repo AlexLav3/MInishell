@@ -64,7 +64,7 @@ typedef struct s_shell
 
 //token builder test
 
-int					handle_q(t_token_b **tks, char *str, int i);
+int					handle_q(char *str, int i);
 int					simple_word(t_token_b **tks, char *str, int i);
 int					handle_double_q(t_token_b **tks, char *str, int i);
 //
