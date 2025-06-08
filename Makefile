@@ -4,7 +4,7 @@ CC = cc -g
 CFLAGS =  -Ilibft 
 LDFLAGS = -lreadline
 
-SOURCES = main.c init.c input.c utils.c exect.c process_cmd.c\
+SOURCES = main.c init.c input.c utils.c utils2.c exect.c process_cmd.c\
 		envp_handle.c clean_exit.c sig.c builtin.c\
 		pipe/pipe_handle_001.c pipe/pipe_handle_002.c pipe/pipe_prepare.c\
 		redirections/redir_utils.c	redirections/pipe_redir.c redirections/exc_pipes.c \

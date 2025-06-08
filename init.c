@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:26:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:19:58 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
-	shell->env_var = copy_envp(envp);
+	shell->env_var = copy_envp(envp, NULL);
 	if (!shell->env_var)
 	{
 		perror("Failed to copy envp");

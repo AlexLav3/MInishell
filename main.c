@@ -14,8 +14,8 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
-	t_token	*token;
+	t_shell		shell;
+	t_token		*token;
 
 	(void)argv;
 	token = NULL;
