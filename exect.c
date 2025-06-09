@@ -77,4 +77,3 @@ int	is_valid_directory(char *path)
 		return (perror("cd: Permission denied"), 0);
 	return (1);
 }
-

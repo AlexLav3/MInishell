@@ -43,12 +43,24 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	char	*exp;
 	char 	*res = ft_strdup("");	
 	int 	i = 0;
+	int		tmp = 0;
 	int 	in_single = 0;
 	int 	start = 0;
+	int		in_double = 0;
 
 	while (tokens->com[i])
 	{
-		if (tokens->com[i] == '\'')
+		if(tokens->com[i] == '"')
+		{
+			in_double = 1;
+			tmp = i; 
+			while(tokens->com[tmp] != '"')
+			{
+				in_double = 1;
+				tmp++;
+			}
+		}
+		else if (tokens->com[i] == '\'')
 		{
 			in_single = 1;
 			i++;
@@ -57,24 +69,24 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 				i++;
 			res = join_and_free(res, ft_substr(tokens->com, start, i - start));
 			if (tokens->com[i] == '\'')
-			{
 				in_single = 0;
-				i++;
-			}
 		}
-		if (tokens->com[i] == '$' && !in_single)
+		else if (tokens->com[i] == '$' && (!in_single || in_double))
 		{
 			printf("I am here\n");
 			pos = &tokens->com[i];
-			exp = handle_dollar(pos, shell); //need to check single quotes in this function as well
+			exp = handle_dollar(pos, shell);
 			if (exp)
 			{
 				return (ft_strjoin(strndup(res, pos -res),
 					exp));
 			}
 		}
-		else 
+		else
+		{
+			printf("not hitting any condition: %c\n", tokens->com[i]);
 			res = join_and_free(res, char_to_str(tokens->com[i]));
+		} 
 		i++;
 	}
 	return (res);
@@ -96,8 +108,6 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	{
 		if(cmd[i] == '$')
 			break;
-		if(cmd[i] == '\'')
-			return ft_strdup(cmd);
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
@@ -109,8 +119,8 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		if (!value)
 			return (ft_strdup(""));
 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
-		if(ft_strchr(suf, '$') != NULL)
-			suf = handle_dollar(suf, shell);
+		// if(ft_strchr(suf, '$') != NULL)
+		// 	suf = handle_dollar(suf, shell);
 		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 	}
 	else
