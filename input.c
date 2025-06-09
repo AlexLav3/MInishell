@@ -104,7 +104,7 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 	while (last->next)
 		last = last->next;
 	process_word(last, shell);
-	(*tks)->builder = join_and_free((*tks)->builder, last->word);
+	(*tks)->builder = join_and_free((*tks)->builder, new_part->word);
 	i++;
 	return (i);
 }
@@ -119,12 +119,11 @@ int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 		i++;
 	t_words *new_part = word_node(ft_substr(str, start, i - start), EXPAND);
 	append_word(&(*tks)->parts, new_part);
-	printf("after expansion: %s\n", new_part->word);
 	t_words *last = (*tks)->parts;
-	process_word(new_part, shell);
 	while (last->next)
-    	last = last->next;
-	(*tks)->builder = join_and_free((*tks)->builder, last->word);
+		last = last->next;	
+	process_word(last, shell);
+	(*tks)->builder = join_and_free((*tks)->builder, new_part->word);
 	printf("tokens builder: %s\n", (*tks)->builder);
 	return (i);
 }
