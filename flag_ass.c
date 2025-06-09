@@ -56,6 +56,7 @@ void process_word(t_words *word, t_shell *shell)
     }
     else 
         return ;
+    free(word->word);
     word->word = exp;
 }
 

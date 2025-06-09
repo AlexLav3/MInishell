@@ -44,15 +44,15 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	// printf("literal: %d\n", tokens->literal);
-	if (ft_strchr(tokens->com, '$') != NULL)
-	{
-		pos = ft_strchr(tokens->com, '$');
-		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
-		if (exp)
-			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
-					exp));
-	}
+	// // printf("literal: %d\n", tokens->literal);
+	// if (ft_strchr(tokens->com, '$') != NULL)
+	// {
+	// 	pos = ft_strchr(tokens->com, '$');
+	// 	exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
+	// 	if (exp)
+	// 		return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
+	// 				exp));
+	// }
 	return (cmd);
 }
 char	*handle_dollar(char *cmd, t_shell *shell)
