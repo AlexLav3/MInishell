@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
 //cat test.txt | grep "42" | sort | wc -l (testing)
 char	**make_args(t_token *tokens, t_shell *shell)
 {
@@ -41,57 +40,21 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
 	char	*exp;
-	char 	*res = ft_strdup("");	
-	int 	i = 0;
-	int		tmp = 0;
-	int 	in_single = 0;
-	int 	start = 0;
-	int		in_double = 0;
 
-	while (tokens->com[i])
+	cmd = ft_strdup(tokens->com);
+	if (!cmd)
+		return (free(cmd), NULL);
+	// printf("literal: %d\n", tokens->literal);
+	if (ft_strchr(tokens->com, '$') != NULL)
 	{
-		if(tokens->com[i] == '"')
-		{
-			in_double = 1;
-			tmp = i; 
-			while(tokens->com[tmp] != '"')
-			{
-				in_double = 1;
-				tmp++;
-			}
-		}
-		else if (tokens->com[i] == '\'')
-		{
-			in_single = 1;
-			i++;
-			start = i;
-			while (tokens->com[i] && tokens->com[i] != '\'')
-				i++;
-			res = join_and_free(res, ft_substr(tokens->com, start, i - start));
-			if (tokens->com[i] == '\'')
-				in_single = 0;
-		}
-		else if (tokens->com[i] == '$' && (!in_single || in_double))
-		{
-			printf("I am here\n");
-			pos = &tokens->com[i];
-			exp = handle_dollar(pos, shell);
-			if (exp)
-			{
-				return (ft_strjoin(strndup(res, pos -res),
+		pos = ft_strchr(tokens->com, '$');
+		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
+		if (exp)
+			return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
 					exp));
-			}
-		}
-		else
-		{
-			printf("not hitting any condition: %c\n", tokens->com[i]);
-			res = join_and_free(res, char_to_str(tokens->com[i]));
-		} 
-		i++;
 	}
-	return (res);
+	return (cmd);
 }
-
 char	*handle_dollar(char *cmd, t_shell *shell)
 {
 	int		idx;

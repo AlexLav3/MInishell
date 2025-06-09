@@ -26,13 +26,21 @@
 # define IN_FILE 1
 # define OUT_FILE 2
 
-# define SINGLE_Q 3
-# define DOUBLE_Q 4
+# define EXPAND 3
+# define NO_EXP 4
+
+typedef struct words
+{
+	char 			*word; 
+	int 			flag; 
+	struct words 	*next; 
+} 					t_words;
 
 typedef struct token_b
 {
 	char			*builder;
 	char			*chunk;
+	t_words 		*parts;
 }					t_token_b;
 
 typedef struct s_token
@@ -62,23 +70,26 @@ typedef struct s_shell
 	int				redir_out;
 }					t_shell;
 
-char 				*char_to_str(char c);
+
+//flags 
+t_words 			*word_node(char *str, int flag);
+void 				append_word(t_words **head, t_words *new_node);
+void				process_word(t_words *word, t_shell *shell);
 
 //token builder test
-int					handle_q(t_token_b **tks, char *str, int i);
-int					simple_word(t_token_b **tks, char *str, int i);
+int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);
+int					simple_word(t_token_b **tks, char *str, int i, t_shell *shell);
 int					handle_double_q(t_token_b **tks, char *str, int i);
 //
 
 char				*join_and_free(char *s1, char *s2);
-
 void				heredoc_do(t_token *tokens, t_shell *shell,
 						char *delimiter);
 void				readirs(int dir, t_shell *shell, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
-int					input(char *str, t_token **tokens);
+int					input(char *str, t_token **tokens, t_shell *shell);
 char				**make_args(t_token *tokens, t_shell *shell);
 char				*set_pwd(t_shell *shell);
 int					handle_single_q(t_token **tokens, char *str, int i);
@@ -180,7 +191,7 @@ void				add_token(t_token **head, char *word);
 int					is_meta(char c);
 char				*join_path(char *dir, char *cmd);
 int					size_args(t_token *tokens);
-int					make_tok(t_token **tokens, char *str, int i);
+int					make_tok(t_token **tokens, char *str, int i, t_shell *shell);
 int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
 char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);

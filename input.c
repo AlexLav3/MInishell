@@ -28,7 +28,7 @@ static int	handle_meta(char *str, t_token **tokens, int i)
 	return (i);
 }
 
-int	input(char *str, t_token **tokens)
+int	input(char *str, t_token **tokens, t_shell *shell)
 {
 	int		i;
 
@@ -40,10 +40,10 @@ int	input(char *str, t_token **tokens)
 		if (!str[i])
 			break ;
 		if (is_meta(str[i]))
-			i = handle_meta(str, tokens, i); //separated for norminette
+			i = handle_meta(str, tokens, i);
 		else
 		{
-			i = make_tok(tokens, str, i);
+			i = make_tok(tokens, str, i, shell);
 			if (i < 0)
 				return (-1);
 		}
@@ -51,7 +51,7 @@ int	input(char *str, t_token **tokens)
 	return (i);
 }
 
-int	make_tok(t_token **tokens, char *str, int i)
+int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 {
 	t_token_b	*tks;
 
@@ -63,47 +63,68 @@ int	make_tok(t_token **tokens, char *str, int i)
 		return (free(tks), -1);
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
-		if (str[i] == '"')
+		if (str[i] == '\'' || str[i] == '"')
 		{
-			i = handle_q(&tks, str, i);
+			i = handle_q(&tks, str, i, shell);
 			if (i < 0)
 				return (free(tks->builder), free(tks), -1);
 		}
 		else
-			i = simple_word(&tks, str, i);
+			i = simple_word(&tks, str, i, shell);
 	}
 	add_token(tokens, tks->builder);
 	return (free(tks->builder), free(tks), i);
 }
 
-int	handle_q(t_token_b **tks, char *str, int i)
+int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 {
 	int	start;
 	int	tmp;
 
 	tmp = i;
+	int flag ;
 	start = ++i;
-	if (str[tmp] == '"')
+	if (str[tmp] == '\'')
 	{
+		flag = NO_EXP;
+		while (str[i] && str[i] != '\'')
+			i++;
+	}
+	else if (str[tmp] == '"')
+	{
+		flag = EXPAND;
 		while (str[i] && str[i] != '"')
 			i++;
 	}
 	if (!str[i])
 		return (printf("Unclosed quote\n"), -1);
-	(*tks)->chunk = ft_substr(str, start, i - start);
-	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	t_words *new_part = word_node(ft_substr(str, start, i - start), flag);
+	append_word(&(*tks)->parts, new_part);
+	t_words *last = (*tks)->parts;
+	while (last->next)
+		last = last->next;
+	process_word(last, shell);
+	(*tks)->builder = join_and_free((*tks)->builder, last->word);
 	i++;
 	return (i);
 }
 
-int	simple_word(t_token_b **tks, char *str, int i)
+int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 {
 	int	start;
 
 	start = i;
-	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '"')
+	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
+		&& str[i] != '"')
 		i++;
-	(*tks)->chunk = ft_substr(str, start, i - start);
-	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	t_words *new_part = word_node(ft_substr(str, start, i - start), EXPAND);
+	append_word(&(*tks)->parts, new_part);
+	printf("after expansion: %s\n", new_part->word);
+	t_words *last = (*tks)->parts;
+	process_word(new_part, shell);
+	while (last->next)
+    	last = last->next;
+	(*tks)->builder = join_and_free((*tks)->builder, last->word);
+	printf("tokens builder: %s\n", (*tks)->builder);
 	return (i);
 }
