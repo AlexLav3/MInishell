@@ -12,6 +12,9 @@ https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
 -----------USEFUL INFO-----------
 
+P.S. I ADDED THE WERROR WEXTRA IN THE MAKEFILE 
+just to check and clean up, feel free to take it off if you need.
+
 ps -eAo state,pid,comm | grep -w Z 
 this command checks for zombie processes, child processes that hasn't been terminated once the parent is close_pipes_and_wait
 atm we have none, but may be a nice check with multiple childs. 

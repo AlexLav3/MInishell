@@ -76,12 +76,14 @@ void	init_pipex(t_shell *px, t_shell *shell)
 	px->pipe_fd[1] = -1;
 }
 
+//command is unused
 void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 {
 	t_shell	px;
 	char	**cmds;
 	int		cmd_count;
 	char	**args;
+	(void)command;
 
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);

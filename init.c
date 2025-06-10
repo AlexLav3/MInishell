@@ -51,6 +51,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 char	*set_pwd(t_shell *shell)
 {
 	char	*cwd;
+	(void)shell;
 
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)

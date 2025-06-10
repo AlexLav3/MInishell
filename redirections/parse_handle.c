@@ -69,8 +69,6 @@ void	apply_redirection(t_shell *shell)
 
 int	handle_redirection_token(t_token *tokens, t_shell *shell)
 {
-	char	*delimiter;
-
 	if (ft_strcmp(tokens->com, "<") == 0 && tokens->next)
 		return (readirs(1, shell, tokens->next->com), 1);
 	else if (ft_strcmp(tokens->com, ">") == 0 && tokens->next)

@@ -142,10 +142,10 @@ void				handle_sigint_heredoc(int sig);
 //builtin
 bool				handle_builtin(char **cmd, t_shell *shell);
 void				builtin_cd(char **cmd, t_shell *shell);
-void				builtin_pwd(char **cmd, t_shell *shell);
+void				builtin_pwd(t_shell *shell);
 void				ft_export(char **cmd, t_shell *shell);
 void				builtin_unset(char **cmd, t_shell *shell);
-int					ft_echo(char **cmd, t_shell *shell);
+int					ft_echo(char **cmd);
 void				ft_exit(char **cmd, t_shell *shell);
 
 //builtin utils
