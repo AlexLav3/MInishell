@@ -23,12 +23,12 @@ static int	handle_meta(char *str, t_token **tokens, int i)
 	word = ft_substr(str, start, i - start);
 	if (!word)
 		return (-1);
-	add_token(tokens, word, 0);
+	add_token(tokens, word);
 	free(word);
 	return (i);
 }
 
-int	input(char *str, t_token **tokens)
+int	input(char *str, t_token **tokens, t_shell *shell)
 {
 	int		i;
 
@@ -61,7 +61,6 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 	tks->builder = ft_strdup("");
 	if (!tks->builder)
 		return (free(tks), -1);
-	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
 		if (str[i] == '\'' || str[i] == '"')
@@ -77,7 +76,7 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 				return (free(tks->builder), free(tks), -1);
 		}
 	}
-	add_token(tokens, tks->builder, tks->literal);
+	add_token(tokens, tks->builder);
 	return (free(tks->builder), free(tks), i);
 }
 
