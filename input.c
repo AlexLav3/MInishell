@@ -103,7 +103,6 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 		return (printf("Unclosed quote\n"), -1);
 	word = process_word(ft_substr(str, start, i - start), shell, flag);
 	(*tks)->builder = join_and_free((*tks)->builder, word);
-	free(word);
 	i++;
 	return (i);
 }
@@ -119,6 +118,5 @@ int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 		i++;
 	word = process_word(ft_substr(str, start, i - start), shell, EXPAND);
 	(*tks)->builder = join_and_free((*tks)->builder, word);
-	free(word);
 	return (i);
 }

@@ -12,21 +12,6 @@
 
 #include "Minishell.h"
 
-// void	sig_handle(int sig)
-// {
-// 	(void)sig;
-// 	write(1, "\n", 1);
-// 	rl_on_new_line();
-// 	rl_replace_line("", 0);
-// 	rl_redisplay();
-// }
-
-// void	setup_sig(void)
-// {
-// 	signal(SIGINT, sig_handle);
-// 	signal(SIGQUIT, SIG_IGN);
-// }
-
 void	setup_shell_signals(void)
 {
 	struct sigaction	sa;
@@ -47,7 +32,6 @@ void	handle_sigint_prompt(int sig)
 	rl_redisplay();
 }
 
-// heredoc
 void	setup_heredoc_signals(void)
 {
 	struct sigaction	sa;

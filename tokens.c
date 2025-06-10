@@ -25,7 +25,6 @@ t_token	*new_token(char *word)
 		free(word);
 		return (free(tokens), NULL);
 	}
-	//free(word);
 	tokens->next = NULL;
 	return (tokens);
 }

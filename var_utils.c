@@ -27,7 +27,7 @@ void	set_var(char **cmd, t_shell *shell, char *equal, int i)
 	else
 		update_env(shell, var, name);
 	free(var);
-	*equal = '=';
+	*equal = '='; //why putting it back to equal? 
 }
 
 int	copy_env_vars(char **dest, char **src, int count)
@@ -73,14 +73,4 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 	if (ft_strchr(suf, '$') != NULL)
 		suf = expand_nested_dollar(suf, shell);
 	return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
-}
-
-char	*join_and_free(char *s1, char *s2)
-{
-	char	*joined;
-
-	joined = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (joined);
 }

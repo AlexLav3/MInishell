@@ -9,65 +9,22 @@ https://0xax.gitbooks.io/linux-insides/content/SysCall/
 
 ⚠️ = important issue (serious problem). even if fixed, check if happens on other edge cases/occasions.
 
+
+-----------USEFUL INFO-----------
+
+ps -eAo state,pid,comm | grep -w Z 
+this command checks for zombie processes, child processes that hasn't been terminated once the parent is close_pipes_and_wait
+atm we have none, but may be a nice check with multiple childs. 
+
 -------------ISSUES AND FIXES-----------------
 
-edge cases:
-
-	echo stuff"abcdef" $SHLVL'pizza'
-		-bash behaviour: stuffabcdef 2pizza
-		-minishell behaviour: stuff abcdef 2 pizza
-to fix:
-all tokenitation and cmd creation.
-
-
-other issues:
-- minishell should be executable inside the minishell itself.
 
 -----------TO DO LIST-----------
 
------LEAKS/ISSUES-----
-1 bytes in 1 blocks are definitely lost in loss record 1 of 72
-==647256==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==647256==    by 0x496D5CE: strndup (strndup.c:43)
-==647256==    by 0x404778: toks_to_args (make_args.c:53)
-==647256==    by 0x40465A: make_args (make_args.c:31)
-==647256==    by 0x401DD3: single_cmd (process_cmd.c:19)
-==647256==    by 0x401F2C: process_commands (process_cmd.c:63)
-==647256==    by 0x4014DB: take_comm (init.c:44)
-==647256==    by 0x401334: main (main.c:28)
-==647256== 
-==647256== 2 bytes in 1 blocks are definitely lost in loss record 2 of 72
-==647256==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==647256==    by 0x405450: ft_strdup (ft_strdup.c:33)
-==647256==    by 0x4048AD: handle_dollar (make_args.c:82)
-==647256==    by 0x40474F: toks_to_args (make_args.c:51)
-==647256==    by 0x40465A: make_args (make_args.c:31)
-==647256==    by 0x401DD3: single_cmd (process_cmd.c:19)
-==647256==    by 0x401F2C: process_commands (process_cmd.c:63)
-==647256==    by 0x4014DB: take_comm (init.c:44)
-==647256==    by 0x401334: main (main.c:28)
-==647256== 
-==647256== 7 bytes in 1 blocks are definitely lost in loss record 3 of 72
-==647256==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==647256==    by 0x405450: ft_strdup (ft_strdup.c:33)
-==647256==    by 0x4046CF: toks_to_args (make_args.c:45)
-==647256==    by 0x40465A: make_args (make_args.c:31)
-==647256==    by 0x401DD3: single_cmd (process_cmd.c:19)
-==647256==    by 0x401F2C: process_commands (process_cmd.c:63)
-==647256==    by 0x4014DB: take_comm (init.c:44)
-==647256==    by 0x401334: main (main.c:28)
-==647256== 
-==647256== LEAK SUMMARY:
-==647256==    definitely lost: 10 bytes in 3 blocks
-==647256==    indirectly lost: 0 bytes in 0 blocks
-==647256==      possibly lost: 0 bytes in 0 blocks
-==647256==    still reachable: 4,805 bytes in 70 blocks
-==647256==         suppressed: 208,244 bytes in 225 blocks
+please check valgrind, the laptop I'm using (not mine) doesn't have it
+especially with quotes and var expantions.
 
 --------------------18-05-26 notes ------------------------
-
-Memory leak: 
-Do we still have memory leak? It looked okay now when I have run valgrind. Can we delete notes above? no. we still have them
 
 HEREDOC:
 heredoc examples to check:
@@ -101,33 +58,5 @@ heredoc examples to check:
 		fish is cool
 		bash rocks
 		EOF
-
-PARSING:
-Currently if we have a pipe, " mark or redirection without a trailing space, the next character will disappear. 
-W is missing from wc
-prompt> ls -a |wc -l
-tokens com: ls
-tokens com: -a
-tokens com: |
-tokens com: c
-tokens com: -l
-command not found: No such file or directory - not supposed to work 
-
-B is missing from bash
-prompt> grep "bash" << EOF | sort
-tokens com: grep
-tokens com: "
-tokens com: ash
-tokens com: "
-tokens com: <<
-tokens com: EOF
-tokens com: |
-tokens com: sort -leave quotes related issues aside for now
-
-HISTORY:
-Strange behaviour with the history.
-If you go back with up arrow you will access the last commands, as you should.
-But if you delete anything from that command line it will automatically update it in history.
-
 
 -----------------------------------------------------------

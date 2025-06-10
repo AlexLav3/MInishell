@@ -87,38 +87,6 @@ void	ft_export(char **cmd, t_shell *shell)
 		print_env(*shell);
 }
 
-// void	ft_export(char **cmd, t_shell *shell)
-// {
-// 	char	*var;
-// 	char	*name;
-// 	char	*equal;
-// 	int		i;
-
-// 	i = 1;
-// 	while (cmd[i])
-// 	{
-// 		equal = ft_strchr(cmd[i], '=');
-// 		if (equal)
-// 		{
-// 			var = ft_strdup(cmd[i]);
-// 			if (!var)
-// 				return ;
-// 			*equal = '\0';
-// 			name = cmd[i];
-// 			if (search_env(shell, name) < 0)
-// 				add_env(shell, var);
-// 			else
-// 				update_env(shell, var, name);
-// 			free(var);
-// 			*equal = '=';
-// 		}
-// 		i++;
-// 	}
-// 	if (i == 1)
-// 		print_env(*shell);
-// }
-
-// shift the array
 void	builtin_unset(char **cmd, t_shell *shell)
 {
 	int	pos;

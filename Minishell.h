@@ -39,7 +39,6 @@ typedef struct token_b
 typedef struct s_token
 {
 	char			*com;
-	char			*builder;
 	struct s_token	*next;
 }					t_token;
 
@@ -56,7 +55,6 @@ typedef struct s_shell
 	char			**av;
 	char			**envp;
 	int				exit;
-
 	char			*infile;
 	char			*outfile;
 	int				redir_in;
@@ -80,15 +78,7 @@ void				take_comm(t_token **tokens, t_shell *shell);
 int					input(char *str, t_token **tokens, t_shell *shell);
 char				**make_args(t_token *tokens, t_shell *shell);
 char				*set_pwd(t_shell *shell);
-int					handle_single_q(t_token **tokens, char *str, int i);
 void				execute_single_cmd(char **cmd, t_shell *shell);
-
-// split tokens
-int					separator_len(char *s);
-void				insert_after_token(t_token *prev, char *word);
-void				split_and_insert_parts(t_token *curr, int i, int len);
-int					split_token_content(t_token *curr);
-void				split_tokens(t_token **tokens);
 
 // get_path
 void				process_commands(char *command, t_token **tokens,
@@ -103,7 +93,7 @@ char				**make_args_pipes(t_token *tokens);
 char				*get_path_in(char *cmd, t_shell *px);
 char				*str_join_free(char *s1, char *s2);
 void				process_token(t_token *token, char **cmd_str, char **cmds,
-						int *i);
+						int *i); //is this function still needed?
 
 // pipes
 void				pipex_error(char *msg);
@@ -168,10 +158,6 @@ void				add_env(t_shell *shell, char *var);
 int					search_env(t_shell *shell, char *var);
 void				update_env(t_shell *shell, char *var, char *name);
 
-//signals
-void				sig_handle(int sig);
-void				setup_sig(void);
-
 //close & free
 void				close_free(t_token *tokens, t_shell *shell);
 void				free_array(char **arr);
@@ -190,7 +176,7 @@ int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
 char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 
-// utils2
+//var utils
 void				set_var(char **cmd, t_shell *shell, char *equal, int i);
 int					copy_env_vars(char **dest, char **src, int count);
 char				*process_env_var(char *cmd, t_shell *shell, char *prefix, int i);

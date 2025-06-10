@@ -25,7 +25,6 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (tokens)
 	{
-		// printf("tokens com: %s\n", tokens->com);
 		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
@@ -37,7 +36,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	return (cmd);
 }
 
-//created a sep function becuase we need to free cmd and exp after use. 
+//is this function used at all? I can't find it anywhere.(search doesn't show any calls)
 static char	*expand_variable(char *token_com, char *exp, char *cmd, char *pos)
 {
 	char	*prefix;
@@ -45,7 +44,7 @@ static char	*expand_variable(char *token_com, char *exp, char *cmd, char *pos)
 
 	prefix = strndup(token_com, pos - token_com);
 	if (!prefix)
-		return (free(exp), free(cmd), NULL);
+		return (free(exp), free(cmd), NULL); 
 	result = ft_strjoin(prefix, exp);
 	free(prefix);
 	free(exp);
@@ -72,7 +71,7 @@ static char	*get_env_value(t_shell *shell, char *name)
 
 	idx = search_env(shell, name);
 	if (idx < 0)
-		return (ft_strdup(""));
+		return (ft_strdup(name)); //does it need to retun the var back or empty? to check 
 	env = shell->env_var[idx];
 	val = ft_strchr(env, '=');
 	if (!val)
@@ -103,5 +102,5 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
-		return (free(prefix), ft_strdup(""));
+		return (free(prefix), ft_strdup(cmd)); //check the same here as above
 }

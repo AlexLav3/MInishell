@@ -49,6 +49,8 @@ void	free_array(char **arr)
 
 void	close_free(t_token *tokens, t_shell *shell)
 {
+	//do you think we can make a checker for if any child process hasn't been closed?
+	//fine if not, I just think it would be good practice and a nice thing to have, thoughts?
 	deallocate(&tokens);
 	free_array(shell->env_var);
 	free(shell->pwd);

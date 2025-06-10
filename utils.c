@@ -31,3 +31,13 @@ void	print_list(t_token *tokens)
 		tokens = tokens->next;
 	}
 }
+
+char	*join_and_free(char *s1, char *s2)
+{
+	char	*joined;
+
+	joined = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (joined);
+}
