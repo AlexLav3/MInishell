@@ -45,15 +45,6 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	// // printf("literal: %d\n", tokens->literal);
-	// if (ft_strchr(tokens->com, '$') != NULL)
-	// {
-	// 	pos = ft_strchr(tokens->com, '$');
-	// 	exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
-	// 	if (exp)
-	// 		return (ft_strjoin(strndup(tokens->com, pos - tokens->com),
-	// 				exp));
-	// }
 	return (cmd);
 }
 char	*handle_dollar(char *cmd, t_shell *shell)
@@ -66,7 +57,6 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*prefix;
 	
 	i = 0;
-	printf("cmd: %s\n", cmd);
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
 	while(cmd[i])
@@ -76,7 +66,6 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
-	printf("prefix: %s\n", prefix);
 	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{

@@ -29,18 +29,10 @@
 # define EXPAND 3
 # define NO_EXP 4
 
-typedef struct words
-{
-	char 			*word; 
-	int 			flag; 
-	struct words 	*next; 
-} 					t_words;
 
 typedef struct token_b
 {
 	char			*builder;
-	char			*chunk;
-	t_words 		*parts;
 }					t_token_b;
 
 typedef struct s_token
@@ -71,15 +63,10 @@ typedef struct s_shell
 }					t_shell;
 
 
-//flags 
-t_words 			*word_node(char *str, int flag);
-void 				append_word(t_words **head, t_words *new_node);
 char				*process_word(char *word, t_shell *shell, int flag);
 
-//token builder test
 int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);
 int					simple_word(t_token_b **tks, char *str, int i, t_shell *shell);
-int					handle_double_q(t_token_b **tks, char *str, int i);
 //
 
 char				*join_and_free(char *s1, char *s2);

@@ -70,7 +70,11 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 				return (free(tks->builder), free(tks), -1);
 		}
 		else
+		{
 			i = simple_word(&tks, str, i, shell);
+			if (i < 0)
+				return (free(tks->builder), free(tks), -1);
+		}
 	}
 	add_token(tokens, tks->builder);
 	return (free(tks->builder), free(tks), i);
