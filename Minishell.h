@@ -27,14 +27,13 @@
 # define IN_FILE 1
 # define OUT_FILE 2
 
-# define SINGLE_Q 3
-# define DOUBLE_Q 4
+# define EXPAND 3
+# define NO_EXP 4
+
 
 typedef struct token_b
 {
 	char			*builder;
-	char			*chunk;
-	int				literal;
 }					t_token_b;
 
 typedef struct s_token
@@ -42,7 +41,6 @@ typedef struct s_token
 	char			*com;
 	char			*builder;
 	struct s_token	*next;
-	bool			literal;
 }					t_token;
 
 typedef struct s_shell
@@ -66,11 +64,11 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-//token builder test
 
-int					handle_q(t_token_b **tks, char *str, int i);
-int					simple_word(t_token_b **tks, char *str, int i);
-int					handle_double_q(t_token_b **tks, char *str, int i);
+char				*process_word(char *word, t_shell *shell, int flag);
+
+int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);
+int					simple_word(t_token_b **tks, char *str, int i, t_shell *shell);
 //
 
 char				*join_and_free(char *s1, char *s2);
@@ -79,7 +77,7 @@ void				readirs(int dir, t_shell *shell, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
-int					input(char *str, t_token **tokens);
+int					input(char *str, t_token **tokens, t_shell *shell);
 char				**make_args(t_token *tokens, t_shell *shell);
 char				*set_pwd(t_shell *shell);
 int					handle_single_q(t_token **tokens, char *str, int i);
@@ -181,13 +179,13 @@ void				deallocate(t_token **root);
 
 //for list tokens
 t_token				*new_token(char *word);
-void				add_token(t_token **head, char *word, int literal);
+void				add_token(t_token **head, char *word);
 
 //utils
 int					is_meta(char c);
 char				*join_path(char *dir, char *cmd);
 int					size_args(t_token *tokens);
-int					make_tok(t_token **tokens, char *str, int i);
+int					make_tok(t_token **tokens, char *str, int i, t_shell *shell);
 int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
 char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);

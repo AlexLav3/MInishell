@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
 //cat test.txt | grep "42" | sort | wc -l (testing)
 char	**make_args(t_token *tokens, t_shell *shell)
 {
@@ -58,19 +57,10 @@ char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	char	*pos;
 	char	*exp;
-	char	*res;
 
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);
-	// printf("literal: %d\n", tokens->literal);
-	if (!tokens->literal && ft_strchr(tokens->com, '$') != NULL)
-	{
-		pos = ft_strchr(tokens->com, '$');
-		exp = handle_dollar(ft_strchr(tokens->com, '$'), shell);
-		if (exp)
-			return (expand_variable(tokens->com, exp, cmd, pos));
-	}
 	return (cmd);
 }
 
@@ -97,9 +87,9 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*prefix;
 
 	i = 0;
-	if (ft_strcmp(cmd, "$?") == 0)
-		return (ft_itoa(shell->exit_stat)); //doing it here already? that's more execution part then args creation
-	while (cmd[i])
+	if (!cmd || cmd[1] == '?')
+		return (ft_strdup(cmd));
+	while(cmd[i])
 	{
 		if (cmd[i] == '$')
 			break ;

@@ -41,7 +41,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		}
 		if (ft_strlen(command) > 0)
 			add_history(command);
-		if (!input(command, tokens))
+		if (!input(command, tokens, shell))
 			deallocate(tokens);
 		process_commands(command, tokens, shell);
 	}

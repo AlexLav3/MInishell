@@ -20,18 +20,17 @@ t_token	*new_token(char *word)
 	if (!tokens)
 		return (NULL);
 	tokens->com = ft_strdup(word);
-	tokens->literal = false;
 	if (!tokens->com)
 	{
 		free(word);
 		return (free(tokens), NULL);
 	}
-	// free(word);
+	//free(word);
 	tokens->next = NULL;
 	return (tokens);
 }
 
-void	add_token(t_token **head, char *word, int literal)
+void	add_token(t_token **head, char *word)
 {
 	t_token	*new;
 	t_token	*tmp;
@@ -48,7 +47,5 @@ void	add_token(t_token **head, char *word, int literal)
 			tmp = tmp->next;
 		tmp->next = new;
 	}
-	if (literal)
-		new->literal = true;
 	return ;
 }
