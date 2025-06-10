@@ -37,7 +37,7 @@ void	execute_single_redir(char **cmd, t_shell *shell)
 		}
 	}
 	else
-		waitpid(shell->pid1, NULL, 0);
+		waitpid(shell->pid1, NULL, 0); //we can use WEXITSTATUS for every waitpid, u ok if I add it?
 	free(path);
 }
 

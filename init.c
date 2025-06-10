@@ -13,9 +13,20 @@
 #include "Minishell.h"
 
 //initial values
+void	init_pipex(t_shell *px, t_shell *shell)
+{
+	px->envp = shell->env_var;
+	px->pipe_fd[0] = -1;
+	px->pipe_fd[1] = -1;
+}
+
 void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
+	shell->redir_in = -1;
+	shell->redir_out = -1;
+	shell->infile = NULL;
+	shell->outfile = NULL;
 	shell->env_var = copy_envp(envp, NULL);
 	if (!shell->env_var)
 	{

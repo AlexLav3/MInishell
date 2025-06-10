@@ -18,9 +18,9 @@ int	size_args(t_token *tokens)
 	int		count;
 
 	count = 0;
-	tmp = tokens;
 	if (tokens == NULL)
 		return (0);
+	tmp = tokens;
 	while (tmp)
 	{
 		if (tmp->com && !is_meta(tmp->com[0]))

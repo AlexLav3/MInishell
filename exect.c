@@ -21,7 +21,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 		perror("fork");
 	else if (shell->pid1 == 0)
 	{
-		if (execve(path, cmd, shell->env_var) == -1)
+		if (execve(path, cmd, shell->env_var) == -1) // is valid directory usable here instead?
 		{
 			perror("execve failed");
 			exit(EXIT_FAILURE);
