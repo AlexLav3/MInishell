@@ -31,13 +31,3 @@ void	print_list(t_token *tokens)
 		tokens = tokens->next;
 	}
 }
-
-char *char_to_str(char c)
-{
-	char *s = malloc(2);
-	if (!s)
-		return NULL;
-	s[0] = c;
-	s[1] = '\0';
-	return s;
-}

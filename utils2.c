@@ -12,7 +12,6 @@
 
 #include "Minishell.h"
 
-// place here the extra functions after norminette
 void	set_var(char **cmd, t_shell *shell, char *equal, int i)
 {
 	char	*var;

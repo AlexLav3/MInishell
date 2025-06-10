@@ -42,11 +42,9 @@ int	input(char *str, t_token **tokens, t_shell *shell)
 		if (is_meta(str[i]))
 			i = handle_meta(str, tokens, i);
 		else
-		{
 			i = make_tok(tokens, str, i, shell);
-			if (i < 0)
-				return (-1);
-		}
+		if (i < 0)
+			return (-1);
 	}
 	return (i);
 }
@@ -105,6 +103,7 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 		return (printf("Unclosed quote\n"), -1);
 	word = process_word(ft_substr(str, start, i - start), shell, flag);
 	(*tks)->builder = join_and_free((*tks)->builder, word);
+	free(word);
 	i++;
 	return (i);
 }
@@ -120,5 +119,6 @@ int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 		i++;
 	word = process_word(ft_substr(str, start, i - start), shell, EXPAND);
 	(*tks)->builder = join_and_free((*tks)->builder, word);
+	free(word);
 	return (i);
 }
