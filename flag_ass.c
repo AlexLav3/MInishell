@@ -35,28 +35,28 @@ void append_word(t_words **head, t_words *new_node)
     }
 }
 
-void process_word(t_words *word, t_shell *shell)
+char *process_word(char *word, t_shell *shell, int flag)
 {
     char	*pos;
 	char	*exp;
 	char	*res;
 
-    printf("word: %s\n", word->word);
-    if (word->flag != EXPAND || !word->word)
-		return ;
-    if (ft_strchr(word->word, '$') != NULL)
+    printf("word: %s\n", word);
+    if (flag != EXPAND || !word)
+		return ft_strdup(word);
+    if (ft_strchr(word, '$') != NULL)
     {
-        printf("word again: %s\n", word->word);
-        pos = ft_strchr(word->word, '$');
+        printf("word again: %s\n", word);
+        pos = ft_strchr(word, '$');
 	    if (!pos)
-		    return ;
+		    return ft_strdup(word);
 	    exp = handle_dollar(pos, shell);
 	    if (!exp)
-		    return ; 
+		    return ft_strdup(word); 
     }
     else 
-        return ;
-    free(word->word);
-    word->word = exp;
+        return ft_strdup(word);
+    free(word);
+    return exp;
 }
 

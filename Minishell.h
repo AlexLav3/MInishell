@@ -74,7 +74,7 @@ typedef struct s_shell
 //flags 
 t_words 			*word_node(char *str, int flag);
 void 				append_word(t_words **head, t_words *new_node);
-void				process_word(t_words *word, t_shell *shell);
+char				*process_word(char *word, t_shell *shell, int flag);
 
 //token builder test
 int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);

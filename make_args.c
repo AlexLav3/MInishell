@@ -25,6 +25,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (tokens)
 	{
+		printf("tokens com here: %s\n", tokens->com);
 		if (tokens->com && tokens->com[0] != '\0')
 		{
 			cmd[i] = toks_to_args(tokens, *cmd, shell);
@@ -82,8 +83,8 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		if (!value)
 			return (ft_strdup(""));
 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
-		// if(ft_strchr(suf, '$') != NULL)
-		// 	suf = handle_dollar(suf, shell);
+		if(ft_strchr(suf, '$') != NULL)
+			suf = handle_dollar(suf, shell);
 		return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
 	}
 	else
