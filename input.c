@@ -120,6 +120,5 @@ int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 		i++;
 	word = process_word(ft_substr(str, start, i - start), shell, EXPAND);
 	(*tks)->builder = join_and_free((*tks)->builder, word);
-	printf("tokens builder: %s\n", (*tks)->builder);
 	return (i);
 }
