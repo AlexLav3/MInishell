@@ -50,7 +50,7 @@ char *process_word(char *word, t_shell *shell, int flag)
         pos = ft_strchr(word, '$');
 	    if (!pos)
 		    return ft_strdup(word);
-	    exp = handle_dollar(pos, shell);
+	    exp = handle_dollar(word, shell);
 	    if (!exp)
 		    return ft_strdup(word); 
     }

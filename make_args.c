@@ -66,6 +66,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*prefix;
 	
 	i = 0;
+	printf("cmd: %s\n", cmd);
 	if (!cmd || cmd[1] == '?')
 		return (ft_strdup(cmd));
 	while(cmd[i])
@@ -75,6 +76,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		i++;
 	}
 	prefix = ft_substr(cmd, 0, i);
+	printf("prefix: %s\n", prefix);
 	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{

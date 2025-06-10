@@ -114,11 +114,6 @@ int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
 		&& str[i] != '"')
 		i++;
-	// t_words *new_part = word_node(ft_substr(str, start, i - start), EXPAND);
-	//append_word(&(*tks)->parts, new_part);
-	// t_words *last = (*tks)->parts;
-	// while (last->next)
-	// 	last = last->next;	
 	word = process_word(ft_substr(str, start, i - start), shell, EXPAND);
 	(*tks)->builder = join_and_free((*tks)->builder, word);
 	printf("tokens builder: %s\n", (*tks)->builder);
