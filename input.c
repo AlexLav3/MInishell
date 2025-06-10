@@ -81,7 +81,7 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 	int	start;
 	int	tmp;
 	int flag ;
-	char *word = ft_strdup("");
+	char *word;
 
 	tmp = i;
 	start = ++i;
