@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:43:20 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/26 12:21:41 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 14:08:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ char	**parse_args_and_redirs(t_token *tokens, t_shell *shell)
 	char	**args;
 	int		arg_count;
 
-	// shell->redir_in = -1;
-	// shell->redir_out = -1;
-	// shell->infile = NULL;
-	// shell->outfile = NULL; //moved to initial values, feel free to uncommend them here if creates issues. 
-	// otherwise, remove from here.
 	arg_count = count_args(tokens);
 	args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!args)

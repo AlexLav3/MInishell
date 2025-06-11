@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:07:11 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/26 12:21:47 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 14:10:26 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 	char	**cmds;
 	int		cmd_count;
 	char	**args;
-	(void)command; //command is unused
+	(void)command; //command is unused f: true, we can probably remove it from the function call
 
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 15:02:18 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 14:44:46 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	cmd[i++] = NULL;
 	return (cmd);
 }
-
-char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell) //this function seems reduntant now
+// this function seems reduntant now
+// f:	I think if you would try to added straight to make_args, you would have more than 25 lines.
+char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	(void)shell;
 	cmd = ft_strdup(tokens->com);
@@ -66,5 +67,5 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
-		return (free(prefix), ft_strdup(cmd)); //check the same here as above
+		return (free(prefix), ft_strdup(cmd)); //check the same here as above 
 }

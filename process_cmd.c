@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/24 00:21:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/11 14:46:28 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,7 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
-	//int	has_pipe;
-	//int	has_redir;
-
-	// has_pipe = token_has_pipe(*tokens);
-	//has_redir = token_has_redir(*tokens);
-	if (!token_has_pipe(*tokens)) //should work like this too 
+	if (!token_has_pipe(*tokens))
 	{
 		if (token_has_redir(*tokens))
 			single_cmd_with_redir(command, tokens, shell);

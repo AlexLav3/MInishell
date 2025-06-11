@@ -6,12 +6,17 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:38:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 10:50:33 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/11 14:14:22 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Minishell.h"
 
+/*
+we can use WEXITSTATUS for every waitpid, u ok if I add it?
+f: I do not know how that works. I think we need to keep waitpid and add WEXITSTATUS
+on top of that, which means extra lines. But feel free to try it. 
+*/
 void	execute_single_redir(char **cmd, t_shell *shell)
 {
 	char	*path;
@@ -34,7 +39,7 @@ void	execute_single_redir(char **cmd, t_shell *shell)
 		}
 	}
 	else
-    waitpid(shell->pid1, NULL, 0); //we can use WEXITSTATUS for every waitpid, u ok if I add it?
+    waitpid(shell->pid1, NULL, 0);
 	if (path != cmd[0])
 		free(path);
 }

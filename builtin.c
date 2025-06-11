@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 13:30:50 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 14:24:38 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	ft_echo(char **cmd)
 void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
-	// char	**envp;
 
-	// envp = shell->env_var; //not using this variable anywhere
 	if (size_cmd_arg(cmd) > 2)
 		return ;
 	if (!cmd[1])
@@ -98,7 +96,12 @@ void	builtin_unset(char **cmd, t_shell *shell)
 		pos = search_env(shell, cmd[i]);
 		if (pos >= 0)
 		{
-			free(shell->env_var[pos]); //couldn't this create an issue? we're looping it right after - maybe better after the loop, not before?
+			/*
+			 couldn't this create an issue? we're looping it right after - maybe better after the loop, not before?
+			 f: that would cause a leak. We free the memory therr but still pointing to the location
+			 once it is free, we add the next node to this postion, swifting everthing back (left)
+			*/
+			free(shell->env_var[pos]);
 			while (shell->env_var[pos])
 			{
 				shell->env_var[pos] = shell->env_var[pos + 1];
