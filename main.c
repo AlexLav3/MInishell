@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **envp)
 		return (printf("This program does not take any arguments\n"),
 			EXIT_FAILURE);
 	init_shell(&shell, envp);
-	// setup_sig();
 	setup_shell_signals();
 	if (!shell.exit)
 		take_comm(&token, &shell);

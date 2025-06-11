@@ -21,7 +21,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 		perror("fork");
 	else if (shell->pid1 == 0)
 	{
-		if (execve(path, cmd, shell->env_var) == -1)
+		if (execve(path, cmd, shell->env_var) == -1) // is valid directory usable here instead?
 		{
 			perror("execve failed");
 			exit(EXIT_FAILURE);
@@ -58,7 +58,7 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		return (builtin_cd(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (builtin_pwd(cmd, shell), true);
+		return (builtin_pwd(shell), true);
 	else if (ft_strcmp(cmd[0], "export") == 0)
 		return (ft_export(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "env") == 0)
@@ -66,7 +66,7 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		return (builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (ft_echo(cmd, shell), true);
+		return (ft_echo(cmd), true);
 	else if (ft_strcmp(cmd[0], "$?") == 0)
 		return (printf("%d\n", shell->exit_stat), true);
 	else if (ft_strcmp(cmd[0], "exit") == 0)

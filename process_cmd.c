@@ -50,21 +50,21 @@ void	pipe_cmds(char *command, t_token **tokens, t_shell *shell)
 
 void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
-	int	has_pipe;
-	int	has_redir;
+	//int	has_pipe;
+	//int	has_redir;
 
-	has_pipe = token_has_pipe(*tokens);
-	has_redir = token_has_redir(*tokens);
-	if (!has_pipe)
+	// has_pipe = token_has_pipe(*tokens);
+	//has_redir = token_has_redir(*tokens);
+	if (!token_has_pipe(*tokens)) //should work like this too 
 	{
-		if (has_redir)
+		if (token_has_redir(*tokens))
 			single_cmd_with_redir(command, tokens, shell);
 		else
 			single_cmd(command, tokens, shell);
 	}
 	else
 	{
-		if (has_redir)
+		if (token_has_redir(*tokens))
 			pipe_cmds_with_redir(command, tokens, shell);
 		else
 			pipe_cmds(command, tokens, shell);

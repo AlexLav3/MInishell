@@ -23,12 +23,12 @@ static int	handle_meta(char *str, t_token **tokens, int i)
 	word = ft_substr(str, start, i - start);
 	if (!word)
 		return (-1);
-	add_token(tokens, word, 0);
+	add_token(tokens, word);
 	free(word);
 	return (i);
 }
 
-int	input(char *str, t_token **tokens)
+int	input(char *str, t_token **tokens, t_shell *shell)
 {
 	int		i;
 
@@ -40,18 +40,16 @@ int	input(char *str, t_token **tokens)
 		if (!str[i])
 			break ;
 		if (is_meta(str[i]))
-			i = handle_meta(str, tokens, i); //separated for norminette
+			i = handle_meta(str, tokens, i);
 		else
-		{
-			i = make_tok(tokens, str, i);
-			if (i < 0)
-				return (-1);
-		}
+			i = make_tok(tokens, str, i, shell);
+		if (i < 0)
+			return (-1);
 	}
 	return (i);
 }
 
-int	make_tok(t_token **tokens, char *str, int i)
+int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 {
 	t_token_b	*tks;
 
@@ -61,58 +59,64 @@ int	make_tok(t_token **tokens, char *str, int i)
 	tks->builder = ft_strdup("");
 	if (!tks->builder)
 		return (free(tks), -1);
-	tks->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
 		if (str[i] == '\'' || str[i] == '"')
 		{
-			i = handle_q(&tks, str, i);
+			i = handle_q(&tks, str, i, shell);
 			if (i < 0)
 				return (free(tks->builder), free(tks), -1);
 		}
 		else
-			i = simple_word(&tks, str, i);
+		{
+			i = simple_word(&tks, str, i, shell);
+			if (i < 0)
+				return (free(tks->builder), free(tks), -1);
+		}
 	}
-	add_token(tokens, tks->builder, tks->literal);
+	add_token(tokens, tks->builder);
 	return (free(tks->builder), free(tks), i);
 }
 
-int	handle_q(t_token_b **tks, char *str, int i)
+int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 {
 	int	start;
+	int flag ;
+	char *word;
 	int	tmp;
 
 	tmp = i;
 	start = ++i;
 	if (str[tmp] == '\'')
 	{
-		(*tks)->literal = 1;
+		flag = NO_EXP;
 		while (str[i] && str[i] != '\'')
 			i++;
 	}
 	else if (str[tmp] == '"')
 	{
+		flag = EXPAND;
 		while (str[i] && str[i] != '"')
 			i++;
 	}
 	if (!str[i])
 		return (printf("Unclosed quote\n"), -1);
-	(*tks)->chunk = ft_substr(str, start, i - start);
-	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	word = process_word(ft_substr(str, start, i - start), shell, flag);
+	(*tks)->builder = join_and_free((*tks)->builder, word);
 	i++;
 	return (i);
 }
 
-int	simple_word(t_token_b **tks, char *str, int i)
+int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 {
 	int	start;
+	char *word;
 
 	start = i;
-	(*tks)->literal = 0;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''
 		&& str[i] != '"')
 		i++;
-	(*tks)->chunk = ft_substr(str, start, i - start);
-	(*tks)->builder = join_and_free((*tks)->builder, (*tks)->chunk);
+	word = process_word(ft_substr(str, start, i - start), shell, EXPAND);
+	(*tks)->builder = join_and_free((*tks)->builder, word);
 	return (i);
 }

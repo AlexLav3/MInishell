@@ -33,10 +33,11 @@ char	**parse_args_and_redirs(t_token *tokens, t_shell *shell)
 	char	**args;
 	int		arg_count;
 
-	shell->redir_in = -1;
-	shell->redir_out = -1;
-	shell->infile = NULL;
-	shell->outfile = NULL;
+	// shell->redir_in = -1;
+	// shell->redir_out = -1;
+	// shell->infile = NULL;
+	// shell->outfile = NULL; //moved to initial values, feel free to uncommend them here if creates issues. 
+	// otherwise, remove from here.
 	arg_count = count_args(tokens);
 	args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!args)
@@ -69,8 +70,6 @@ void	apply_redirection(t_shell *shell)
 
 int	handle_redirection_token(t_token *tokens, t_shell *shell)
 {
-	char	*delimiter;
-
 	if (ft_strcmp(tokens->com, "<") == 0 && tokens->next)
 		return (readirs(1, shell, tokens->next->com), 1);
 	else if (ft_strcmp(tokens->com, ">") == 0 && tokens->next)
