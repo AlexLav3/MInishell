@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 14:44:46 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/11 18:10:45 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*prefix;
 
 	i = 0;
-	if (!cmd || cmd[1] == '?')
-		return (ft_strdup(cmd));
+	if (ft_strcmp(cmd, "$?") == 0)
+		return (ft_itoa(shell->exit_stat));
+	// if (!cmd || cmd[1] == '?')
+	// 	return (ft_strdup(cmd));
 	while(cmd[i])
 	{
 		if (cmd[i] == '$')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 13:19:58 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 18:14:49 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_pipex(t_shell *px, t_shell *shell)
 void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
+	shell->exit_stat = 0;
 	shell->redir_in = -1;
 	shell->redir_out = -1;
 	shell->infile = NULL;
