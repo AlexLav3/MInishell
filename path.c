@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:25:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 08:25:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:31:41 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,19 @@ char	*join_path(char *dir, char *cmd)
 	if (!full_path)
 		return (NULL);
 	return (full_path);
+}
+
+char	*get_right_path(char *cmd, void *either_shell, int is_pipe)
+{
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, X_OK) == 0)
+			return (ft_strdup(cmd));
+		else
+			return (NULL);
+	}
+	if (is_pipe)
+		return (get_path_in(cmd, (t_shell *)either_shell));
+	else
+		return (get_cmd_path(cmd, (t_shell *)either_shell));
 }

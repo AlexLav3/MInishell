@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 14:50:19 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 11:25:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ typedef struct s_shell
 	int				redir_out;
 	int				env_idx;
 }					t_shell;
+
+
+// test run program in program
+char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
 
 
 char				*process_word(char *word, t_shell *shell, int flag);
