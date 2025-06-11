@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:38:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 10:50:33 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/11 11:16:20 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_single_redir(char **cmd, t_shell *shell)
 
 	if (!cmd[0] || !cmd)
 		return ;
-	path = get_right_path(cmd[0], shell, 0);
+	path = get_cmd_path(cmd[0], shell);
 	if (!path)
 		return ((void)(perror("Command not found utils.c redir"), shell->exit_stat = 127));
 	shell->pid1 = fork();
