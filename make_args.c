@@ -34,7 +34,8 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	return (cmd);
 }
 // this function seems reduntant now
-// f:	I think if you would try to added straight to make_args, you would have more than 25 lines.
+// f:	I think if you would try to added straight to make_args, you would have more than 25 lines. 
+//ok but this seems a very bad way to solve it. norminette is not an excuse for bad choices. I'll see if I can come up with something else. 
 char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	(void)shell;
@@ -54,7 +55,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	if (ft_strcmp(cmd, "$?") == 0)
 		return (ft_itoa(shell->exit_stat));
 	// if (!cmd || cmd[1] == '?')
-	// 	return (ft_strdup(cmd));
+	// 	return (ft_strdup(cmd)); // I'll take care of this as discussed.
 	while(cmd[i])
 	{
 		if (cmd[i] == '$')
@@ -69,5 +70,5 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
-		return (free(prefix), ft_strdup(cmd)); //check the same here as above 
+		return (free(prefix), ft_strdup(cmd));
 }

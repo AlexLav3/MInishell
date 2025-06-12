@@ -55,7 +55,7 @@ void	close_free(t_token *tokens, t_shell *shell)
 		what type of checker do you mean?
 		we have: while (wait(NULL) > 0)
 		which means to wait for all the child processes to finish before carry on.
-		it is in the close_pipes_and_wait() funciton
+		it is in the close_pipes_and_wait() funciton - possibly. I just found  out that zombie processes can happen and they are really bvad. We don't nee d check rn. I just think it would be nice.
 	*/
 	deallocate(&tokens);
 	free_array(shell->env_var);

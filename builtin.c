@@ -99,7 +99,7 @@ void	builtin_unset(char **cmd, t_shell *shell)
 			/*
 			 couldn't this create an issue? we're looping it right after - maybe better after the loop, not before?
 			 f: that would cause a leak. We free the memory therr but still pointing to the location
-			 once it is free, we add the next node to this postion, swifting everthing back (left)
+			 once it is free, we add the next node to this postion, swifting everthing back (left) - right sorry i was tired af and I did not notice/read the assignment line below, lol.
 			*/
 			free(shell->env_var[pos]);
 			while (shell->env_var[pos])

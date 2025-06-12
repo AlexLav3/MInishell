@@ -75,7 +75,7 @@ void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 	char	**cmds;
 	int		cmd_count;
 	char	**args;
-	(void)command; //command is unused f: true, we can probably remove it from the function call
+	(void)command; //command is unused f: true, we can probably remove it from the function call - ok  I will do
 
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);

@@ -36,6 +36,9 @@ ahh, the trick I mentioned you on slack:
 	A fast test showed no leaks, but I will test it again later once I finish with the rest of Norminette.
 	I created a helper function called copy_env_vars and placed it in utils2.c.
 	This actually makes the copy from envp to copy. While the copy_envp function handles the new variable after that, and added to the end.
+
+	I'm too tired to understand how what I asked is related to the answer, they seem uncorrelated. is it the answer for the questions below? don't use "tricks" possibly, and also, there is no if statements, not sure how malloc 
+	treats is if it's null. We can also avoid calling the function if it's null, so the check would be somewhere else. 
 */
 char	**copy_envp(char **envp, char *new_var)
 {
@@ -89,7 +92,7 @@ int	search_env(t_shell *shell, char *var)
 	if (!var)
 		return (0);
 	while (var[len])
-	{							//as not caps are allowed, I'll change this condition. f: what "not caps" mean? only lowercase or only uppercase?
+	{							//as not caps are allowed, I'll change this condition. f: what "not caps" mean? only lowercase or only uppercase? - I mean caps. LIKE THIS PART, THIS IS ALL ONLY IN CAPS.
 		if (var[len] == '\'' || (var[len] < 65 || var[len] > 90))
 			break ;
 		len++;
