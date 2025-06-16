@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 12:12:28 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/11 11:21:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 
 	if (!cmd[0] || !cmd)
 		return ;
-	path = get_cmd_path(cmd[0], shell);
+	path = get_right_path(cmd[0], shell, 0);
 	if (!path)
 	{
 		perror("Command not found");
@@ -48,7 +48,8 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 		return ;
 	}
 	exec_fork_and_wait(path, cmd, shell);
-	free(path);
+	if (path != cmd[0])
+		free(path);
 }
 
 bool	handle_builtin(char **cmd, t_shell *shell)

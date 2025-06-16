@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:55:59 by ferenc            #+#    #+#             */
-/*   Updated: 2025/04/21 21:09:47 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/11 11:31:41 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void	execute_cmd(char *cmd, t_shell *px)
 {
 	char	**args;
 	char	*path;
-
+	
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 		pipex_error("split");
-	path = get_path_in(args[0], px);
+	path = get_right_path(args[0], px, 1);
 	if (!path)
 		pipex_error("command not found");
 	if (execve(path, args, px->envp) == -1)

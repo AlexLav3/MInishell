@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/27 12:26:49 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:27:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	setup_shell_signals(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl+
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	handle_sigint_prompt(int sig)
@@ -46,5 +46,5 @@ void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	write(2, "\n", 1);
-	exit(130); // Match bash exit code for Ctrl+C
+	exit(130);
 }

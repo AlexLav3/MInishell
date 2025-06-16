@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 13:51:28 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:28:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**copy_envp(char **envp, char *new_var)
 
 	count = 0;
 	while (envp[count])
-		count++;								//pls tell me what you're trying to do with this check (below this line)
+		count++;								
 	copy = malloc(sizeof(char *) * (count + 1 + (new_var != NULL)));
 	if (!copy)
 		return (NULL);
@@ -48,7 +48,7 @@ char	**copy_envp(char **envp, char *new_var)
 				free(copy[count]);
 			return (free(copy), NULL);
 		}
-	}			//here too
+	}			
 	copy[count + (new_var != NULL)] = NULL;
 	return (copy);
 }
@@ -78,7 +78,7 @@ int	search_env(t_shell *shell, char *var)
 	if (!var)
 		return (0);
 	while (var[len])
-	{							//as not caps are allowed, I'll change this condition.
+	{							
 		if (var[len] == '\'' || (var[len] < 65 || var[len] > 90))
 			break ;
 		len++;

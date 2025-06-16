@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/30 14:50:19 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:37:17 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,14 @@ typedef struct s_shell
 }					t_shell;
 
 
+// test run program in program
+char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
+
+
 char				*process_word(char *word, t_shell *shell, int flag);
 
 int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);
 int					simple_word(t_token_b **tks, char *str, int i, t_shell *shell);
-//
 
 char				*join_and_free(char *s1, char *s2);
 void				heredoc_do(t_shell *shell, char *delimiter);
@@ -93,7 +96,7 @@ char				**make_args_pipes(t_token *tokens);
 char				*get_path_in(char *cmd, t_shell *px);
 char				*str_join_free(char *s1, char *s2);
 void				process_token(t_token *token, char **cmd_str, char **cmds,
-						int *i); //is this function still needed?
+						int *i);
 
 // pipes
 void				pipex_error(char *msg);

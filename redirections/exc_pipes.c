@@ -12,6 +12,13 @@
 
 #include "../Minishell.h"
 
+/*
+we can use WEXITSTATUS for every waitpid, u ok if I add it?
+f: I do not know how that works. I think we need to keep waitpid and add WEXITSTATUS 
+on top of that, which means extra lines. But feel free to try it. 
+
+I know how it works, I'll do it. 
+*/
 void	execute_single_redir(char **cmd, t_shell *shell)
 {
 	char	*path;

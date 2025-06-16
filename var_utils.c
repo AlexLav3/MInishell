@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/05/30 15:02:46 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/06/16 16:27:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_var(char **cmd, t_shell *shell, char *equal, int i)
 	else
 		update_env(shell, var, name);
 	free(var);
-	*equal = '='; //why putting it back to equal? 
+	*equal = '=';
 }
 
 int	copy_env_vars(char **dest, char **src, int count)

@@ -34,7 +34,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	return (cmd);
 }
 
-char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell) //this function seems reduntant now
+char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	(void)shell;
 	cmd = ft_strdup(tokens->com);
@@ -50,8 +50,10 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*prefix;
 
 	i = 0;
-	if (!cmd || cmd[1] == '?')
-		return (ft_strdup(cmd));
+	if (ft_strcmp(cmd, "$?") == 0)
+		return (ft_itoa(shell->exit_stat));
+	// if (!cmd || cmd[1] == '?')
+	// 	return (ft_strdup(cmd)); // I'll take care of this as discussed.
 	while(cmd[i])
 	{
 		if (cmd[i] == '$')
@@ -66,5 +68,5 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
-		return (free(prefix), ft_strdup(cmd)); //check the same here as above
+		return (free(prefix), ft_strdup(cmd));
 }

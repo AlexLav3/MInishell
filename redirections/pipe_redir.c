@@ -76,7 +76,6 @@ void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 	int		cmd_count;
 	char	**args;
 
-	(void)command; //command is unused
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);
 	cmds = make_args_pipes(*tokens);

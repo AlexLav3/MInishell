@@ -22,6 +22,7 @@ void	init_pipex(t_shell *px, t_shell *shell)
 void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
+	shell->exit_stat = 0;
 	shell->redir_in = -1;
 	shell->redir_out = -1;
 	shell->infile = NULL;
