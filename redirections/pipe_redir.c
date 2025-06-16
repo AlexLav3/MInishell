@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:07:11 by ferenc            #+#    #+#             */
-/*   Updated: 2025/05/20 12:05:40 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/26 12:21:47 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,13 @@ void	strip_redirection_tokens(t_token **tokens)
 	}
 }
 
-void	init_pipex(t_shell *px, t_shell *shell)
-{
-	px->envp = shell->env_var;
-	px->pipe_fd[0] = -1;
-	px->pipe_fd[1] = -1;
-}
-
 void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 {
 	t_shell	px;
 	char	**cmds;
 	int		cmd_count;
 	char	**args;
+	(void)command; //command is unused
 
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/23 21:45:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/30 13:51:28 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,62 +26,46 @@ void	print_env(t_shell shell)
 		printf("%s\n", shell.env_var[i++]);
 }
 
-char	**copy_envp(char **envp)
+char	**copy_envp(char **envp, char *new_var)
 {
 	int		count;
-	int		i;
 	char	**copy;
 
 	count = 0;
-	i = 0;
 	while (envp[count])
-		count++;
-	copy = malloc(sizeof(char *) * (count + 1));
+		count++;								//pls tell me what you're trying to do with this check (below this line)
+	copy = malloc(sizeof(char *) * (count + 1 + (new_var != NULL)));
 	if (!copy)
 		return (NULL);
-	while (i < count)
+	if (!copy_env_vars(copy, envp, count))
+		return (free(copy), NULL);
+	if (new_var)
 	{
-		copy[i] = ft_strdup(envp[i]);
-		if (!copy[i])
+		copy[count] = ft_strdup(new_var);
+		if (!copy[count])
 		{
-			while (i-- > 0)
-				free(copy[i]);
-			free(copy);
-			return (NULL);
+			while (count-- > 0)
+				free(copy[count]);
+			return (free(copy), NULL);
 		}
-		i++;
-	}
-	copy[count] = NULL;
+	}			//here too
+	copy[count + (new_var != NULL)] = NULL;
 	return (copy);
 }
 
 void	add_env(t_shell *shell, char *var)
 {
-	int		count;
 	char	**new_envp;
 	int		i;
-	int		len;
 
+	new_envp = copy_envp(shell->env_var, var);
+	if (!new_envp)
+		return ;
 	i = 0;
-	count = 0;
-	while (shell->env_var[count])
-		count++;
-	len = ft_strlen(var) + count;
-	new_envp = malloc(sizeof(char *) * (len) + 1);
-	while (i < count)
-	{
-		new_envp[i] = ft_strdup(shell->env_var[i]);
-		if (!new_envp[i])
-		{
-			while (i-- > 0)
-				free(new_envp[i]);
-			free(new_envp);
-			return ;
-		}
-		i++;
-	}
-	new_envp[i] = ft_strdup(var);
-	shell->env_var = copy_envp(new_envp);
+	while (shell->env_var[i])
+		free(shell->env_var[i++]);
+	free(shell->env_var);
+	shell->env_var = new_envp;
 }
 
 int	search_env(t_shell *shell, char *var)
@@ -94,7 +78,7 @@ int	search_env(t_shell *shell, char *var)
 	if (!var)
 		return (0);
 	while (var[len])
-	{
+	{							//as not caps are allowed, I'll change this condition.
 		if (var[len] == '\'' || (var[len] < 65 || var[len] > 90))
 			break ;
 		len++;
@@ -115,5 +99,9 @@ void	update_env(t_shell *shell, char *var, char *name)
 	int	pos;
 
 	pos = search_env(shell, name);
-	shell->env_var[pos] = ft_strdup(var);
+	if (pos >= 0)
+	{
+		free(shell->env_var[pos]);
+		shell->env_var[pos] = ft_strdup(var);
+	}
 }

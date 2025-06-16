@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/24 00:33:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/05/30 14:50:19 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,19 @@
 # define IN_FILE 1
 # define OUT_FILE 2
 
+# define EXPAND 3
+# define NO_EXP 4
+
+
+typedef struct token_b
+{
+	char			*builder;
+}					t_token_b;
+
 typedef struct s_token
 {
 	char			*com;
-	char			*builder;
 	struct s_token	*next;
-	bool			literal;
 }					t_token;
 
 typedef struct s_shell
@@ -48,33 +55,30 @@ typedef struct s_shell
 	char			**av;
 	char			**envp;
 	int				exit;
-
 	char			*infile;
 	char			*outfile;
 	int				redir_in;
 	int				redir_out;
+	int				env_idx;
 }					t_shell;
 
-char				*join_and_free(char *s1, char *s2);
-int					simple_word(t_token **tokens, char *str, int i);
 
+char				*process_word(char *word, t_shell *shell, int flag);
+
+int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);
+int					simple_word(t_token_b **tks, char *str, int i, t_shell *shell);
+//
+
+char				*join_and_free(char *s1, char *s2);
 void				heredoc_do(t_shell *shell, char *delimiter);
 void				readirs(int dir, t_shell *shell, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
-int					input(char *str, t_token **tokens);
+int					input(char *str, t_token **tokens, t_shell *shell);
 char				**make_args(t_token *tokens, t_shell *shell);
 char				*set_pwd(t_shell *shell);
-int					handle_single_q(t_token **tokens, char *str, int i);
 void				execute_single_cmd(char **cmd, t_shell *shell);
-
-// split tokens
-int					separator_len(char *s);
-void				insert_after_token(t_token *prev, char *word);
-void				split_and_insert_parts(t_token *curr, int i, int len);
-int					split_token_content(t_token *curr);
-void				split_tokens(t_token **tokens);
 
 // get_path
 void				process_commands(char *command, t_token **tokens,
@@ -89,7 +93,7 @@ char				**make_args_pipes(t_token *tokens);
 char				*get_path_in(char *cmd, t_shell *px);
 char				*str_join_free(char *s1, char *s2);
 void				process_token(t_token *token, char **cmd_str, char **cmds,
-						int *i);
+						int *i); //is this function still needed?
 
 // pipes
 void				pipex_error(char *msg);
@@ -138,25 +142,21 @@ void				handle_sigint_heredoc(int sig);
 //builtin
 bool				handle_builtin(char **cmd, t_shell *shell);
 void				builtin_cd(char **cmd, t_shell *shell);
-void				builtin_pwd(char **cmd, t_shell *shell);
+void				builtin_pwd(t_shell *shell);
 void				ft_export(char **cmd, t_shell *shell);
 void				builtin_unset(char **cmd, t_shell *shell);
-int					ft_echo(char **cmd, t_shell *shell);
+int					ft_echo(char **cmd);
 void				ft_exit(char **cmd, t_shell *shell);
 
 //builtin utils
 int					is_valid_directory(char *path);
 
 //env variables
-char				**copy_envp(char **envp);
+char				**copy_envp(char **envp, char *new_var);
 void				print_env(t_shell shell);
 void				add_env(t_shell *shell, char *var);
 int					search_env(t_shell *shell, char *var);
 void				update_env(t_shell *shell, char *var, char *name);
-
-//signals
-void				sig_handle(int sig);
-void				setup_sig(void);
 
 //close & free
 void				close_free(t_token *tokens, t_shell *shell);
@@ -165,16 +165,21 @@ void				deallocate(t_token **root);
 
 //for list tokens
 t_token				*new_token(char *word);
-void				add_token(t_token **head, char *word, int literal);
+void				add_token(t_token **head, char *word);
 
 //utils
 int					is_meta(char c);
 char				*join_path(char *dir, char *cmd);
 int					size_args(t_token *tokens);
-int					make_tok(t_token **tokens, char *str, int i);
+int					make_tok(t_token **tokens, char *str, int i, t_shell *shell);
 int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
 char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
+
+//var utils
+void				set_var(char **cmd, t_shell *shell, char *equal, int i);
+int					copy_env_vars(char **dest, char **src, int count);
+char				*process_env_var(char *cmd, t_shell *shell, char *prefix, int i);
 
 //testing
 void				print_list(t_token *tokens);

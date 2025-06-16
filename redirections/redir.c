@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:41:21 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/20 12:10:23 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/05/26 12:21:49 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Minishell.h"
+#include <../Minishell.h>
 
 void	heredoc_child_process(int write_fd, char *delimiter)
 {
