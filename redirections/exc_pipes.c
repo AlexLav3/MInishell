@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exc_pipes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:38:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 11:16:20 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/16 18:02:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	execute_single_redir(char **cmd, t_shell *shell)
 		return ;
 	path = get_cmd_path(cmd[0], shell);
 	if (!path)
-		return ((void)(perror("Command not found utils.c redir"), shell->exit_stat = 127));
+		return ((void)(perror("Command not found utils.c redir"),
+			shell->exit_stat = 127));
 	shell->pid1 = fork();
 	if (shell->pid1 == -1)
 		perror("fork utils.c redir");
@@ -34,12 +35,13 @@ void	execute_single_redir(char **cmd, t_shell *shell)
 		}
 	}
 	else
-    waitpid(shell->pid1, NULL, 0); //we can use WEXITSTATUS for every waitpid, u ok if I add it?
+		waitpid(shell->pid1, NULL, 0);
+			//we can use WEXITSTATUS for every waitpid, u ok if I add it?
 	if (path != cmd[0])
 		free(path);
 }
 
-void	execute_piped_commands(t_shell *px, char **cmds, int cmd_count, \
+void	execute_piped_commands(t_shell *px, char **cmds, int cmd_count,
 		t_shell *shell)
 {
 	int	i;

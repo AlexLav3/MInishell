@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 16:40:57 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:59:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 {
 	int	start;
-	int flag ;
+	int flag;
 	char *word;
 	int	tmp;
 
