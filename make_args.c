@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 18:10:45 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/16 16:04:34 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	cmd[i++] = NULL;
 	return (cmd);
 }
-// this function seems reduntant now
-// f:	I think if you would try to added straight to make_args, you would have more than 25 lines. 
-//ok but this seems a very bad way to solve it. norminette is not an excuse for bad choices. I'll see if I can come up with something else. 
+
 char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	(void)shell;

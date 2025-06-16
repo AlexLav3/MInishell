@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/06/11 14:49:32 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/16 16:27:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void	set_var(char **cmd, t_shell *shell, char *equal, int i)
 	else
 		update_env(shell, var, name);
 	free(var);
-	*equal = '='; //why putting it back to equal? f: after we check for the variable name($NAME), we restore the string back to original like NAME=Alice 
-	// - so for printing, basically. ok. As I remember the eqal sign was shown before too, but sure this works too. I honestly do not remember how I did the same thing before, if it was even different or not. so many changes I have no idea anymore
+	*equal = '=';
 }
 
 int	copy_env_vars(char **dest, char **src, int count)

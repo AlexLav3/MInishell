@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 18:14:49 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/16 16:25:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-//initial values
 void	init_pipex(t_shell *px, t_shell *shell)
 {
 	px->envp = shell->env_var;

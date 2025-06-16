@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 14:30:12 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/16 16:24:46 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,10 @@ void	free_array(char **arr)
 		i++;
 	}
 	free(arr);
-	// arr = NULL;
 }
 
 void	close_free(t_token *tokens, t_shell *shell)
 {
-	//do you think we can make a checker for if any child process hasn't been closed?
-	//fine if not, I just think it would be good practice and a nice thing to have, thoughts?
-	/*
-		what type of checker do you mean?
-		we have: while (wait(NULL) > 0)
-		which means to wait for all the child processes to finish before carry on.
-		it is in the close_pipes_and_wait() funciton - possibly. I just found  out that zombie processes can happen and they are really bvad. We don't nee d check rn. I just think it would be nice.
-	*/
 	deallocate(&tokens);
 	free_array(shell->env_var);
 	free(shell->pwd);

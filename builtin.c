@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 14:24:38 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/16 16:24:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,6 @@ void	builtin_unset(char **cmd, t_shell *shell)
 		pos = search_env(shell, cmd[i]);
 		if (pos >= 0)
 		{
-			/*
-			 couldn't this create an issue? we're looping it right after - maybe better after the loop, not before?
-			 f: that would cause a leak. We free the memory therr but still pointing to the location
-			 once it is free, we add the next node to this postion, swifting everthing back (left) - right sorry i was tired af and I did not notice/read the assignment line below, lol.
-			*/
 			free(shell->env_var[pos]);
 			while (shell->env_var[pos])
 			{
