@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 23:34:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:40:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*set_pwd(t_shell *shell)
 	char	*cwd;
 	(void)shell;
 
-	cwd = getcwd(NULL, 0); //leak here
+	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 	{
 		perror("getcwd");
