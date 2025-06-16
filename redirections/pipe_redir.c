@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 15:07:11 by ferenc            #+#    #+#             */
-/*   Updated: 2025/06/16 18:02:41 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:21:27 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 	char	**cmds;
 	int		cmd_count;
 	char	**args;
-
+	
+	(void)command;
 	args = parse_args_and_redirs(*tokens, shell);
 	strip_redirection_tokens(tokens);
 	cmds = make_args_pipes(*tokens);
