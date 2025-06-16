@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:09:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 23:25:10 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:36:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	deallocate(t_token **root)
 
 void	free_array(char **arr)
 {
-	printf("freeing\n");
 	int	i;
 
 	if (!arr)
