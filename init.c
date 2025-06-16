@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 16:42:10 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:34:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		command = readline("prompt> ");
 		if (!command)
 		{
-			deallocate(tokens);
-			pipex_error("exit");
+			close_free(*tokens, shell); 
+			write(1, "exit\n", 5);
+    		exit(EXIT_SUCCESS);
 		}
 		if (ft_strlen(command) > 0)
 			add_history(command);
@@ -64,10 +65,11 @@ char	*set_pwd(t_shell *shell)
 	char	*cwd;
 	(void)shell;
 
-	cwd = getcwd(NULL, 0);
+	cwd = getcwd(NULL, 0); //leak here
 	if (cwd == NULL)
 	{
 		perror("getcwd");
+		free(cwd);
 		return (NULL);
 	}
 	return (cwd);

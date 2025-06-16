@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 16:28:43 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:19:11 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**copy_envp(char **envp, char *new_var)
 
 	count = 0;
 	while (envp[count])
-		count++;								
+		count++;
 	copy = malloc(sizeof(char *) * (count + 1 + (new_var != NULL)));
 	if (!copy)
 		return (NULL);
@@ -48,7 +48,7 @@ char	**copy_envp(char **envp, char *new_var)
 				free(copy[count]);
 			return (free(copy), NULL);
 		}
-	}			
+	}
 	copy[count + (new_var != NULL)] = NULL;
 	return (copy);
 }
@@ -78,7 +78,7 @@ int	search_env(t_shell *shell, char *var)
 	if (!var)
 		return (0);
 	while (var[len])
-	{							
+	{
 		if (var[len] == '\'' || (var[len] < 65 || var[len] > 90))
 			break ;
 		len++;
