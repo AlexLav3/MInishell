@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 23:19:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:18:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,14 @@ int	search_env(t_shell *shell, char *var)
 	int		i;
 	size_t	len;
 
+	if (!var || !shell || !shell->env_var)
+        return (-1);
 	len = 0;
 	i = 0;
 	if (!var)
 		return (0);
-	while (var[len])
-	{
-		if (var[len] == '\'' || (var[len] < 65 || var[len] > 90))
-			break ;
+	while (var[len] && (ft_isalnum(var[len]) || var[len] == '_'))
 		len++;
-	}
 	shell->var_len = len;
 	while (shell->env_var[i])
 	{
@@ -97,11 +95,17 @@ int	search_env(t_shell *shell, char *var)
 void	update_env(t_shell *shell, char *var, char *name)
 {
 	int	pos;
-
+	char *new_val;
+	
+	if (!shell || !shell->env_var || !var || !name)
+        return;
 	pos = search_env(shell, name);
 	if (pos >= 0)
-	{
-		free(shell->env_var[pos]);
-		shell->env_var[pos] = ft_strdup(var);
-	}
+    {
+        new_val = ft_strdup(var);
+        if (!new_val)
+            return;
+        free(shell->env_var[pos]);
+        shell->env_var[pos] = new_val;
+    }
 }

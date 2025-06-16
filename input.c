@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 23:13:16 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:25:27 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	handle_meta(char *str, t_token **tokens, int i)
 	if (!word)
 		return (-1);
 	add_token(tokens, word);
-	free(word);
+    free(word);
 	return (i);
 }
 
@@ -32,6 +32,8 @@ int	input(char *str, t_token **tokens, t_shell *shell)
 {
 	int		i;
 
+	if (!str)
+        return (0);
 	i = 0;
 	while (str[i])
 	{

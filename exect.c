@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 11:21:30 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/17 00:31:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 
 	shell->pid1 = fork();
 	if (shell->pid1 == -1)
+	{
 		perror("fork");
+		shell->exit_stat = 1;
+        return;
+	}
 	else if (shell->pid1 == 0)
 	{
-		if (execve(path, cmd, shell->env_var) == -1) // is valid directory usable here instead?
+		if (execve(path, cmd, shell->env_var) == -1)
 		{
 			perror("execve failed");
 			exit(EXIT_FAILURE);
@@ -43,7 +47,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 	path = get_right_path(cmd[0], shell, 0);
 	if (!path)
 	{
-		perror("Command not found");
+		printf("%s: command not found\n", cmd[0]);
 		shell->exit_stat = 127;
 		return ;
 	}
@@ -77,9 +81,18 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 
 int	is_valid_directory(char *path)
 {
-	if (access(path, F_OK) == -1)
-		return (perror("cd: No such file or directory"), 0);
-	if (access(path, X_OK) == -1)
-		return (perror("cd: Permission denied"), 0);
-	return (1);
+	struct stat sb;
+
+    if (access(path, F_OK) == -1)
+        return (perror("cd: No such file or directory"), 0);
+    else if (stat(path, &sb) == -1)
+        return (perror("cd: stat error"), 0);
+    else if (!S_ISDIR(sb.st_mode))
+    {
+        perror("cd: Not a directory");
+        return (0);
+    }
+    else if (access(path, X_OK) == -1)
+        return (perror("cd: Permission denied"), 0);
+    return (1);
 }

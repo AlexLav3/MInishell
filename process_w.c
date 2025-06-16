@@ -14,5 +14,6 @@ char	*process_word(char *word, t_shell *shell, int flag)
 	}
 	else
 		return (word);
+	free(word);
 	return (exp);
 }

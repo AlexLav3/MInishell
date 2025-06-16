@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 16:24:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:20:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	builtin_cd(char **cmd, t_shell *shell)
 	char	*path;
 
 	if (size_cmd_arg(cmd) > 2)
+	{
+		shell->exit_stat = 1;
 		return ;
+	}
 	if (!cmd[1])
 		path = get_cmd_path(cmd[0], shell);
 	else
@@ -63,9 +66,8 @@ void	builtin_pwd(t_shell *shell)
 		shell->exit_stat = 128;
 		return ;
 	}
-	else
-		shell->exit_stat = 0;
 	printf("%s\n", shell->pwd);
+    shell->exit_stat = 0;
 }
 
 void	ft_export(char **cmd, t_shell *shell)
@@ -74,6 +76,11 @@ void	ft_export(char **cmd, t_shell *shell)
 	int		i;
 
 	i = 1;
+	if (!cmd[i])
+    {
+        print_env(*shell);
+        return ;
+    }
 	while (cmd[i])
 	{
 		equal = ft_strchr(cmd[i], '=');
@@ -81,8 +88,6 @@ void	ft_export(char **cmd, t_shell *shell)
 			set_var(cmd, shell, equal, i);
 		i++;
 	}
-	if (i == 1)
-		print_env(*shell);
 }
 
 void	builtin_unset(char **cmd, t_shell *shell)
