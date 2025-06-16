@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 00:26:03 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:15:59 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 
 # define EXPAND 3
 # define NO_EXP 4
-
 
 typedef struct token_b
 {

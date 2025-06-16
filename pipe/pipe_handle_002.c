@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 09:55:59 by ferenc            #+#    #+#             */
-/*   Updated: 2025/06/11 11:31:41 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/17 00:36:57 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	execute_cmd(char *cmd, t_shell *px)
 {
 	char	**args;
 	char	*path;
-	
+
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 		pipex_error("split");

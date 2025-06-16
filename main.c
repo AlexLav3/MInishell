@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/11 11:32:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/17 01:22:50 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		return (printf("This program does not take any arguments\n"),
 			EXIT_FAILURE);
 	init_shell(&shell, envp);
-	setup_shell_signals();
+	setup_shell_signals(); //signals already here, no need inside the loop.
 	if (!shell.exit)
 		take_comm(&token, &shell);
 	close_free(token, &shell);

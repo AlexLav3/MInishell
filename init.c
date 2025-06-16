@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 23:40:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 01:21:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 
 	while (!shell->exit)
 	{
-		signal(SIGINT, handle_sigint_prompt);
-		signal(SIGQUIT, SIG_IGN);
-		command = readline("prompt> ");
+    	command = readline("prompt> ");
 		if (!command)
 		{
 			close_free(*tokens, shell); 
