@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 18:22:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:53:40 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 {
 	int	status;
 
+	signal(SIGINT, SIG_IGN);
 	shell->pid1 = fork();
 	if (shell->pid1 == -1)
 	{
@@ -25,6 +26,8 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 	}
 	else if (shell->pid1 == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (execve(path, cmd, shell->env_var) == -1)
 		{
 			perror("execve failed");
@@ -35,6 +38,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 	{
 		waitpid(shell->pid1, &status, 0);
 		shell->exit_stat = WEXITSTATUS(status);
+		setup_shell_signals();
 	}
 }
 

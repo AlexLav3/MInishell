@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 18:23:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:49:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int	input(char *str, t_token **tokens, t_shell *shell)
 {
 	int	i;
 
-	if (!str)
-		return (0);
 	i = 0;
 	while (str[i])
 	{
