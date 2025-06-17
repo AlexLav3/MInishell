@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 00:50:19 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:23:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ static int	handle_meta(char *str, t_token **tokens, int i)
 	if (!word)
 		return (-1);
 	add_token(tokens, word);
-    free(word);
+	free(word);
 	return (i);
 }
 
 int	input(char *str, t_token **tokens, t_shell *shell)
 {
-	int		i;
+	int	i;
 
 	if (!str)
-        return (0);
+		return (0);
 	i = 0;
 	while (str[i])
 	{
@@ -82,10 +82,10 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 
 int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 {
-	int	start;
-	int flag;
-	char *word;
-	int	tmp;
+	int		start;
+	int		flag;
+	char	*word;
+	int		tmp;
 
 	tmp = i;
 	start = ++i;
@@ -111,8 +111,8 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 
 int	simple_word(t_token_b **tks, char *str, int i, t_shell *shell)
 {
-	int	start;
-	char *word;
+	int		start;
+	char	*word;
 
 	start = i;
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]) && str[i] != '\''

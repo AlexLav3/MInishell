@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 01:22:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:23:23 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		return (printf("This program does not take any arguments\n"),
 			EXIT_FAILURE);
 	init_shell(&shell, envp);
-	setup_shell_signals(); //signals already here, no need inside the loop.
+	setup_shell_signals();
 	if (!shell.exit)
 		take_comm(&token, &shell);
 	close_free(token, &shell);

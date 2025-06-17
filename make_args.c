@@ -6,11 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 16:41:05 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:24:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
+
 //cat test.txt | grep "42" | sort | wc -l (testing)
 char	**make_args(t_token *tokens, t_shell *shell)
 {
@@ -50,11 +51,11 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	char	*prefix;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	if (ft_strcmp(cmd, "$?") == 0)
 		return (ft_itoa(shell->exit_stat));
-	// if (!cmd || cmd[1] == '?')
-	// 	return (ft_strdup(cmd)); // I'll take care of this as discussed.
-	while(cmd[i])
+	while (cmd[i])
 	{
 		if (cmd[i] == '$')
 			break ;

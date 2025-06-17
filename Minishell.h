@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 01:15:59 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:23:04 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include <sys/stat.h>
 
 # define IN_FILE 1
 # define OUT_FILE 2
@@ -62,15 +62,14 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-
 // test run program in program
 char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
-
 
 char				*process_word(char *word, t_shell *shell, int flag);
 
 int					handle_q(t_token_b **tks, char *str, int i, t_shell *shell);
-int					simple_word(t_token_b **tks, char *str, int i, t_shell *shell);
+int					simple_word(t_token_b **tks, char *str, int i,
+						t_shell *shell);
 
 char				*join_and_free(char *s1, char *s2);
 void				heredoc_do(t_shell *shell, char *delimiter);
@@ -174,7 +173,8 @@ void				add_token(t_token **head, char *word);
 int					is_meta(char c);
 char				*join_path(char *dir, char *cmd);
 int					size_args(t_token *tokens);
-int					make_tok(t_token **tokens, char *str, int i, t_shell *shell);
+int					make_tok(t_token **tokens, char *str, int i,
+						t_shell *shell);
 int					is_pipe(char c);
 int					size_cmd_arg(char **cmd);
 char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
@@ -182,7 +182,8 @@ char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 //var utils
 void				set_var(char **cmd, t_shell *shell, char *equal, int i);
 int					copy_env_vars(char **dest, char **src, int count);
-char				*process_env_var(char *cmd, t_shell *shell, char *prefix, int i);
+char				*process_env_var(char *cmd, t_shell *shell, char *prefix,
+						int i);
 
 //testing
 void				print_list(t_token *tokens);

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 00:20:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:23:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	builtin_pwd(t_shell *shell)
 		return ;
 	}
 	printf("%s\n", shell->pwd);
-    shell->exit_stat = 0;
+	shell->exit_stat = 0;
 }
 
 void	ft_export(char **cmd, t_shell *shell)
@@ -77,10 +77,10 @@ void	ft_export(char **cmd, t_shell *shell)
 
 	i = 1;
 	if (!cmd[i])
-    {
-        print_env(*shell);
-        return ;
-    }
+	{
+		print_env(*shell);
+		return ;
+	}
 	while (cmd[i])
 	{
 		equal = ft_strchr(cmd[i], '=');
