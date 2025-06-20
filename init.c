@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 20:36:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:34:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	init_shell(t_shell *shell, char **envp)
 void	take_comm(t_token **tokens, t_shell *shell)
 {
 	char	*command;
-	rl_catch_signals = 0;
 
 	while (!shell->exit)
 	{

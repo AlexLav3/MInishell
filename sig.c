@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 20:52:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/21 00:38:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	setup_shell_signals(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = handle_sigint_prompt;
-	sa.sa_flags = SA_RESTART;
+	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 18:23:52 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:03:36 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_echo(char **cmd)
 void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
-
+	
 	if (size_cmd_arg(cmd) > 2)
 	{
 		shell->exit_stat = 1;
@@ -51,6 +51,7 @@ void	builtin_cd(char **cmd, t_shell *shell)
 		path = cmd[1];
 	if (!path || !is_valid_directory(path) || chdir(path) != 0)
 	{
+		printf("path %s\n" ,path);
 		shell->exit_stat = 1;
 		return ;
 	}

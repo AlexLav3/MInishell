@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 20:53:40 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/21 01:04:06 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 {
 	int	status;
 
-	signal(SIGINT, SIG_IGN);
 	shell->pid1 = fork();
 	if (shell->pid1 == -1)
 	{
@@ -27,19 +26,18 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 	else if (shell->pid1 == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
 		if (execve(path, cmd, shell->env_var) == -1)
 		{
 			perror("execve failed");
 			exit(EXIT_FAILURE);
 		}
-	}
-	else
-	{
-		waitpid(shell->pid1, &status, 0);
-		shell->exit_stat = WEXITSTATUS(status);
-		setup_shell_signals();
-	}
+	} //implied else, as both other cases are already taken care of - the remaining part is parent (below)
+	signal(SIGINT, SIG_IGN);
+	waitpid(shell->pid1, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		write(1, "\n", 1);
+	shell->exit_stat = WEXITSTATUS(status);
+	setup_shell_signals();
 }
 
 void	execute_single_cmd(char **cmd, t_shell *shell)
