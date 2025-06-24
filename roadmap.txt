@@ -16,13 +16,13 @@ P.S. I ADDED THE WERROR WEXTRA IN THE MAKEFILE
 just to check and clean up, feel free to take it off if you need.
 --reply--
 f: I think it is mandatory to have them anyway, so it is good you added them.
-
+yes, it is just annoying to have them at the beginning. 
 
 ps -eAo state,pid,comm | grep -w Z 
 this command checks for zombie processes, child processes that hasn't been terminated once the parent is close_pipes_and_wait
 atm we have none, but may be a nice check with multiple childs. 
 --reply--
-f:	how do you check it with multiple childs?
+f:	how do you check it with multiple childs? - check every time, shows if any is still going.
 	I think our child processes are handled well, so it should be okay. 
 
 -------------ISSUES AND FIXES-----------------
@@ -30,50 +30,34 @@ f:	how do you check it with multiple childs?
 
 -----------TO DO LIST-----------
 
-please check valgrind, the laptop I'm using (not mine) doesn't have it
-especially with quotes and var expantions.
---reply--
-f: 	yeah, checked. we have issue/leak in simple world function, but it has the same code in handle_q
-	so I think we will have issue there as well
-		word = process_word(ft_substr(str, start, i - start), shell, EXPAND);
-		we allocate str in ft_substring and we need to free it. 
-		Previously you called (*tks)->chunk = ft_substr(str, start, i - start);
-		Can we do it againa and add that variable into the process_word function?
-		And free it after we used it. 
+echo hello<>?:"polka"
+hello <> ?:polka 
 
---------------------18-05-26 notes ------------------------
+wrong:
+echo $D
+$D - ok, I'll fix.
 
-HEREDOC:
-heredoc examples to check:
-	if we need ot hadnle variables:
-		name="Alice"
-		cat << EOF
-		Hi $name,
-		Welcome to the shell!
-		EOF
-	result:
-		Hi Alice,
-		Welcome to the shell!
+prompt> > file echo message
+redir: : Permission denied
+message
 
-	redirecting to a file:
-		cat << EOF > myfile.txt
-		This will go into a file.
-		Not just to the terminal.
-		EOF
-	
-	using pipe:
-		cat << EOF | grep "hello"
-		hello bar
-		ooo world
-		here is is hello again
-		EOF
+//bash: (random example)
+ % ./input.c 
+zsh: permission denied: ./input.c
 
-	other command apart cat before heredoc:
-		grep "bash" << EOF | sort
-		zsh is nice
-		bash is better
-		fish is cool
-		bash rocks
-		EOF
+prompt: echo -n aa
+aa
+prompt: 
+// supposed to be: 
+prompt: echo -n aa
+aapromtpt:
+
+//bash: 
+elavrich@c3r8s1 ~/Documents/homegit/mian
+ % echo -n aa
+aa%                                                                                           
+elavrich@c3r8s1 ~/Documents/homegit/mian
+ % 
+sure it does not print a new line, but the new prompt is not on the same line. 
 
 -----------------------------------------------------------
