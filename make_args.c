@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 18:24:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:23:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
-		return (free(prefix), ft_strdup(cmd));
+		return (free(prefix), NULL);
 }

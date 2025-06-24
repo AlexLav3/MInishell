@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 18:23:43 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 18:23:44 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:24:00 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*process_word(char *word, t_shell *shell, int flag)
 	{
 		exp = handle_dollar(word, shell);
 		if (!exp)
-			return (word);
+			return (free(word), ft_strdup(""));
 	}
 	else
 		return (word);

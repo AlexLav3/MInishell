@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/21 01:04:06 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:18:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 			perror("execve failed");
 			exit(EXIT_FAILURE);
 		}
-	} //implied else, as both other cases are already taken care of - the remaining part is parent (below)
+	}
 	signal(SIGINT, SIG_IGN);
 	waitpid(shell->pid1, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
