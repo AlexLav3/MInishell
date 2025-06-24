@@ -31,7 +31,7 @@ f:	how do you check it with multiple childs? - check every time, shows if any is
 -----------TO DO LIST-----------
 
 echo hello<>?:"polka"
-hello <> ?:polka 
+hello <> ?:polka  --fixed
 
 wrong:
 echo $D
