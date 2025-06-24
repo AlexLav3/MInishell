@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/24 18:28:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:28:38 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_echo(char **cmd)
 void	builtin_cd(char **cmd, t_shell *shell)
 {
 	char	*path;
-	
+
 	if (size_cmd_arg(cmd) > 2)
 	{
 		shell->exit_stat = 1;

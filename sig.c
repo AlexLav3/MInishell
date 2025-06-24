@@ -6,13 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/21 00:38:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:28:42 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
- 
 void	setup_shell_signals(void)
 {
 	struct sigaction	sa;

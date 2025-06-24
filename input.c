@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/24 17:59:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/25 00:28:48 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 		else
 			i = simple_word(&tks, str, i, shell);
 		if (i < 0)
-				return (free(tks->builder), free(tks), -1);
+			return (free(tks->builder), free(tks), -1);
 	}
 	add_token(tokens, tks->builder);
 	return (free(tks->builder), free(tks), i);
