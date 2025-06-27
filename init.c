@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/21 00:34:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:54:26 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,26 @@ void	init_pipex(t_shell *px, t_shell *shell)
 	px->envp = shell->env_var;
 	px->pipe_fd[0] = -1;
 	px->pipe_fd[1] = -1;
+	px->prev_fd[0] = -1;
+	px->prev_fd[1] = -1;
+}
+
+void init_cmd(t_cmd *cmd) //update
+{
+	cmd->redir_in = -1;
+	cmd->redir_out = -1;
+	cmd->infile = NULL;
+	cmd->outfile = NULL;
+	cmd->args = NULL;
+	cmd->redir_error = 0;
 }
 
 void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
 	shell->exit_stat = 0;
-	shell->redir_in = -1;
-	shell->redir_out = -1;
+	// shell->redir_in = -1;
+	// shell->redir_out = -1;
 	shell->infile = NULL;
 	shell->outfile = NULL;
 	shell->env_var = copy_envp(envp, NULL);

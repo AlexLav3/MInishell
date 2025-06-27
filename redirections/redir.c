@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 06:41:21 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/24 18:27:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:58:34 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../Minishell.h>
 
+// redir.c
 void	heredoc_child_process(int write_fd, char *delimiter)
 {
 	char	*line;
@@ -62,9 +63,11 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
 	return (pid);
 }
 
-static void	handle_heredoc_parent(t_shell *shell, int pipe_fd[2], pid_t pid)
+static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell,
+									int pipe_fd[2], pid_t pid)
 {
 	int	status;
+	
 
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
@@ -72,13 +75,13 @@ static void	handle_heredoc_parent(t_shell *shell, int pipe_fd[2], pid_t pid)
 	{
 		shell->exit_stat = 130;
 		close(pipe_fd[0]);
-		shell->redir_in = -1;
+		cmd->redir_in = -1;
 	}
 	else
-		shell->redir_in = pipe_fd[0];
+		cmd->redir_in = pipe_fd[0];
 }
 
-void	heredoc_do(t_shell *shell, char *delimiter)
+void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
@@ -89,5 +92,5 @@ void	heredoc_do(t_shell *shell, char *delimiter)
 	if (pid == -1)
 		return ;
 	if (pid > 0)
-		handle_heredoc_parent(shell, pipe_fd, pid);
+		handle_heredoc_parent(cmd, shell, pipe_fd, pid);
 }

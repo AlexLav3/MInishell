@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 20:37:19 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:57:13 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
+typedef struct s_cmd {
+	char	**args;
+	int		redir_in;
+	int		redir_out;
+	char	*infile;
+	char	*outfile;
+	int		redir_error;
+}			t_cmd;
+
+
 typedef struct s_shell
 {
 	char			**env_var;
@@ -57,8 +67,6 @@ typedef struct s_shell
 	int				exit;
 	char			*infile;
 	char			*outfile;
-	int				redir_in;
-	int				redir_out;
 	int				env_idx;
 }					t_shell;
 
@@ -72,8 +80,8 @@ int					simple_word(t_token_b **tks, char *str, int i,
 						t_shell *shell);
 
 char				*join_and_free(char *s1, char *s2);
-void				heredoc_do(t_shell *shell, char *delimiter);
-void				readirs(int dir, t_shell *shell, char *com);
+void				heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter);
+void				readirs(int dir, t_cmd *cmd, char *com);
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
@@ -113,23 +121,31 @@ void				execute_cmd(char *cmd, t_shell *px);
 char				*handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
-int					handle_redirection_token(t_token *tokens, t_shell *shell);
+
+t_token				*tokenize_command(char *cmd_str);
+void				middle_child_process_redir(t_cmd *cmd, t_shell *px, char *cmd_str);
+
+int					handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell);
 int					is_redir(const char *s);
 int					count_args(t_token *tokens);
 int					token_has_redir(t_token *tokens);
-char				**parse_args_and_redirs(t_token *tokens, t_shell *shell);
-void				apply_redirection(t_shell *shell);
-void				execute_single_redir(char **cmd, t_shell *shell);
+char				**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell);
+void				apply_redirection(t_cmd *cmd);
+void				execute_single_redir(t_cmd *cmd, t_shell *shell);
 void				single_cmd_with_redir(char *command, t_token **tokens,
 						t_shell *shell);
-void				reset_redirection(t_shell *shell);
+void				reset_redirection(t_cmd *cmd);
+void				init_cmd(t_cmd *cmd);
+
+void				fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
+						t_shell *shell);
 
 void				pipe_cmds_with_redir(char *command, t_token **tokens,
 						t_shell *shell);
-void				handle_last_redir_child(t_shell *shell, t_shell *px,
-						char *cmd);
-void				handle_first_redir_child(t_shell *shell, t_shell *px,
-						char *cmd);
+void				handle_last_redir_child(t_cmd *cmd, t_shell *px,
+						char *cmd_str);
+void				handle_first_redir_child(t_cmd *cmd, t_shell *px,
+						char *cmd_str);
 void				strip_redirection_tokens(t_token **tokens);
 void				init_pipex(t_shell *px, t_shell *shell);
 void				execute_piped_commands(t_shell *px, char **cmds,
