@@ -1,5 +1,6 @@
 #include <../Minishell.h>
 
+//executor_main.c
 static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 {
 	// Setup input
@@ -73,7 +74,7 @@ void	single_cmd_with_redir(char *command, t_token **tokens, t_shell *shell)
 	{
 		if (cmd.args)
 			free_array(cmd.args);
-		reset_redirection(&cmd); // update 27 jun
+		reset_redirection(&cmd);
 		return ;
 	}
 	execute_single_redir(&cmd, shell);

@@ -1,6 +1,6 @@
 #include "../Minishell.h"
 
-
+//redir_apply.c
 static void	apply_in_redirection(t_cmd *cmd)
 {
 	int	fd;

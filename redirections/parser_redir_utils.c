@@ -1,5 +1,6 @@
 #include <../Minishell.h>
 
+//parser_redir_utils.c
 int	redir_token_in_out(t_token *tokens, t_cmd *cmd)
 {
 	if (ft_strcmp(tokens->com, "<") == 0)

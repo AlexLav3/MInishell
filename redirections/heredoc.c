@@ -1,6 +1,6 @@
 #include <../Minishell.h>
 
-// redir.c
+//heredoc.c
 static void	heredoc_child_process(int write_fd, char *delimiter)
 {
 	char	*line;

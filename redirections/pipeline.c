@@ -1,5 +1,6 @@
 #include <../Minishell.h>
 
+//pipeline.c
 static void process_and_execute(int cmd_count, char **cmd_strs, t_shell *shell, t_cmd *cmds)
 {	
 	int		i;
