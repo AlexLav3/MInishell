@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/06/16 23:06:43 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/27 16:57:25 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	set_var(char **cmd, t_shell *shell, char *equal, int i)
 	*equal = '=';
 }
 
-int	copy_env_vars(char **dest, char **src, int count)
+int	copy_env_vars(char **dest, char **src, size_t count)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < count)

@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/27 11:54:26 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/29 16:26:31 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	init_shell(t_shell *shell, char **envp)
 {
 	shell->exit = 0;
 	shell->exit_stat = 0;
-	// shell->redir_in = -1;
-	// shell->redir_out = -1;
 	shell->infile = NULL;
 	shell->outfile = NULL;
 	shell->env_var = copy_envp(envp, NULL);

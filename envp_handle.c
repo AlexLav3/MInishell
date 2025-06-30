@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/17 18:23:57 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/06/29 16:14:27 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,18 @@ void	print_env(t_shell shell)
 
 char	**copy_envp(char **envp, char *new_var)
 {
-	int		count;
-	char	**copy;
+	size_t		count;
+	char		**copy;
+	int			extra;
 
+	extra = (new_var != NULL);
 	count = 0;
 	while (envp[count])
 		count++;
-	copy = malloc(sizeof(char *) * (count + 1 + (new_var != NULL)));
+	copy = malloc(sizeof(char *) * (count + 1 + extra));
 	if (!copy)
 		return (NULL);
+	ft_memset(copy, 0, sizeof(char *) * (count + 1 + extra));
 	if (!copy_env_vars(copy, envp, count))
 		return (free(copy), NULL);
 	if (new_var)
@@ -44,12 +47,11 @@ char	**copy_envp(char **envp, char *new_var)
 		copy[count] = ft_strdup(new_var);
 		if (!copy[count])
 		{
-			while (count-- > 0)
-				free(copy[count]);
-			return (free(copy), NULL);
+			free_array(copy);
+			return (NULL);
 		}
 	}
-	copy[count + (new_var != NULL)] = NULL;
+	copy[count + extra] = NULL;
 	return (copy);
 }
 

@@ -1,19 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   redir.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 06:41:21 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/27 11:58:34 by ferenc           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <../Minishell.h>
 
 // redir.c
-void	heredoc_child_process(int write_fd, char *delimiter)
+static void	heredoc_child_process(int write_fd, char *delimiter)
 {
 	char	*line;
 
@@ -90,7 +78,10 @@ void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter)
 		return ;
 	pid = create_heredoc_child(pipe_fd, delimiter);
 	if (pid == -1)
+	{
+		cmd->redir_error = 1;
 		return ;
+	}
 	if (pid > 0)
 		handle_heredoc_parent(cmd, shell, pipe_fd, pid);
 }

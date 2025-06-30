@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/26 17:57:13 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:53:02 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int					simple_word(t_token_b **tks, char *str, int i,
 						t_shell *shell);
 
 char				*join_and_free(char *s1, char *s2);
-void				heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter);
-void				readirs(int dir, t_cmd *cmd, char *com);
+
 
 void				init_shell(t_shell *shell, char **envp);
 void				take_comm(t_token **tokens, t_shell *shell);
@@ -121,37 +120,46 @@ void				execute_cmd(char *cmd, t_shell *px);
 char				*handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
+//executor_main.c (static: 2)
+void	execute_piped_commands(t_shell *px, t_cmd *cmds,
+			int cmd_count, t_shell *shell);
+void	single_cmd_with_redir(char *command, t_token **tokens, t_shell *shell);
+void	execute_single_redir(t_cmd *cmd, t_shell *shell);
+// executor_utils.c
+void	handle_exit_status(t_shell *shell, int status);
+int	prep_command_path(t_cmd *cmd, t_shell *shell, char **path);
+void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell);
+void	execve_cmd(t_cmd *cmd, t_shell *shell);
+void	close_all_pipe_fds(t_shell *px);
+//heredoc.c (static: 4)
+void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter);
+//parser_redir_utils.c
+int	redir_token_in_out(t_token *tokens, t_cmd *cmd);
+int	redir_token_append(t_token *tokens, t_cmd *cmd);
+int	handle_arg_token(t_token *token, char **args, int *i);
+void	readirs(int dir, t_cmd *cmd, char *com);
+//parser_redir.c
+char	**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell);
+int	handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell);
+void	fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
+			t_shell *shell);
+//pipeline.c (static: 1)
+void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell);
+//redir_apply.c (static: 2)
+void	apply_redirection(t_cmd *cmd);
+void	reset_redirection(t_cmd *cmd);
+//token_utils.c (static: 1)
+int	is_redir(const char *s);
+int	token_has_redir(t_token *tokens);
+void	strip_redirection_tokens(t_token **tokens);
 
 t_token				*tokenize_command(char *cmd_str);
-void				middle_child_process_redir(t_cmd *cmd, t_shell *px, char *cmd_str);
-
-int					handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell);
-int					is_redir(const char *s);
 int					count_args(t_token *tokens);
-int					token_has_redir(t_token *tokens);
-char				**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell);
-void				apply_redirection(t_cmd *cmd);
-void				execute_single_redir(t_cmd *cmd, t_shell *shell);
-void				single_cmd_with_redir(char *command, t_token **tokens,
-						t_shell *shell);
-void				reset_redirection(t_cmd *cmd);
 void				init_cmd(t_cmd *cmd);
-
-void				fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
-						t_shell *shell);
-
-void				pipe_cmds_with_redir(char *command, t_token **tokens,
-						t_shell *shell);
-void				handle_last_redir_child(t_cmd *cmd, t_shell *px,
-						char *cmd_str);
-void				handle_first_redir_child(t_cmd *cmd, t_shell *px,
-						char *cmd_str);
-void				strip_redirection_tokens(t_token **tokens);
 void				init_pipex(t_shell *px, t_shell *shell);
-void				execute_piped_commands(t_shell *px, char **cmds,
-						int cmd_count, t_shell *shell);
 
-void				heredoc_child_process(int write_fd, char *delimiter);
+// signals
+
 void				setup_shell_signals(void);
 void				handle_sigint_prompt(int sig);
 void				setup_heredoc_signals(void);
@@ -197,7 +205,7 @@ char				*toks_to_args(t_token *tokens, char *cmd, t_shell *shell);
 
 //var utils
 void				set_var(char **cmd, t_shell *shell, char *equal, int i);
-int					copy_env_vars(char **dest, char **src, int count);
+int					copy_env_vars(char **dest, char **src, size_t count);
 char				*process_env_var(char *cmd, t_shell *shell, char *prefix,
 						int i);
 
