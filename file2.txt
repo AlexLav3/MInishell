@@ -1,34 +1,4 @@
-drwxrwxr-x 2 ferenc ferenc   4096 Jun 26 10:17 pipe
-drwxrwxr-x 2 ferenc ferenc   4096 Jun 30 18:40 redirections
-drwxrwxr-x 4 ferenc ferenc   4096 Jun 30 18:58 bin
-drwxrwxr-x 5 ferenc ferenc   4096 Jun 26 10:17 libft
--rw-r--r-- 1 ferenc ferenc      0 Jun 27 15:34 lines.txt
--rw-r--r-- 1 ferenc ferenc      0 Jun 30 18:59 file2.txt
--rw-r--r-- 1 ferenc ferenc     93 Jun 29 10:44 file3.txt
--rw-rw-r-- 1 ferenc ferenc  10788 Jun 29 12:07 allinone_redir.c
--rw-rw-r-- 1 ferenc ferenc  11131 Jun 29 14:55 alltofix_redir.c
--rw-rw-r-- 1 ferenc ferenc   1216 Jun 26 10:17 process_w.c
--rw-rw-r-- 1 ferenc ferenc   1313 Jun 26 10:17 main.c
--rw-rw-r-- 1 ferenc ferenc   1321 Jun 26 10:17 utils.c
--rw-rw-r-- 1 ferenc ferenc   1427 Jun 26 10:17 tokens.c
--rw-rw-r-- 1 ferenc ferenc   1456 Jun 26 10:17 counters.c
--rw-rw-r-- 1 ferenc ferenc    150 Jun 26 10:17 test.supp
--rw-rw-r-- 1 ferenc ferenc   1511 Jun 26 10:17 sig.c
--rw-rw-r-- 1 ferenc ferenc   1565 Jun 26 12:07 clean_exit.c
--rw-rw-r-- 1 ferenc ferenc   1831 Jun 26 10:17 roadmap.txt
--rw-rw-r-- 1 ferenc ferenc   1873 Jun 26 10:17 process_cmd.c
--rw-rw-r-- 1 ferenc ferenc   1965 Jun 26 10:17 make_args.c
--rw-rw-r-- 1 ferenc ferenc   1986 Jun 26 10:17 path.c
--rw-rw-r-- 1 ferenc ferenc   2030 Jun 27 16:57 var_utils.c
--rw-rw-r-- 1 ferenc ferenc   2137 Jun 29 16:26 init.c
--rw-rw-r-- 1 ferenc ferenc    227 Jun 26 10:17 test.txt
--rw-rw-r-- 1 ferenc ferenc   2327 Jun 26 10:17 builtin.c
--rw-rw-r-- 1 ferenc ferenc   2663 Jun 29 16:14 envp_handle.c
--rw-rw-r-- 1 ferenc ferenc   2920 Jun 26 10:17 input.c
--rw-rw-r-- 1 ferenc ferenc   2958 Jun 26 10:17 exect.c
--rw-rw-r-- 1 ferenc ferenc    658 Jun 26 17:15 tokenize.c
--rw-rw-r-- 1 ferenc ferenc   6892 Jun 30 18:53 Minishell.h
--rw-rw-r-- 1 ferenc ferenc    906 Jun 30 18:40 Makefile
--rwxrwxrwx 1 ferenc ferenc      0 Jun 30 18:59 file.txt
--rwxrwxr-x 1 ferenc ferenc 107960 Jun 30 18:58 minishell
-total 244
+fdfdfd
+fdfdfdf
+df
+dfd
