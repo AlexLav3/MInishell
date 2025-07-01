@@ -1,6 +1,15 @@
 #include <../Minishell.h>
 
 //executor_main.c
+
+/* 
+ * This function sets up the `stdin` and `stdout` of a child process
+ * depending on the current command's redirection flags and its position
+ * in the pipeline. It uses `dup2()` to redirect input/output from/to:
+ * - Redirection file descriptors if present
+ * - Previous pipe for input (if not the first command)
+ * - Next pipe for output (if not the last command)
+ */
 static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 {
 	// Setup input
@@ -26,7 +35,12 @@ static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 			pipex_error("dup2 pipe_fd[1]");
 	}
 }
-
+/*
+ * Closes the previous pipe file descriptors if open, then assigns the
+ * current pipe's file descriptors to `prev_fd` in preparation for the
+ * next iteration of piped execution.
+ * This ensures correct chaining of pipes across multiple commands.
+ */
 static void	update_fds(t_shell *px)
 {
 	if (px->prev_fd[0] != -1)
@@ -38,7 +52,15 @@ static void	update_fds(t_shell *px)
 	px->pipe_fd[0] = -1;
 	px->pipe_fd[1] = -1;
 }
-
+/*
+ * Forks and executes each command in the pipeline. For each command:
+ * - Creates a pipe (unless it's the last one)
+ * - Forks a child process
+ * - Sets up redirections and pipe connections using `setup_in_out`
+ * - Calls `execve_cmd()` in the child
+ * - In the parent, updates pipe file descriptors
+ * At the end, it waits for all child processes.
+ */
 void	execute_piped_commands(t_shell *px, t_cmd *cmds,
 			int cmd_count, t_shell *shell)
 {
@@ -63,6 +85,14 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds,
 	}
 	close_pipes_and_wait(px);
 }
+
+/*
+ * Handles a single, non-piped command with potential redirections.
+ * Parses arguments and redirection tokens, and if valid,
+ * executes the command using `execute_single_redir()`.
+ * Performs memory cleanup afterward.
+ */
+
 void	single_cmd_with_redir(char *command, t_token **tokens, t_shell *shell)
 {
 	t_cmd	cmd;
@@ -81,6 +111,15 @@ void	single_cmd_with_redir(char *command, t_token **tokens, t_shell *shell)
 	free_array(cmd.args);
 	reset_redirection(&cmd);
 }
+
+/*
+ * Executes a single command with redirection.
+ * - Prepares the command path using `prep_command_path`
+ * - Forks a child process
+ * - In child: applies redirection and runs execve
+ * - In parent: waits and handles the exit status
+ * Frees the command path if necessary.
+ */
 
 void	execute_single_redir(t_cmd *cmd, t_shell *shell)
 {

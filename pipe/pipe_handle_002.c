@@ -1,6 +1,11 @@
 #include "../Minishell.h"
 
 // pipe_handle_002.c
+
+/*
+ * Handles the first command in a pipeline.
+ * Redirects STDOUT to pipe write end and executes the command.
+ */
 void	first_child_process(t_shell *px, char *cmd)
 {
 	if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
@@ -10,6 +15,10 @@ void	first_child_process(t_shell *px, char *cmd)
 	execute_cmd(cmd, px);
 }
 
+/*
+ * Handles the last command in a pipeline.
+ * Redirects STDIN from pipe read end and executes the command.
+ */
 void	last_child_process(t_shell *px, char *cmd)
 {
 	if (dup2(px->pipe_fd[0], STDIN_FILENO) == -1)
@@ -19,6 +28,11 @@ void	last_child_process(t_shell *px, char *cmd)
 	execute_cmd(cmd, px);
 }
 
+/*
+ * Handles intermediate commands in a pipeline.
+ * Redirects STDIN from previous pipe read end,
+ * and STDOUT to current pipe write end, then executes.
+ */
 void	middle_child_process(t_shell *px, char *cmd)
 {
 	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
@@ -31,6 +45,10 @@ void	middle_child_process(t_shell *px, char *cmd)
 	exit(0);
 }
 
+/*
+ * Closes all remaining pipe FDs in the parent process.
+ * Waits for all child processes to finish using `wait`.
+ */
 void	close_pipes_and_wait(t_shell *px)
 {
 	if (px->pipe_fd[0] != -1) // >= 0 change back all
@@ -44,7 +62,10 @@ void	close_pipes_and_wait(t_shell *px)
 	while (wait(NULL) > 0)
 		;
 }
-
+/*
+ * Parses a command string into args and searches for the binary path.
+ * If found, executes the command with `execve`, else prints an error.
+ */
 void	execute_cmd(char *cmd, t_shell *px)
 {
 	char	**args;

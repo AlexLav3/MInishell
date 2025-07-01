@@ -1,6 +1,12 @@
 #include "../Minishell.h"
 
 //redir_apply.c
+
+/*
+ * Sets up input redirection for a command.
+ * Handles either an input file (`infile`) or a heredoc/pipe FD (`redir_in`).
+ * Uses `dup2` to redirect STDIN, then closes the used FD if needed.
+ */
 static void	apply_in_redirection(t_cmd *cmd)
 {
 	int	fd;
@@ -28,6 +34,11 @@ static void	apply_in_redirection(t_cmd *cmd)
 	}
 }
 
+/*
+ * Sets up output redirection for a command.
+ * Handles either an output file (`outfile`) or a pipe/appending FD (`redir_out`).
+ * Uses `dup2` to redirect STDOUT, then closes the used FD if needed.
+ */
 static void	apply_out_redirection(t_cmd *cmd)
 {
 	int	fd;
@@ -55,6 +66,10 @@ static void	apply_out_redirection(t_cmd *cmd)
 	}
 }
 
+/*
+ * Central function to apply input/output redirection.
+ * Checks for redirection errors first and applies both input and output setups if necessary.
+ */
 void	apply_redirection(t_cmd *cmd)
 {
 	if (cmd->redir_error)
@@ -64,7 +79,10 @@ void	apply_redirection(t_cmd *cmd)
 	if (cmd->outfile || cmd->redir_out != -1)
 		apply_out_redirection(cmd);
 }
-
+/*
+* Frees file paths (`infile`, `outfile`) and closes any open redirection FDs (`redir_in`, `redir_out`).
+* Used after command execution to clean up the `t_cmd` structure.
+*/
 void	reset_redirection(t_cmd *cmd)
 {
 	if (cmd->infile)

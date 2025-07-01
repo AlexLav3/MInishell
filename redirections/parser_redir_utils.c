@@ -1,6 +1,11 @@
 #include <../Minishell.h>
 
 //parser_redir_utils.c
+
+/*
+ * Opens input or output files based on `<` or `>` token.
+ * Updates the corresponding file descriptors in `t_cmd`.
+ */
 int	redir_token_in_out(t_token *tokens, t_cmd *cmd)
 {
 	if (ft_strcmp(tokens->com, "<") == 0)
@@ -15,7 +20,11 @@ int	redir_token_in_out(t_token *tokens, t_cmd *cmd)
 	}
 	return (0);
 }
-
+/*
+ * Handles the `>>` token for append redirection.
+ * Opens the output file in append mode.
+ * Sets `redir_out` and marks error if the file cannot be opened.
+ */
 int	redir_token_append(t_token *tokens, t_cmd *cmd)
 {
 	if (cmd->outfile)
@@ -37,6 +46,10 @@ int	redir_token_append(t_token *tokens, t_cmd *cmd)
 	return (1);
 }
 
+/*
+ * Copies a token into the args array.
+ * Handles memory allocation errors and cleanup.
+ */
 int	handle_arg_token(t_token *token, char **args, int *i)
 {
 	if (!token->com)
@@ -53,6 +66,11 @@ int	handle_arg_token(t_token *token, char **args, int *i)
 	return (1);
 }
 
+/*
+ * Generic helper for input (`<`) or output (`>`) redirection.
+ * Trims whitespace, opens file with appropriate flags, stores path,
+ * and updates `redir_in` or `redir_out`. Marks errors on failure.
+ */
 void	readirs(int dir, t_cmd *cmd, char *com)
 {
 	if (dir == IN_FILE)

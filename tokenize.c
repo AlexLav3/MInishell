@@ -1,6 +1,11 @@
-// tokenize.c
 #include "Minishell.h"
 
+// tokenize.c
+
+/*
+ * Allocates and returns a new t_token node with the given word.
+ * Sets the `com` field using ft_strdup and initializes `next` to NULL.
+ */
 static t_token	*create_token(char *word)
 {
 	t_token	*token;
@@ -13,6 +18,11 @@ static t_token	*create_token(char *word)
 	return (token);
 }
 
+/*
+ * Splits a command string by spaces into words and creates a linked list of tokens.
+ * Each word is wrapped in a t_token using create_token.
+ * Returns the head of the token list, or NULL on failure.
+ */
 t_token	*tokenize_command(char *cmd_str)
 {
 	t_token	*head = NULL;

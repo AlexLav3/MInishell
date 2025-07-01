@@ -1,6 +1,12 @@
 #include <../Minishell.h>
 
 //parser_redir.c
+
+/*
+ * Parses the command's tokens into arguments and handles redirection
+ * tokens (e.g. `<`, `>`, `>>`, `<<`). Returns the final arguments array.
+ * Sets redirection fields in the `t_cmd` struct.
+ */
 char	**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell)
 {
 	char	**args;
@@ -17,6 +23,11 @@ char	**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell)
 	return (args);
 }
 
+/*
+ * Checks the token type and handles redirection accordingly.
+ * Delegates to appropriate functions for `<`, `>`, `>>`, or `<<`.
+ * Returns 1 if it was a redirection token.
+ */
 int	handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell)
 {
 	if (cmd->redir_error)
@@ -38,6 +49,11 @@ int	handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
+/*
+ * Iterates over tokens and fills the args array.
+ * Skips redirection tokens using `handle_redirection_token`.
+ * Adds normal command arguments using `handle_arg_token`.
+ */
 void	fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
 			t_shell *shell)
 {

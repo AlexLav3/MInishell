@@ -1,12 +1,21 @@
 #include "../Minishell.h"
 
 // pipe_handle_001.c
+
+/*
+ * Simple error handler that prints a message using `perror`
+ * and exits the program with failure.
+ */
 void	pipex_error(char *msg)
 {
 	perror(msg);
 	exit(EXIT_FAILURE);
 }
 
+/*
+ * Counts how many commands are in a null-terminated string array.
+ * Used to determine how many pipes/processes to set up.
+ */
 int	cmd_counter(char **cmds)
 {
 	int	i;
@@ -17,6 +26,11 @@ int	cmd_counter(char **cmds)
 	return (i);
 }
 
+/*
+ * Manages closing pipe file descriptors after forking a child.
+ * Closes read end from previous command and write end of current pipe.
+ * Prepares `prev_fd` for the next command in the chain.
+ */
 void	fd_handle(int i, int cmd_count, t_shell *px)
 {
 	if (i > 0 && px->prev_fd[0] >= 0)
@@ -27,6 +41,10 @@ void	fd_handle(int i, int cmd_count, t_shell *px)
 		px->prev_fd[0] = px->pipe_fd[0];
 }
 
+/*
+ * Decides which child function to run based on position in pipeline:
+ * first, middle, or last. Also closes unused FDs in each child.
+ */
 void	which_child(int i, int cmd_count, t_shell *px, char **cmds)
 {
 	if (i == 0)
@@ -41,6 +59,11 @@ void	which_child(int i, int cmd_count, t_shell *px, char **cmds)
 		close(px->pipe_fd[1]);
 }
 
+/*
+ * Main function to execute a sequence of piped commands.
+ * Iterates through commands, sets up pipes and forks children.
+ * Each child handles one command. Parent closes FDs and waits.
+ */
 void	create_pipes(char **cmds, t_shell *shell)
 {
 	int		i;

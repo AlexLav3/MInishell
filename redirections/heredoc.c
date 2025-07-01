@@ -1,6 +1,12 @@
 #include <../Minishell.h>
 
 //heredoc.c
+
+/*
+ * Child process responsible for reading heredoc input line-by-line
+ * until the specified delimiter is encountered. Each line is written
+ * to the write-end of the heredoc pipe.
+ */
 static void	heredoc_child_process(int write_fd, char *delimiter)
 {
 	char	*line;
@@ -20,7 +26,9 @@ static void	heredoc_child_process(int write_fd, char *delimiter)
 	close(write_fd);
 	exit(0);
 }
-
+/*
+ * Creates a pipe to hold heredoc input. Returns -1 on failure.
+ */
 static int	init_heredoc_pipe(int pipe_fd[2])
 {
 	if (pipe(pipe_fd) == -1)
@@ -31,6 +39,10 @@ static int	init_heredoc_pipe(int pipe_fd[2])
 	return (0);
 }
 
+/*
+ * Forks a child process that writes heredoc input into the pipe.
+ * In the child, closes read end and calls `heredoc_child_process`.
+ */
 static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
 {
 	pid_t	pid;
@@ -51,6 +63,12 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
 	return (pid);
 }
 
+/*
+ * Parent process after forking heredoc child.
+ * - Waits for child to finish
+ * - If interrupted by SIGINT, sets error and closes pipe
+ * - Otherwise, stores read-end of pipe for command input
+ */
 static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell,
 									int pipe_fd[2], pid_t pid)
 {
@@ -68,7 +86,13 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell,
 	else
 		cmd->redir_in = pipe_fd[0];
 }
-
+/*
+ * Orchestrates the heredoc creation process.
+ * - Initializes the pipe
+ * - Forks child to read heredoc input
+ * - Handles parent logic and stores input fd
+ * Marks the command as errored on any failure.
+ */
 void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter)
 {
 	int		pipe_fd[2];

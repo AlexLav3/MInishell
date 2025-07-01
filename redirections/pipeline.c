@@ -1,6 +1,14 @@
 #include <../Minishell.h>
 
 //pipeline.c
+
+/*
+ * Used by piped command execution.
+ * - Initializes `t_cmd` structs and tokenizes subcommands
+ * - Parses args and redirections for each command
+ * - Executes all via `execute_piped_commands`
+ * - Cleans up tokens and memory
+ */
 static void process_and_execute(int cmd_count, char **cmd_strs, t_shell *shell, t_cmd *cmds)
 {	
 	int		i;
@@ -23,6 +31,11 @@ static void process_and_execute(int cmd_count, char **cmd_strs, t_shell *shell, 
 	free_array(cmd_strs);
 }
 
+/*
+ * Entry point for handling a full pipeline (commands with `|`).
+ * Splits into individual commands, initializes `t_cmd` array,
+ * processes and executes all using `process_and_execute`.
+ */
 void	pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell)
 {
 	t_cmd	*cmds;

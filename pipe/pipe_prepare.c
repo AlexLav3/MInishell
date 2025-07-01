@@ -1,6 +1,11 @@
 #include "../Minishell.h"
 
 // pipe_prepare.c
+
+/*
+ * Checks if the token list contains any pipe (`|`) symbols.
+ * Used to decide whether to enter pipe execution logic.
+ */
 int	token_has_pipe(t_token *tokens)
 {
 	while (tokens)
@@ -12,6 +17,10 @@ int	token_has_pipe(t_token *tokens)
 	return (0);
 }
 
+/*
+ * Joins two strings and frees both inputs.
+ * Returns the new combined string. Used during command building.
+ */
 char	*str_join_free(char *s1, char *s2)
 {
 	char	*tmp;
@@ -22,6 +31,11 @@ char	*str_join_free(char *s1, char *s2)
 	return (tmp);
 }
 
+/*
+ * Builds command strings from tokens.
+ * On pipe token, finalizes current command and moves to next.
+ * Otherwise, adds token to current command string.
+ */
 void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 {
 	char	*tmp;
@@ -42,7 +56,10 @@ void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 			*cmd_str = ft_strdup(token->com);
 	}
 }
-
+/*
+ * Converts a token list into an array of command strings split by pipes.
+ * Each element in the array is a command (with args) to be executed.
+ */
 char	**make_args_pipes(t_token *tokens)
 {
 	char	**cmds;
@@ -65,7 +82,10 @@ char	**make_args_pipes(t_token *tokens)
 	cmds[i] = NULL;
 	return (cmds);
 }
-
+/*
+ * Searches `$PATH` for the full path to a given command.
+ * Returns the first matching executable path, or NULL if not found.
+ */
 char	*get_path_in(char *cmd, t_shell *px)
 {
 	int		i;
