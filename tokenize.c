@@ -6,6 +6,7 @@
  * Allocates and returns a new t_token node with the given word.
  * Sets the `com` field using ft_strdup and initializes `next` to NULL.
  */
+//function exists already (tokens.c)
 static t_token	*create_token(char *word)
 {
 	t_token	*token;
@@ -23,6 +24,7 @@ static t_token	*create_token(char *word)
  * Each word is wrapped in a t_token using create_token.
  * Returns the head of the token list, or NULL on failure.
  */
+ //why the need of this? also can be moved in tokens.c
 t_token	*tokenize_command(char *cmd_str)
 {
 	t_token	*head = NULL;

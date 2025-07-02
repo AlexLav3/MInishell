@@ -16,6 +16,7 @@ void	pipex_error(char *msg)
  * Counts how many commands are in a null-terminated string array.
  * Used to determine how many pipes/processes to set up.
  */
+//identical function is in counters
 int	cmd_counter(char **cmds)
 {
 	int	i;

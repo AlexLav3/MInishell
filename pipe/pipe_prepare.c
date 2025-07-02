@@ -21,6 +21,7 @@ int	token_has_pipe(t_token *tokens)
  * Joins two strings and frees both inputs.
  * Returns the new combined string. Used during command building.
  */
+ //don't we have this already?
 char	*str_join_free(char *s1, char *s2)
 {
 	char	*tmp;
