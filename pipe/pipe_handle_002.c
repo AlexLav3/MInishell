@@ -51,7 +51,7 @@ void	middle_child_process(t_shell *px, char *cmd)
  */
 void	close_pipes_and_wait(t_shell *px)
 {
-	if (px->pipe_fd[0] != -1) // >= 0 change back all
+	if (px->pipe_fd[0] != -1)
 		close(px->pipe_fd[0]);
 	if (px->pipe_fd[1] != -1)
 		close(px->pipe_fd[1]);
