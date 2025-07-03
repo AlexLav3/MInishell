@@ -1,6 +1,6 @@
 NAME = minishell
 BIN = bin
-CC = cc -g -Wall -Werror -Wextra
+CC = cc -g -Wall -Werror -Wextra -Wunused-function
 CFLAGS =  -Ilibft 
 LDFLAGS = -lreadline
 
