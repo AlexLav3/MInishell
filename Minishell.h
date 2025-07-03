@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 13:49:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/03 14:35:24 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void				process_token(t_token *token, char **cmd_str, char **cmds,
 
 // pipes
 void				pipex_error(char *msg);
-int					cmd_counter(char **cmds);
 void				fd_handle(int i, int cmd_count, t_shell *px);
 void				which_child(int i, int cmd_count, t_shell *px, char **cmds);
 void				create_pipes(char **cmds, t_shell *shell);
