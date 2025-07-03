@@ -13,21 +13,6 @@ void	pipex_error(char *msg)
 }
 
 /*
- * Counts how many commands are in a null-terminated string array.
- * Used to determine how many pipes/processes to set up.
- */
-//identical function is in counters
-int	cmd_counter(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i])
-		i++;
-	return (i);
-}
-
-/*
  * Manages closing pipe file descriptors after forking a child.
  * Closes read end from previous command and write end of current pipe.
  * Prepares `prev_fd` for the next command in the chain.
@@ -73,7 +58,7 @@ void	create_pipes(char **cmds, t_shell *shell)
 
 	i = -1;
 	init_pipex(&px, shell);
-	cmd_count = cmd_counter(cmds);
+	cmd_count = size_cmd_arg(cmds);
 	while (++i < cmd_count)
 	{
 		if (i < cmd_count - 1)

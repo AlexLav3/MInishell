@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 14:35:24 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/03 14:48:56 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void				pipe_cmds(char *command, t_token **tokens, t_shell *shell);
 int					token_has_pipe(t_token *tokens);
 char				**make_args_pipes(t_token *tokens);
 char				*get_path_in(char *cmd, t_shell *px);
-char				*str_join_free(char *s1, char *s2);
 void				process_token(t_token *token, char **cmd_str, char **cmds,
 						int *i);
 
@@ -157,7 +156,6 @@ void				reset_redirection(t_cmd *cmd);
 //token_utils.c (static: 1)
 int					is_redir(const char *s);
 int					token_has_redir(t_token *tokens);
-void				strip_redirection_tokens(t_token **tokens);
 
 int					count_args(t_token *tokens);
 void				init_cmd(t_cmd *cmd);

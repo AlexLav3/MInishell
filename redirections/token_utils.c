@@ -60,26 +60,3 @@ static void	remove_redir(t_token **tokens, t_token **curr, t_token **prev)
 	free(next_token);
 }
 
-/*
- * Iterates through the token list and removes all redirection-related tokens.  - alex: why taking them off? Bash doesn't, is there any specific reason you are?
- * Used after parsing redirections so they don't interfere with argument processing.
- * This ensures the remaining tokens are just command arguments or pipes.
-*/
-void	strip_redirection_tokens(t_token **tokens)
-{
-	t_token	*curr;
-	t_token	*prev;
-
-	curr = *tokens;
-	prev = NULL;
-	while (curr && curr->next)
-	{
-		if (is_redir(curr->com))
-			remove_redir(tokens, &curr, &prev);
-		else
-		{
-			prev = curr;
-			curr = curr->next;
-		}
-	}
-}
