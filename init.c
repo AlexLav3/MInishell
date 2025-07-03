@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:46:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:58:36 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_pipex(t_shell *px, t_shell *shell)
 	px->prev_fd[1] = -1;
 }
 
-void	init_cmd(t_cmd *cmd) //update
+void	init_cmd(t_cmd *cmd)
 {
 	cmd->redir_in = -1;
 	cmd->redir_out = -1;
