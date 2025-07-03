@@ -18,21 +18,6 @@ int	token_has_pipe(t_token *tokens)
 }
 
 /*
- * Joins two strings and frees both inputs.
- * Returns the new combined string. Used during command building.
- */
- //don't we have this already?
-char	*str_join_free(char *s1, char *s2)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(s1, s2);
-	free(s1);
-	free(s2);
-	return (tmp);
-}
-
-/*
  * Builds command strings from tokens.
  * On pipe token, finalizes current command and moves to next.
  * Otherwise, adds token to current command string.
@@ -51,7 +36,7 @@ void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 		if (*cmd_str)
 		{
 			tmp = ft_strjoin(" ", token->com);
-			*cmd_str = str_join_free(*cmd_str, tmp);
+			*cmd_str = join_and_free(*cmd_str, tmp);
 		}
 		else
 			*cmd_str = ft_strdup(token->com);
