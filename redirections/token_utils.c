@@ -1,6 +1,16 @@
-#include "../Minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:50:10 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:51:00 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//token_utils.c
+#include "../Minishell.h"
 
 /*
  * Utility to check if a given string is a redirection symbol
@@ -38,8 +48,10 @@ int	token_has_redir(t_token *tokens)
 /*
  * Helper function that removes a redirection token and its associated argument
  * from the token list, adjusting pointers and freeing memory.
- * It removes **a single redirection token and its argument** from the linked list.
- * For example, given tokens: [ls] [>] [file.txt], it removes both ">" and "file.txt".
+ * It removes **a single redirection token 
+ * and its argument** from the linked list.
+ * For example, given tokens: [ls] [>] [file.txt], 
+ * it removes both ">" and "file.txt".
  */
 static void	remove_redir(t_token **tokens, t_token **curr, t_token **prev)
 {
@@ -58,4 +70,3 @@ static void	remove_redir(t_token **tokens, t_token **curr, t_token **prev)
 	free(next_token->com);
 	free(next_token);
 }
-

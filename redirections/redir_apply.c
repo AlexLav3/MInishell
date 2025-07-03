@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir_apply.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:44:09 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:45:34 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Minishell.h"
 
 //redir_apply.c
@@ -36,7 +48,8 @@ static void	apply_in_redirection(t_cmd *cmd)
 
 /*
  * Sets up output redirection for a command.
- * Handles either an output file (`outfile`) or a pipe/appending FD (`redir_out`).
+ * Handles either an output file (`outfile`) 
+ * or a pipe/appending FD (`redir_out`).
  * Uses `dup2` to redirect STDOUT, then closes the used FD if needed.
  */
 static void	apply_out_redirection(t_cmd *cmd)
@@ -68,7 +81,8 @@ static void	apply_out_redirection(t_cmd *cmd)
 
 /*
  * Central function to apply input/output redirection.
- * Checks for redirection errors first and applies both input and output setups if necessary.
+ * Checks for redirection errors first 
+ * and applies both input and output setups if necessary.
  */
 void	apply_redirection(t_cmd *cmd)
 {
@@ -79,8 +93,10 @@ void	apply_redirection(t_cmd *cmd)
 	if (cmd->outfile || cmd->redir_out != -1)
 		apply_out_redirection(cmd);
 }
+
 /*
-* Frees file paths (`infile`, `outfile`) and closes any open redirection FDs (`redir_in`, `redir_out`).
+* Frees file paths (`infile`, `outfile`) and 
+* closes any open redirection FDs (`redir_in`, `redir_out`).
 * Used after command execution to clean up the `t_cmd` structure.
 */
 void	reset_redirection(t_cmd *cmd)

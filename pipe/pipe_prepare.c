@@ -1,6 +1,16 @@
-#include "../Minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_prepare.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:34:41 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:34:51 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// pipe_prepare.c
+#include "../Minishell.h"
 
 /*
  * Checks if the token list contains any pipe (`|`) symbols.
@@ -42,6 +52,7 @@ void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 			*cmd_str = ft_strdup(token->com);
 	}
 }
+
 /*
  * Converts a token list into an array of command strings split by pipes.
  * Each element in the array is a command (with args) to be executed.
@@ -68,6 +79,7 @@ char	**make_args_pipes(t_token *tokens)
 	cmds[i] = NULL;
 	return (cmds);
 }
+
 /*
  * Searches `$PATH` for the full path to a given command.
  * Returns the first matching executable path, or NULL if not found.

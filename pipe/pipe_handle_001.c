@@ -1,6 +1,16 @@
-#include "../Minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_handle_001.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:33:54 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// pipe_handle_001.c
+#include "../Minishell.h"
 
 /*
  * Simple error handler that prints a message using `perror`

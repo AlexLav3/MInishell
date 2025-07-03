@@ -1,6 +1,16 @@
-#include <../Minishell.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:38:24 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//heredoc.c
+#include <../Minishell.h>
 
 /*
  * Child process responsible for reading heredoc input line-by-line
@@ -26,6 +36,7 @@ static void	heredoc_child_process(int write_fd, char *delimiter)
 	close(write_fd);
 	exit(0);
 }
+
 /*
  * Creates a pipe to hold heredoc input. Returns -1 on failure.
  */
@@ -69,11 +80,10 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
  * - If interrupted by SIGINT, sets error and closes pipe
  * - Otherwise, stores read-end of pipe for command input
  */
-static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell,
-									int pipe_fd[2], pid_t pid)
+static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
+		pid_t pid)
 {
 	int	status;
-	
 
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
@@ -86,6 +96,7 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell,
 	else
 		cmd->redir_in = pipe_fd[0];
 }
+
 /*
  * Orchestrates the heredoc creation process.
  * - Initializes the pipe

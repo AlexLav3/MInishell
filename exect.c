@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:28:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/03 20:46:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 
 	shell->pid1 = fork();
 	if (shell->pid1 == -1)
-	{	
+	{
 		perror("fork");
 		shell->exit_stat = 1;
 		return ;

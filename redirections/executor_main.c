@@ -1,6 +1,16 @@
-#include <../Minishell.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor_main.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:37:33 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//executor_main.c
+#include <../Minishell.h>
 
 /* 
  * This function sets up the `stdin` and `stdout` of a child process
@@ -12,7 +22,6 @@
  */
 static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 {
-	// Setup input
 	if (cmds[i].redir_in != -1)
 	{
 		if (dup2(cmds[i].redir_in, STDIN_FILENO) == -1)
@@ -23,7 +32,6 @@ static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 		if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
 			pipex_error("dup2 prev_fd[0]");
 	}
-	// Setup output
 	if (cmds[i].redir_out != -1)
 	{
 		if (dup2(cmds[i].redir_out, STDOUT_FILENO) == -1)
@@ -35,6 +43,7 @@ static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 			pipex_error("dup2 pipe_fd[1]");
 	}
 }
+
 /*
  * Closes the previous pipe file descriptors if open, then assigns the
  * current pipe's file descriptors to `prev_fd` in preparation for the
@@ -52,6 +61,7 @@ static void	update_fds(t_shell *px)
 	px->pipe_fd[0] = -1;
 	px->pipe_fd[1] = -1;
 }
+
 /*
  * Forks and executes each command in the pipeline. For each command:
  * - Creates a pipe (unless it's the last one)
@@ -61,8 +71,8 @@ static void	update_fds(t_shell *px)
  * - In the parent, updates pipe file descriptors
  * At the end, it waits for all child processes.
  */
-void	execute_piped_commands(t_shell *px, t_cmd *cmds,
-			int cmd_count, t_shell *shell)
+void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
+		t_shell *shell)
 {
 	int	i;
 
@@ -74,7 +84,7 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds,
 		px->pid = fork();
 		if (px->pid == -1)
 			pipex_error("fork failed");
-		if (px->pid == 0) // child
+		if (px->pid == 0)
 		{
 			setup_in_out(px, cmds, cmd_count, i);
 			close_all_pipe_fds(px);

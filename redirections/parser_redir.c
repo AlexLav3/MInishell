@@ -1,6 +1,16 @@
-#include <../Minishell.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_redir.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:39:04 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//parser_redir.c
+#include <../Minishell.h>
 
 /*
  * Parses the command's tokens into arguments and handles redirection
@@ -55,7 +65,7 @@ int	handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell)
  * Adds normal command arguments using `handle_arg_token`.
  */
 void	fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
-			t_shell *shell)
+		t_shell *shell)
 {
 	int	i;
 

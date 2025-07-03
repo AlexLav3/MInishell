@@ -1,6 +1,16 @@
-#include <../Minishell.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_redir_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:38:35 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:38:54 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//parser_redir_utils.c
+#include <../Minishell.h>
 
 /*
  * Opens input or output files based on `<` or `>` token.
@@ -20,6 +30,7 @@ int	redir_token_in_out(t_token *tokens, t_cmd *cmd)
 	}
 	return (0);
 }
+
 /*
  * Handles the `>>` token for append redirection.
  * Opens the output file in append mode.
@@ -50,8 +61,6 @@ int	redir_token_append(t_token *tokens, t_cmd *cmd)
  * Copies a token into the args array.
  * Handles memory allocation errors and cleanup.
  */
- //why the copy?
- //this is part of the function which leads back to array creation from tokens
 int	handle_arg_token(t_token *token, char **args, int *i)
 {
 	if (!token->com)

@@ -1,13 +1,22 @@
-#include <../Minishell.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:37:53 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//executor_utils.c
+#include <../Minishell.h>
 
 /*
  * Determines the shell's exit status based on how a child process
  * exited. Handles normal exits and signals (e.g. SIGINT, SIGQUIT).
  * Sets `exit_stat` accordingly for proper shell behavior.
  */
-
 void	handle_exit_status(t_shell *shell, int status)
 {
 	if (WIFEXITED(status))

@@ -1,6 +1,16 @@
-#include "../Minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_handle_002.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
+/*   Updated: 2025/07/03 20:34:37 by elavrich         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// pipe_handle_002.c
+#include "../Minishell.h"
 
 /*
  * Handles the first command in a pipeline.
@@ -62,6 +72,7 @@ void	close_pipes_and_wait(t_shell *px)
 	while (wait(NULL) > 0)
 		;
 }
+
 /*
  * Parses a command string into args and searches for the binary path.
  * If found, executes the command with `execve`, else prints an error.
