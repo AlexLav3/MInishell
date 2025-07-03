@@ -38,7 +38,6 @@ int	token_has_redir(t_token *tokens)
 /*
  * Helper function that removes a redirection token and its associated argument
  * from the token list, adjusting pointers and freeing memory.
- * Used internally by `strip_redirection_tokens`.
  * It removes **a single redirection token and its argument** from the linked list.
  * For example, given tokens: [ls] [>] [file.txt], it removes both ">" and "file.txt".
  */
