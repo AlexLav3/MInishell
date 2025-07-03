@@ -51,6 +51,7 @@ int	redir_token_append(t_token *tokens, t_cmd *cmd)
  * Handles memory allocation errors and cleanup.
  */
  //why the copy?
+ //this is part of the function which leads back to array creation from tokens
 int	handle_arg_token(t_token *token, char **args, int *i)
 {
 	if (!token->com)

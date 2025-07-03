@@ -1,6 +1,6 @@
 NAME = minishell
 BIN = bin
-CC = cc -g -Wall -Werror -Wextra
+CC = cc -g -Wall -Werror -Wextra -Wunused-function
 CFLAGS =  -Ilibft 
 LDFLAGS = -lreadline
 
@@ -8,10 +8,11 @@ SOURCES = main.c init.c input.c utils.c exect.c process_cmd.c\
 		envp_handle.c clean_exit.c sig.c builtin.c\
 		pipe/pipe_handle_001.c pipe/pipe_handle_002.c pipe/pipe_prepare.c\
 		counters.c tokens.c path.c make_args.c \
-		process_w.c var_utils.c tokenize.c\
+		process_w.c var_utils.c\
 		redirections/executor_main.c redirections/executor_utils.c redirections/heredoc.c\
 		redirections/parser_redir.c redirections/parser_redir_utils.c redirections/pipeline.c\
 		redirections/redir_apply.c redirections/token_utils.c\
+		# tokenize.c\
 		
 
 OBJECTS = $(SOURCES:%.c=$(BIN)/%.o)
