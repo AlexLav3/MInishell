@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/06/17 18:07:10 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/03 13:49:19 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	process_commands(char *command, t_token **tokens, t_shell *shell)
 	else
 	{
 		if (token_has_redir(*tokens))
-			pipe_cmds_with_redir(command, tokens, shell);
+			pipe_cmds_with_redir(tokens, shell);
 		else
 			pipe_cmds(command, tokens, shell);
 	}

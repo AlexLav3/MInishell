@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/30 19:41:20 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/03 13:49:54 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ typedef struct s_cmd {
 	int		redir_error;
 }			t_cmd;
 
+typedef struct s_pipe_context
+{
+	t_token		**start;
+	t_token		*curr;
+	t_token		*prev;
+	t_cmd		*cmd;
+}			t_pipe_context;
 
 typedef struct s_shell
 {
@@ -144,7 +151,7 @@ int					handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell);
 void				fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
 						t_shell *shell);
 //pipeline.c (static: 1)
-void				pipe_cmds_with_redir(char *command, t_token **tokens, t_shell *shell);
+void				pipe_cmds_with_redir(t_token **tokens, t_shell *shell);
 //redir_apply.c (static: 2)
 void				apply_redirection(t_cmd *cmd);
 void				reset_redirection(t_cmd *cmd);
@@ -153,7 +160,6 @@ int					is_redir(const char *s);
 int					token_has_redir(t_token *tokens);
 void				strip_redirection_tokens(t_token **tokens);
 
-t_token				*tokenize_command(char *cmd_str);
 int					count_args(t_token *tokens);
 void				init_cmd(t_cmd *cmd);
 void				init_pipex(t_shell *px, t_shell *shell);
