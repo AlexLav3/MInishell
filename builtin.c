@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/06 11:28:41 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/06 12:30:04 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ void	builtin_cd(char **cmd, t_shell *shell)
 		shell->exit_stat = 1;
 		return ;
 	}
-	// else // it was already set in init.c->init_shell
-	// 	shell->pwd = set_pwd(shell);
+	else
+	{
+		free(shell->pwd);
+		shell->pwd = set_pwd(shell);
+	}
 	shell->exit_stat = 0;
 }
 
