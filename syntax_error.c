@@ -16,6 +16,9 @@ static int	is_special(char c)
 			c != '{' &&
 			c != '}');
 }
+
+// *** Special characters are ignored. ***
+// *** ; \\ # ! ~ & ( ) [ ] { } ***
 void	strip_char(char *command)
 {
 	int i;
@@ -40,15 +43,15 @@ void	strip_char(char *command)
 static int	syntax_pipe(t_token *tokens)
 {
 	if (is_pipe(tokens->com[0]))
-		return(printf("*** Syntax error: no command before pipe. ***\n"), 3);
+		return(printf("*** Syntax error: Missing Command before |. ***\n"), 3);
 	while (tokens)
 	{
 		if (tokens->com && is_pipe(tokens->com[0]))
 		{
-			if (!tokens->next || is_pipe(tokens->next->com[0])
+			if (!tokens->next || is_meta(tokens->next->com[0])
 				|| is_pipe(tokens->com[1]))
 				{
-					printf("*** Syntax error: no command after pipe. ***\n");
+					printf("*** Syntax error: Missing Command after |. ***\n");
 					return (4);
 				}
 		}
@@ -57,21 +60,44 @@ static int	syntax_pipe(t_token *tokens)
 	return (0);
 }
 
+static int	syntax_redir(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->com && 
+			(tokens->com[0] == '>' || tokens->com[0] == '<') &&
+			(tokens->com[1] == '>' || tokens->com[1] == '<') &&
+			(tokens->com[2] == '>' || tokens->com[2] == '<'))
+		{
+			printf("*** Syntax error: Multiple Consecutive Redirection. ***\n");
+			return (4);
+		}
+
+		if (tokens->com && 
+			(tokens->com[0] == '>' || tokens->com[0] == '<'))
+		{
+			if (!tokens->next || is_meta(tokens->next->com[0]))
+			{
+				printf("*** Syntax error: Missing Target ***\n");
+				return (4);
+			}
+		}
+		tokens = tokens->next;
+	}
+	return (0);
+}
 
 int	syntax_error(t_token **tokens)
 {
 	int	len;
 	len = 0;
-	print_list(*tokens);
+	// print_list(*tokens);
 	
 	if (len == 0)
 		len = syntax_pipe(*tokens);
-	// if (len == 0)
-	// 	len = syntax_redir(*tokens);
-
-	// printf("\nYou typed a wrong command, which caused syntax error.\n");
-	// printf("Try again!\n");
-	deallocate(tokens);
-	len = 1; // no need just until everything else is fixed
+	if (len == 0)
+		len = syntax_redir(*tokens);
+	if (len > 0)
+		deallocate(tokens);
 	return (len);
 }
