@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:58:36 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/07 16:09:24 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,14 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		}
 		if (ft_strlen(command) > 0)
 			add_history(command);
-		if (input(command, tokens, shell) < 0)
-			deallocate(tokens);
-		process_commands(command, tokens, shell);
+		strip_char(command); // update 07_jul strip ; and \ chars
+		if (command[0] != '\0')
+		{
+			if (input(command, tokens, shell) < 0)
+				deallocate(tokens);
+			if (syntax_error(tokens) == 0) // update 07_jul
+				process_commands(command, tokens, shell); // original line
+		}
 	}
 	rl_clear_history();
 }

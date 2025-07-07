@@ -12,8 +12,8 @@ SOURCES = main.c init.c input.c utils.c exect.c process_cmd.c\
 		redirections/executor_main.c redirections/executor_utils.c redirections/heredoc.c\
 		redirections/parser_redir.c redirections/parser_redir_utils.c redirections/pipeline.c\
 		redirections/redir_apply.c redirections/token_utils.c\
-		# tokenize.c\
-		
+		syntax_error.c\
+				
 
 OBJECTS = $(SOURCES:%.c=$(BIN)/%.o)
 
