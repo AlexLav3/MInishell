@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:34:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:01:14 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	middle_child_process(t_shell *px, char *cmd)
 	close(px->prev_fd[0]);
 	close(px->pipe_fd[1]);
 	execute_cmd(cmd, px);
-	exit(0);
+	// exit(0);
 }
 
 /*
@@ -87,7 +87,15 @@ void	execute_cmd(char *cmd, t_shell *px)
 		pipex_error("split");
 	path = get_right_path(args[0], px, 1);
 	if (!path)
-		pipex_error("command not found");
+	{
+		write(STDERR_FILENO, args[0], ft_strlen(args[0]));
+		write(STDERR_FILENO, ": command not found\n", 21);
+		free_array(args);
+		exit(127);
+	}
 	if (execve(path, args, px->envp) == -1)
+	{
 		pipex_error("execve");
+		exit(127);
+	}
 }

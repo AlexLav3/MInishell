@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_prepare.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:41 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:34:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:18:46 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,13 @@ char	*get_path_in(char *cmd, t_shell *px)
 	{
 		full_path = join_path(paths[i], cmd);
 		if (access(full_path, X_OK) == 0)
+		{
+			free_array(paths);
 			return (full_path);
+		}
 		free(full_path);
 		i++;
 	}
+	free_array(paths);
 	return (NULL);
 }

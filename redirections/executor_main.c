@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:37:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:16:17 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,12 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
  * Performs memory cleanup afterward.
  */
 
-void	single_cmd_with_redir(char *command, t_token **tokens, t_shell *shell)
+void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
 {
 	t_cmd	cmd;
 
 	init_cmd(&cmd);
 	cmd.args = parse_args_and_redirs(*tokens, &cmd, shell);
-	free(command);
 	if (!cmd.args || !cmd.args[0] || cmd.redir_error)
 	{
 		if (cmd.args)
