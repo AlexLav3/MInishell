@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/08 09:38:52 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/08 10:16:17 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,15 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		if (ft_strlen(command) > 0)
 			add_history(command);
 		if (input(command, tokens, shell) < 0)
+		{
+			free(command);
 			deallocate(tokens);
+			continue;
+		}
 		if (syntax_error(tokens) == 0) // update 07_jul
-			process_commands(command, tokens, shell); // original line
+			process_commands(tokens, shell); // original line
+		deallocate(tokens);
+		free(command);
 	}
 	rl_clear_history();
 }
