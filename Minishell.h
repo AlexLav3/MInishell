@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/08 10:16:06 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 01:22:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,9 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-//syntax_error.c
 int					syntax_error(t_token **tokens);
-// void				strip_char(char *command);
+int					valid_name(char *name);
 
-// test run program in program
 char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
 
 char				*process_word(char *word, t_shell *shell, int flag);
@@ -101,8 +99,7 @@ char				*set_pwd(t_shell *shell);
 void				execute_single_cmd(char **cmd, t_shell *shell);
 
 // get_path
-void				process_commands(t_token **tokens,
-						t_shell *shell);
+void				process_commands(t_token **tokens, t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
 void				single_cmd(t_token **tokens, t_shell *shell);
 void				pipe_cmds(t_token **tokens, t_shell *shell);
@@ -132,8 +129,7 @@ char				*handle_dollar(char *cmd, t_shell *shell);
 //executor_main.c (static: 2)
 void				execute_piped_commands(t_shell *px, t_cmd *cmds,
 						int cmd_count, t_shell *shell);
-void				single_cmd_with_redir(t_token **tokens,
-						t_shell *shell);
+void				single_cmd_with_redir(t_token **tokens, t_shell *shell);
 void				execute_single_redir(t_cmd *cmd, t_shell *shell);
 // executor_utils.c
 void				handle_exit_status(t_shell *shell, int status);

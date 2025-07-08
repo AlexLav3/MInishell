@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/06/27 16:57:25 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 01:22:41 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	set_var(char **cmd, t_shell *shell, char *equal, int i)
 		return ;
 	*equal = '\0';
 	name = cmd[i];
+	if (!valid_name(name))
+	{
+		free(var);
+		return ;
+	}
 	if (search_env(shell, name) < 0)
 		add_env(shell, var);
 	else
@@ -73,4 +78,19 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 	if (ft_strchr(suf, '$') != NULL)
 		suf = expand_nested_dollar(suf, shell);
 	return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
+}
+
+int	valid_name(char *name)
+{
+	//-, +, !, @, % =
+	if (name[0] >= '0' && name[0] <= '9')
+		return (printf("invalid!\n"), 0);
+	while (*name)
+	{
+		if (*name == ' ' || *name == '-' || *name == '+' || *name == '!'
+			|| *name == '@' || *name == '%' || *name == '=')
+			return (printf("invalid\n"), 0);
+		name++;
+	}
+	return (1);
 }

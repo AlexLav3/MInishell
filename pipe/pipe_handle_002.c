@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/08 10:01:14 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 01:20:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	middle_child_process(t_shell *px, char *cmd)
 	close(px->prev_fd[0]);
 	close(px->pipe_fd[1]);
 	execute_cmd(cmd, px);
-	// exit(0);
 }
 
 /*
