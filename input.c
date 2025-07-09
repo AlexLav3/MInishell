@@ -6,13 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 20:22:46 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:29:04 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-static int	handle_meta(char *str, t_token **tokens, int i, int quoted)
+static int	handle_meta(char *str, t_token **tokens, int i, bool quoted)
 {
 	int		start;
 	char	*word;
@@ -40,7 +40,7 @@ int	input(char *str, t_token **tokens, t_shell *shell)
 		if (!str[i])
 			break ;
 		if (is_meta(str[i]))
-			i = handle_meta(str, tokens, i, 0);
+			i = handle_meta(str, tokens, i, false);
 		else
 			i = make_tok(tokens, str, i, shell);
 		if (i < 0)
@@ -57,7 +57,7 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 	if (!tks)
 		return (-1);
 	tks->builder = ft_strdup("");
-	tks->quoted = 0;
+	tks->quoted = false;
 	if (!tks->builder)
 		return (free(tks), -1);
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
@@ -65,7 +65,10 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 		if (is_meta(str[i]))
 			return (i);
 		if (str[i] == '\'' || str[i] == '"')
+		{
 			i = handle_q(&tks, str, i, shell);
+			tks->quoted = true;
+		}
 		else
 			i = simple_word(&tks, str, i, shell);
 		if (i < 0)
@@ -87,14 +90,12 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 	if (str[tmp] == '\'')
 	{
 		flag = NO_EXP;
-		(*tks)->quoted = 1;
 		while (str[i] && str[i] != '\'')
 			i++;
 	}
 	else if (str[tmp] == '"')
 	{
 		flag = EXPAND;
-		(*tks)->quoted = 1;
 		while (str[i] && str[i] != '"')
 			i++;
 	}

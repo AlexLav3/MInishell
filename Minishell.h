@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 17:05:20 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 20:26:42 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@
 
 typedef struct token_b
 {
-	int				quoted;
+	bool			quoted;
 	char			*builder;
 }					t_token_b;
 
 typedef struct s_token
 {
-	int				quoted;
+	bool			quoted;
 	char			*com;
 	struct s_token	*next;
 }					t_token;

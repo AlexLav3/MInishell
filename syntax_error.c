@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 16:09:56 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/09 17:04:19 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 20:30:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static int	syntax_pipe(t_token *tokens)
 {
 	if (!tokens || !tokens->com)
 		return (0);
-	if (tokens->com[0] && is_pipe(tokens->com[0]) && tokens->quoted == 0)
+	if (tokens->com[0] && is_pipe(tokens->com[0]) && !tokens->quoted)
 	{
 		printf("*** Syntax error: Missing Command before |. ***\n");
 		return (1);
 	}
 	while (tokens)
 	{
-		if (tokens->com && is_pipe(tokens->com[0]) && tokens->quoted == 0)
+		if (tokens->com && is_pipe(tokens->com[0]) && !tokens->quoted)
 		{
 			if (!tokens->next || is_meta(tokens->next->com[0])
 				|| (tokens->com[1] && is_pipe(tokens->com[1])))
