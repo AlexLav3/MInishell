@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/07/09 20:20:34 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:49:05 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 		value = ft_strchr(env, '=');
 		if (!value)
 			return (free(prefix), ft_strdup(""));
-		value = value + 1;
+		value = ft_strdup(value + 1);
 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
 	}
 	if (ft_strchr(suf, '$') != NULL)
 		suf = expand_nested_dollar(suf, shell);
-	return (join_and_free(prefix, join_and_free(ft_strdup(value), suf)));
+	return (join_and_free(prefix, join_and_free(value, suf)));
 }
 
 int	valid_name(char *name)

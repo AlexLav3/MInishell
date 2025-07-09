@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 20:21:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:43:29 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	}
 	prefix = ft_substr(cmd, 0, i);
 	idx = search_env(shell, cmd + (i + 1));
-	if (search_env(shell, cmd + (i + 1)) >= 0)
+	if (idx >= 0)
 	{
 		shell->env_idx = search_env(shell, cmd + (i + 1));
 		return (process_env_var(cmd, shell, prefix, i));
