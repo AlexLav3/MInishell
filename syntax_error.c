@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 16:09:56 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/09 11:02:59 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 14:10:23 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@
 int	is_in_quotes(char *command, char sign)
 {
 	int	i;
-
+	char quote;
+	
+	quote = 0;
 	i = 0;
-	while (command[i] != '\0')
+	while (command[i])
 	{
-		if (command[i] == '"' && command[i + 1] == sign)
+		if ((command[i] == '"' || command[i] == '\'') && quote == 0)
+			quote = command[i];
+		else if (command[i] == quote)
+			quote = 0;
+		else if (command[i] == sign && quote != 0)
 			return (1);
 		i++;
 	}
@@ -29,7 +35,9 @@ int	is_in_quotes(char *command, char sign)
 
 static int	syntax_pipe(t_token *tokens, char *command)
 {
-	if (is_pipe(tokens->com[0]))
+	if (!tokens || !tokens->com)
+		return (0); 
+	if (tokens->com[0] && is_pipe(tokens->com[0]))
 	{
 		printf("*** Syntax error: Missing Command before |. ***\n");
 		return (1);
@@ -40,7 +48,7 @@ static int	syntax_pipe(t_token *tokens, char *command)
 			&& !is_in_quotes(command, '|'))
 		{
 			if (!tokens->next || is_meta(tokens->next->com[0])
-				|| is_pipe(tokens->com[1]))
+				|| (tokens->com[1] && is_pipe(tokens->com[1])))
 			{
 				printf("*** Syntax error: Missing Command after |. ***\n");
 				return (1);
