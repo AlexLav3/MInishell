@@ -6,13 +6,13 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 14:11:50 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:00:16 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-static int	handle_meta(char *str, t_token **tokens, int i)
+static int	handle_meta(char *str, t_token **tokens, int i, int quoted)
 {
 	int		start;
 	char	*word;
@@ -23,7 +23,7 @@ static int	handle_meta(char *str, t_token **tokens, int i)
 	word = ft_substr(str, start, i - start);
 	if (!word)
 		return (-1);
-	add_token(tokens, word);
+	add_token(tokens, word, quoted); // update
 	free(word);
 	return (i);
 }
@@ -40,7 +40,7 @@ int	input(char *str, t_token **tokens, t_shell *shell)
 		if (!str[i])
 			break ;
 		if (is_meta(str[i]))
-			i = handle_meta(str, tokens, i);
+			i = handle_meta(str, tokens, i, 0); // update
 		else
 			i = make_tok(tokens, str, i, shell);
 		if (i < 0)
@@ -57,10 +57,13 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 	if (!tks)
 		return (-1);
 	tks->builder = ft_strdup("");
+	tks->quoted = 0; // update
 	if (!tks->builder)
 		return (free(tks), -1);
 	while (str[i] && str[i] != ' ' && !is_meta(str[i]))
 	{
+		if (is_meta(str[i])) // update
+			return (i);
 		if (str[i] == '\'' || str[i] == '"')
 			i = handle_q(&tks, str, i, shell);
 		else
@@ -68,7 +71,7 @@ int	make_tok(t_token **tokens, char *str, int i, t_shell *shell)
 		if (i < 0)
 			return (free(tks->builder), free(tks), -1);
 	}
-	add_token(tokens, tks->builder);
+	add_token(tokens, tks->builder, tks->quoted); // update
 	return (free(tks->builder), free(tks), i);
 }
 
@@ -84,12 +87,14 @@ int	handle_q(t_token_b **tks, char *str, int i, t_shell *shell)
 	if (str[tmp] == '\'')
 	{
 		flag = NO_EXP;
+		(*tks)->quoted = 1; // update
 		while (str[i] && str[i] != '\'')
 			i++;
 	}
 	else if (str[tmp] == '"')
 	{
 		flag = EXPAND;
+		(*tks)->quoted = 1; // update
 		while (str[i] && str[i] != '"')
 			i++;
 	}

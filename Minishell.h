@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 10:11:08 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:05:20 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@
 
 typedef struct token_b
 {
+	int				quoted;
 	char			*builder;
 }					t_token_b;
 
 typedef struct s_token
 {
+	int				quoted;
 	char			*com;
 	struct s_token	*next;
 }					t_token;
@@ -78,9 +80,8 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-int					syntax_error(t_token **tokens, char *command);
+int					syntax_error(t_token **tokens);
 int					valid_name(char *name);
-int					is_in_quotes(char *command, char sign);
 
 char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
 
@@ -100,7 +101,7 @@ char				*set_pwd(t_shell *shell);
 void				execute_single_cmd(char **cmd, t_shell *shell);
 
 // get_path
-void				process_commands(char *command, t_token **tokens, t_shell *shell);
+void				process_commands(t_token **tokens, t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
 void				single_cmd(t_token **tokens, t_shell *shell);
 void				pipe_cmds(t_token **tokens, t_shell *shell);
@@ -197,8 +198,8 @@ void				free_array(char **arr);
 void				deallocate(t_token **root);
 
 //for list tokens
-t_token				*new_token(char *word);
-void				add_token(t_token **head, char *word);
+t_token				*new_token(char *word, int quoted);
+void				add_token(t_token **head, char *word, int quoted);
 
 //utils
 int					is_meta(char c);

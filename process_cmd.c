@@ -6,11 +6,34 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/09 11:00:56 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:03:42 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
+
+static int	token_has_unquoted_pipe(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->com && is_pipe(tokens->com[0]) && tokens->quoted == 0)
+			return (1);
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
+static int	token_has_unquoted_redir(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->com && (tokens->com[0] == '>'
+				|| tokens->com[0] == '<') && tokens->quoted == 0)
+			return (1);
+		tokens = tokens->next;
+	}
+	return (0);
+}
 
 void	single_cmd(t_token **tokens, t_shell *shell)
 {
@@ -46,18 +69,17 @@ void	pipe_cmds(t_token **tokens, t_shell *shell)
 	free_array(cmds);
 }
 
-void	process_commands(char *command, t_token **tokens, t_shell *shell)
+void	process_commands(t_token **tokens, t_shell *shell)
 {
-	if (token_has_pipe(*tokens) && !is_in_quotes(command, '|'))
+	if (token_has_unquoted_pipe(*tokens))
 	{
-		if (token_has_redir(*tokens) && !is_in_quotes(command, '>')
-			&& !is_in_quotes(command, '<'))
+		if (token_has_unquoted_redir(*tokens))
 			pipe_cmds_with_redir(tokens, shell);
-		else if (!token_has_redir(*tokens))
+		else
 			pipe_cmds(tokens, shell);
 	}
-	else if (!token_has_pipe(*tokens) && token_has_redir(*tokens)
-		&& !is_in_quotes(command, '>') && !is_in_quotes(command, '<'))
+	else if (!token_has_unquoted_pipe(*tokens)
+		&& token_has_unquoted_redir(*tokens))
 		single_cmd_with_redir(tokens, shell);
 	else
 		single_cmd(tokens, shell);

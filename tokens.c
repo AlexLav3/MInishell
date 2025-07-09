@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/16 16:41:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 17:04:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-t_token	*new_token(char *word)
+t_token	*new_token(char *word, int quoted)
 {
 	t_token	*tokens;
 
@@ -26,15 +26,16 @@ t_token	*new_token(char *word)
 		return (free(tokens), NULL);
 	}
 	tokens->next = NULL;
+	tokens->quoted = quoted; //update
 	return (tokens);
 }
 
-void	add_token(t_token **head, char *word)
+void	add_token(t_token **head, char *word, int quoted)
 {
 	t_token	*new;
 	t_token	*tmp;
 
-	new = new_token(word);
+	new = new_token(word, quoted);
 	if (!new)
 		return ;
 	if (!*head)
