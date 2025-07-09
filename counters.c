@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   counters.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 07:46:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/05/17 07:48:13 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:05:06 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	size_args(t_token *tokens)
 	tmp = tokens;
 	while (tmp)
 	{
-		if (tmp->com && !is_meta(tmp->com[0]))
+		if (tmp->com && tmp->com[0] != '\0')
 			count++;
 		tmp = tmp->next;
 	}

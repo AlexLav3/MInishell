@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 01:22:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 10:11:08 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-int					syntax_error(t_token **tokens);
+int					syntax_error(t_token **tokens, char *command);
 int					valid_name(char *name);
+int					is_in_quotes(char *command, char sign);
 
 char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
 
@@ -99,7 +100,7 @@ char				*set_pwd(t_shell *shell);
 void				execute_single_cmd(char **cmd, t_shell *shell);
 
 // get_path
-void				process_commands(t_token **tokens, t_shell *shell);
+void				process_commands(char *command, t_token **tokens, t_shell *shell);
 char				*get_cmd_path(char *cmd, t_shell *shell);
 void				single_cmd(t_token **tokens, t_shell *shell);
 void				pipe_cmds(t_token **tokens, t_shell *shell);
