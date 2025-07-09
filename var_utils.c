@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/07/09 01:22:41 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:05:38 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 
 int	valid_name(char *name)
 {
-	//-, +, !, @, % =
 	if (name[0] >= '0' && name[0] <= '9')
 		return (printf("invalid!\n"), 0);
 	while (*name)

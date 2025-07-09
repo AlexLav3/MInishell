@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/25 00:23:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:05:19 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**make_args(t_token *tokens, t_shell *shell)
 		}
 		tokens = tokens->next;
 	}
-	cmd[i++] = NULL;
+	cmd[i] = NULL;
 	return (cmd);
 }
 

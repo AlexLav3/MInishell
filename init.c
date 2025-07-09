@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 01:21:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:01:40 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	take_comm(t_token **tokens, t_shell *shell)
 			deallocate(tokens);
 			continue ;
 		}
-		if (syntax_error(tokens) == 0)
-			process_commands(tokens, shell); // original line
+		if (syntax_error(tokens, command) == 0)
+			process_commands(command, tokens, shell);
 		deallocate(tokens);
 		free(command);
 	}

@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/08 10:33:00 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 11:00:56 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,20 @@ void	pipe_cmds(t_token **tokens, t_shell *shell)
 	free_array(cmds);
 }
 
-void	process_commands(t_token **tokens, t_shell *shell)
+void	process_commands(char *command, t_token **tokens, t_shell *shell)
 {
-	if (!token_has_pipe(*tokens))
+	if (token_has_pipe(*tokens) && !is_in_quotes(command, '|'))
 	{
-		if (token_has_redir(*tokens))
-			single_cmd_with_redir(tokens, shell);
-		else
-			single_cmd(tokens, shell);
-	}
-	else
-	{
-		if (token_has_redir(*tokens))
+		if (token_has_redir(*tokens) && !is_in_quotes(command, '>')
+			&& !is_in_quotes(command, '<'))
 			pipe_cmds_with_redir(tokens, shell);
-		else
+		else if (!token_has_redir(*tokens))
 			pipe_cmds(tokens, shell);
 	}
+	else if (!token_has_pipe(*tokens) && token_has_redir(*tokens)
+		&& !is_in_quotes(command, '>') && !is_in_quotes(command, '<'))
+		single_cmd_with_redir(tokens, shell);
+	else
+		single_cmd(tokens, shell);
 	deallocate(tokens);
 }
