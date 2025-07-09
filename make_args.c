@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 11:05:19 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/09 20:21:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	i = 0;
 	if (!cmd)
 		return (NULL);
-	if (ft_strcmp(cmd, "$?") == 0)
-		return (ft_itoa(shell->exit_stat));
 	while (cmd[i])
 	{
 		if (cmd[i] == '$')
@@ -63,9 +61,9 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	}
 	prefix = ft_substr(cmd, 0, i);
 	idx = search_env(shell, cmd + (i + 1));
-	if (idx >= 0)
+	if (search_env(shell, cmd + (i + 1)) >= 0)
 	{
-		shell->env_idx = idx;
+		shell->env_idx = search_env(shell, cmd + (i + 1));
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else

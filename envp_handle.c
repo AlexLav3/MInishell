@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/08 20:40:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/09 20:21:37 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	print_env(t_shell shell)
 
 char	**copy_envp(char **envp, char *new_var)
 {
-	size_t		count;
-	char		**copy;
-	int			extra;
+	size_t	count;
+	char	**copy;
+	int		extra;
 
 	extra = (new_var != NULL);
 	count = 0;
@@ -81,6 +81,8 @@ int	search_env(t_shell *shell, char *var)
 	i = 0;
 	if (!var)
 		return (0);
+	if (var[0] == '?')
+		return (i);
 	while (var[len] && (ft_isalnum(var[len]) || var[len] == '_'))
 		len++;
 	shell->var_len = len;
