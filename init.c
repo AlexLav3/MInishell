@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 17:04:57 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/10 10:42:55 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 			deallocate(tokens);
 			continue ;
 		}
-		if (syntax_error(tokens) == 0)
+		if (syntax_error(tokens, shell) == 0)
 			process_commands(tokens, shell);
 		deallocate(tokens);
 		free(command);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 20:26:42 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/10 10:42:33 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-int					syntax_error(t_token **tokens);
+int					syntax_error(t_token **tokens, t_shell *shell);
 int					valid_name(char *name);
 
 char				*get_right_path(char *cmd, void *either_shell, int is_pipe);
