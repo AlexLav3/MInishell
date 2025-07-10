@@ -1,0 +1,2 @@
+echo <123 <456 hi | echo 42
+exit

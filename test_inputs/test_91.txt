@@ -1,0 +1,2 @@
+echo <"./test_files/infile_big" | echo <"./test_files/infile"
+exit

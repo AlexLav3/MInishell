@@ -1,0 +1,2 @@
+cat <minishell.h|ls
+exit

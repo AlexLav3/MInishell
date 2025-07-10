@@ -1,0 +1,2 @@
+ls >         ./outfiles/outfile01
+exit

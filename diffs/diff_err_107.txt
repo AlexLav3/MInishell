@@ -1,0 +1,5 @@
+--- outputs/bash_err_107.txt	2025-07-10 23:10:29.624309315 +0200
++++ outputs/mini_err_107.txt	2025-07-10 23:10:29.624309315 +0200
+@@ -1 +1 @@
+-/bin/bash: line 1: ./outfiles/outfile with spaces: No such file or directory
++redir_out: No such file or directory

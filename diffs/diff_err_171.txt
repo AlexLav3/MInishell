@@ -1,0 +1,4 @@
+--- outputs/bash_err_171.txt	2025-07-10 23:08:23.366636244 +0200
++++ outputs/mini_err_171.txt	2025-07-10 23:08:23.366636244 +0200
+@@ -1 +0,0 @@
+-/bin/bash: line 1: *: command not found

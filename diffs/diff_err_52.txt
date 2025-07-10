@@ -1,0 +1,5 @@
+--- outputs/bash_err_52.txt	2025-07-10 23:10:29.308305126 +0200
++++ outputs/mini_err_52.txt	2025-07-10 23:10:29.308305126 +0200
+@@ -1 +1 @@
+-/bin/bash: line 1: /home/elavrich/Documents/homegit/mian: Is a directory
++execve failed: Permission denied

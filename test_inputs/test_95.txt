@@ -1,0 +1,2 @@
+cat <"./test_files/infile" | grep hello
+exit

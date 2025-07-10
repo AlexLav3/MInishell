@@ -1,0 +1,6 @@
+--- outputs/bash_err_144.txt	2025-07-10 23:08:23.202634072 +0200
++++ outputs/mini_err_144.txt	2025-07-10 23:08:23.198634019 +0200
+@@ -1 +1,2 @@
+-/bin/bash: line 1: ./outfiles/outfile01: No such file or directory
++redir: : No such file or directory
++minishell: syntax error

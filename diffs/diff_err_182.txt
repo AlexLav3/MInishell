@@ -1,0 +1,5 @@
+--- outputs/bash_err_182.txt	2025-07-10 23:04:48.523791267 +0200
++++ outputs/mini_err_182.txt	2025-07-10 23:04:48.519791214 +0200
+@@ -1 +1 @@
+-/bin/bash: line 1: manual*: command not found
++./testMinishell.sh: line 225: ./minishell: No such file or directory

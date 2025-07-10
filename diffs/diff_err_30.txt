@@ -1,0 +1,4 @@
+--- outputs/bash_err_30.txt	2025-07-10 23:10:29.196303642 +0200
++++ outputs/mini_err_30.txt	2025-07-10 23:10:29.192303589 +0200
+@@ -1 +0,0 @@
+-/bin/bash: line 1: export: `HELLO-=123': not a valid identifier

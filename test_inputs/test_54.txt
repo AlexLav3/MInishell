@@ -1,0 +1,2 @@
+$EMPTY echo hi
+exit

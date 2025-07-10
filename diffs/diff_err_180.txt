@@ -1,0 +1,4 @@
+--- outputs/bash_err_180.txt	2025-07-10 23:04:48.511791108 +0200
++++ outputs/mini_err_180.txt	2025-07-10 23:04:48.507791056 +0200
+@@ -0,0 +1 @@
++./testMinishell.sh: line 225: ./minishell: No such file or directory

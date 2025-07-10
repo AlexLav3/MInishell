@@ -1,0 +1,2 @@
+cat >./test_files/invalid_permission <"./test_files/infile"
+exit

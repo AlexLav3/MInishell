@@ -1,0 +1,2 @@
+cat <missing >./outfiles/outfile01
+exit

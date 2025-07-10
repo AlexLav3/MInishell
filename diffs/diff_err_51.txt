@@ -1,0 +1,4 @@
+--- outputs/bash_err_51.txt	2025-07-10 23:10:29.304305073 +0200
++++ outputs/mini_err_51.txt	2025-07-10 23:10:29.300305020 +0200
+@@ -1 +0,0 @@
+-/bin/bash: line 1: exit: too many arguments

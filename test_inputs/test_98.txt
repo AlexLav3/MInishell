@@ -1,0 +1,2 @@
+cat <missing | cat
+exit

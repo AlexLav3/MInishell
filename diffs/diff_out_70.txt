@@ -1,0 +1,5 @@
+--- outputs/bash_out_70.txt	2025-07-10 23:10:29.408306452 +0200
++++ outputs/mini_out_70.txt	2025-07-10 23:10:29.408306452 +0200
+@@ -1 +1 @@
+-TRES=3
++*** Syntax error: Missing Command after |. ***

@@ -1,0 +1,5 @@
+--- outputs/bash_err_133.txt	2025-07-10 23:10:29.800311647 +0200
++++ outputs/mini_err_133.txt	2025-07-10 23:10:29.796311594 +0200
+@@ -1,2 +0,0 @@
+-/bin/bash: line 1: syntax error near unexpected token `newline'
+-/bin/bash: line 1: `>'

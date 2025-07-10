@@ -1,0 +1,2 @@
+redir_in: No such file or directory
+minishell: syntax error

@@ -1,0 +1,2 @@
+export UNO=1 DOS-2 TRES=3 || env | grep TRES
+exit

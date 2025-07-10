@@ -1,0 +1,5 @@
+--- outputs/bash_err_129.txt	2025-07-10 23:10:29.776311329 +0200
++++ outputs/mini_err_129.txt	2025-07-10 23:10:29.772311276 +0200
+@@ -1,2 +0,0 @@
+-/bin/bash: line 1: syntax error near unexpected token `|'
+-/bin/bash: line 1: `| echo oi'

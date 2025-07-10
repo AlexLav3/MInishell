@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 16:09:56 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/10 11:11:45 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/10 23:11:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-//syntax_error.c
 static int	syntax_pipe(t_token *tokens, t_shell *shell)
 {
 	if (!tokens || !tokens->com)
@@ -44,20 +43,19 @@ static int	syntax_redir(t_token *tokens, t_shell *shell)
 {
 	while (tokens)
 	{
-		if (tokens->com
-			&& (tokens->com[0] == '>' || tokens->com[0] == '<')
+		if (tokens->com && (tokens->com[0] == '>' || tokens->com[0] == '<')
 			&& !tokens->quoted)
 		{
-			if (tokens->com[1]
-				&& (tokens->com[1] == '>' || tokens->com[1] == '<')
-				&& tokens->com[2]
+			if (tokens->com[1] && (tokens->com[1] == '>'
+					|| tokens->com[1] == '<') && tokens->com[2]
 				&& (tokens->com[2] == '>' || tokens->com[2] == '<'))
 			{
 				printf("*** Syntax error: Multiple Redirection. ***\n");
 				shell->exit_stat = 127;
 				return (4);
 			}
-			if (!tokens->next || is_meta(tokens->next->com[0]) || tokens->com[1] == '|')
+			if (!tokens->next || is_meta(tokens->next->com[0])
+				|| tokens->com[1] == '|')
 			{
 				printf("*** Syntax error: Missing Target ***\n");
 				shell->exit_stat = 127;

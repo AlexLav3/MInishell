@@ -1,0 +1,4 @@
+--- outputs/bash_out_128.txt	2025-07-10 23:10:29.768311223 +0200
++++ outputs/mini_out_128.txt	2025-07-10 23:10:29.768311223 +0200
+@@ -0,0 +1 @@
++*** Syntax error: Missing Command before |. ***

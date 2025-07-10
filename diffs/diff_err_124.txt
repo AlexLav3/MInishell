@@ -1,0 +1,5 @@
+--- outputs/bash_err_124.txt	2025-07-10 23:10:29.748310958 +0200
++++ outputs/mini_err_124.txt	2025-07-10 23:10:29.744310905 +0200
+@@ -1 +1 @@
+-/bin/bash: line 1: ./test_files/invalid_permission: No such file or directory
++redir_out: No such file or directory

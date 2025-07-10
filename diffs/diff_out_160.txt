@@ -1,0 +1,4 @@
+--- outputs/bash_out_160.txt	2025-07-10 23:08:23.306635449 +0200
++++ outputs/mini_out_160.txt	2025-07-10 23:08:23.306635449 +0200
+@@ -0,0 +1 @@
++*** Syntax error: Multiple Redirection. ***

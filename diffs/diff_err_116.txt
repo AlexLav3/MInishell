@@ -1,0 +1,7 @@
+--- outputs/bash_err_116.txt	2025-07-10 23:10:29.696310269 +0200
++++ outputs/mini_err_116.txt	2025-07-10 23:10:29.692310216 +0200
+@@ -1,2 +1,2 @@
+-/bin/bash: line 1: ./outfiles/outfile01: No such file or directory
+-/bin/bash: line 1: ./outfiles/outfile02: No such file or directory
++redir_out: No such file or directory
++redir_out: No such file or directory

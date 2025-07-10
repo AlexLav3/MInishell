@@ -1,0 +1,2 @@
+ls >"./outfiles/outfile with spaces"
+exit

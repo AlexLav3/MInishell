@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/10 18:10:30 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:12:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,17 @@ bool	handle_builtin(char **cmd, t_shell *shell)
 	if (ft_strcmp(cmd[0], "cd") == 0)
 		return (shell->exit_stat = 0, builtin_cd(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		return (shell->exit_stat = 0,builtin_pwd(shell), true);
+		return (shell->exit_stat = 0, builtin_pwd(shell), true);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		return (shell->exit_stat = 0,ft_export(cmd, shell), true);
+		return (shell->exit_stat = 0, ft_export(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		return (shell->exit_stat = 0,print_env(*shell), true);
+		return (shell->exit_stat = 0, print_env(*shell), true);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		return (shell->exit_stat = 0,builtin_unset(cmd, shell), true);
+		return (shell->exit_stat = 0, builtin_unset(cmd, shell), true);
 	else if (ft_strcmp(cmd[0], "echo") == 0)
-		return (shell->exit_stat = 0,ft_echo(cmd), true);
+		return (shell->exit_stat = 0, ft_echo(cmd), true);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		return (shell->exit_stat = 0,ft_exit(cmd, shell), true);
+		return (shell->exit_stat = 0, ft_exit(cmd, shell), true);
 	return (false);
 }
 

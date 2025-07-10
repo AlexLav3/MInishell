@@ -1,0 +1,5 @@
+--- outputs/bash_err_109.txt	2025-07-10 23:10:29.640309527 +0200
++++ outputs/mini_err_109.txt	2025-07-10 23:10:29.636309474 +0200
+@@ -1 +1 @@
+-/bin/bash: line 1: ./outfiles/outfile01: No such file or directory
++redir_out: No such file or directory

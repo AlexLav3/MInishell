@@ -1,0 +1,1 @@
+/bin/bash: line 1: /home/elavrich/Documents/homegit/mian: Is a directory

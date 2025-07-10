@@ -1,0 +1,2 @@
+unset HELLO1 HELLO2
+exit

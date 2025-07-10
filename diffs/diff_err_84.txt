@@ -1,0 +1,6 @@
+--- outputs/bash_err_84.txt	2025-07-10 23:10:29.488307512 +0200
++++ outputs/mini_err_84.txt	2025-07-10 23:10:29.488307512 +0200
+@@ -1 +1,2 @@
+-/bin/bash: line 1: ./test_files/infile_big: No such file or directory
++redir_in: No such file or directory
++minishell: syntax error

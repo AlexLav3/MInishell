@@ -1,0 +1,1 @@
+Binary files outputs/bash_err_77.txt and outputs/mini_err_77.txt differ

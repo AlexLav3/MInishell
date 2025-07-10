@@ -1,0 +1,2 @@
+cat <minishell.h>./outfiles/outfile
+exit

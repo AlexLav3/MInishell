@@ -1,0 +1,2 @@
+echo hi < ./test_files/infile bye bye
+exit

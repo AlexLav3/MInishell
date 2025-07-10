@@ -1,0 +1,2 @@
+grep hi <./test_files/infile
+exit
