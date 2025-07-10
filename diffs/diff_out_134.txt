@@ -1,4 +1,0 @@
---- outputs/bash_out_134.txt	2025-07-10 23:10:29.804311701 +0200
-+++ outputs/mini_out_134.txt	2025-07-10 23:10:29.804311701 +0200
-@@ -0,0 +1 @@
-+*** Syntax error: Missing Target ***

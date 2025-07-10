@@ -1,5 +1,0 @@
---- outputs/bash_err_131.txt	2025-07-10 23:10:29.788311489 +0200
-+++ outputs/mini_err_131.txt	2025-07-10 23:10:29.784311436 +0200
-@@ -1,2 +0,0 @@
--/bin/bash: line 1: syntax error near unexpected token `|'
--/bin/bash: line 1: `| $'

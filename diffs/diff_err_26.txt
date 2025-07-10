@@ -1,4 +1,0 @@
---- outputs/bash_err_26.txt	2025-07-10 23:10:29.176303377 +0200
-+++ outputs/mini_err_26.txt	2025-07-10 23:10:29.172303324 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: export: `A-': not a valid identifier

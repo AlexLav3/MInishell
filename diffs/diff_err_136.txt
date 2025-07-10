@@ -1,5 +1,0 @@
---- outputs/bash_err_136.txt	2025-07-10 23:10:29.816311860 +0200
-+++ outputs/mini_err_136.txt	2025-07-10 23:10:29.812311807 +0200
-@@ -1,2 +0,0 @@
--/bin/bash: line 1: syntax error near unexpected token `newline'
--/bin/bash: line 1: `<'

@@ -1,4 +1,0 @@
---- outputs/bash_err_172.txt	2025-07-10 23:07:45.158130071 +0200
-+++ outputs/mini_err_172.txt	2025-07-10 23:07:45.154130018 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: |: command not found

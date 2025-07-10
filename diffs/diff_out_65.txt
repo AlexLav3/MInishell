@@ -1,4 +1,0 @@
---- outputs/bash_out_65.txt	2025-07-10 23:10:29.384306134 +0200
-+++ outputs/mini_out_65.txt	2025-07-10 23:10:29.380306081 +0200
-@@ -0,0 +1 @@
-+README.md: command not found

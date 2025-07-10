@@ -1,5 +1,0 @@
---- outputs/bash_err_138.txt	2025-07-10 23:08:23.166633594 +0200
-+++ outputs/mini_err_138.txt	2025-07-10 23:08:23.162633541 +0200
-@@ -1 +1 @@
--/bin/bash: line 1: ./outfiles/outfile01: No such file or directory
-+redir: : No such file or directory

@@ -1,4 +1,0 @@
---- outputs/bash_err_63.txt	2025-07-10 23:10:29.372305975 +0200
-+++ outputs/mini_err_63.txt	2025-07-10 23:10:29.368305922 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: $: command not found

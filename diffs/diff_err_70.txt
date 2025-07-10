@@ -1,4 +1,0 @@
---- outputs/bash_err_70.txt	2025-07-10 23:10:29.408306452 +0200
-+++ outputs/mini_err_70.txt	2025-07-10 23:10:29.404306399 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: export: `DOS-2': not a valid identifier

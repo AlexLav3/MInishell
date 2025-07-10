@@ -1,5 +1,0 @@
---- outputs/bash_err_187.txt	2025-07-10 23:04:48.555791690 +0200
-+++ outputs/mini_err_187.txt	2025-07-10 23:04:48.551791637 +0200
-@@ -1 +1 @@
--/bin/bash: line 1: README*: No such file or directory
-+./testMinishell.sh: line 225: ./minishell: No such file or directory

@@ -1,5 +1,0 @@
---- outputs/bash_err_166.txt	2025-07-10 23:08:23.342635926 +0200
-+++ outputs/mini_err_166.txt	2025-07-10 23:08:23.338635874 +0200
-@@ -1,2 +0,0 @@
--/bin/bash: line 1: syntax error near unexpected token `>>'
--/bin/bash: line 1: `echo hi | > >>'

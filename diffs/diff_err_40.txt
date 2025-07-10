@@ -1,4 +1,0 @@
---- outputs/bash_err_40.txt	2025-07-10 23:10:29.240304225 +0200
-+++ outputs/mini_err_40.txt	2025-07-10 23:10:29.240304225 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: cd: too many arguments

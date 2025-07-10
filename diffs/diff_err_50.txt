@@ -1,4 +1,0 @@
---- outputs/bash_err_50.txt	2025-07-10 23:10:29.296304967 +0200
-+++ outputs/mini_err_50.txt	2025-07-10 23:10:29.296304967 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: exit: hello: numeric argument required

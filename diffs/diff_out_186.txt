@@ -1,4 +1,0 @@
---- outputs/bash_out_186.txt	2025-07-10 23:04:48.547791585 +0200
-+++ outputs/mini_out_186.txt	2025-07-10 23:04:48.547791585 +0200
-@@ -1 +0,0 @@
--*EMPTY hello READ* world

@@ -1,5 +1,0 @@
---- outputs/bash_err_92.txt	2025-07-10 23:10:29.540308201 +0200
-+++ outputs/mini_err_92.txt	2025-07-10 23:10:29.536308148 +0200
-@@ -1 +1 @@
--/bin/bash: line 1: ./test_files/infile: No such file or directory
-+redir_in: No such file or directory

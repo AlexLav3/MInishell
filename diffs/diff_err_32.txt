@@ -1,4 +1,0 @@
---- outputs/bash_err_32.txt	2025-07-10 23:10:29.204303748 +0200
-+++ outputs/mini_err_32.txt	2025-07-10 23:10:29.204303748 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: export: `123': not a valid identifier

@@ -1,5 +1,0 @@
---- outputs/bash_err_151.txt	2025-07-10 23:08:23.246634655 +0200
-+++ outputs/mini_err_151.txt	2025-07-10 23:08:23.246634655 +0200
-@@ -1 +1 @@
--/bin/bash: line 1: minishell.h: No such file or directory
-+redir_in: No such file or directory

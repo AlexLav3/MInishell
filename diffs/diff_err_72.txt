@@ -1,4 +1,0 @@
---- outputs/bash_err_72.txt	2025-07-10 23:10:29.420306611 +0200
-+++ outputs/mini_err_72.txt	2025-07-10 23:10:29.416306558 +0200
-@@ -1 +0,0 @@
--/bin/bash: line 1: exit: 9223372036854775808: numeric argument required

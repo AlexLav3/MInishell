@@ -1,4 +1,0 @@
---- outputs/bash_out_61.txt	2025-07-10 23:10:29.360305816 +0200
-+++ outputs/mini_out_61.txt	2025-07-10 23:10:29.360305816 +0200
-@@ -0,0 +1 @@
-+/test_files: command not found

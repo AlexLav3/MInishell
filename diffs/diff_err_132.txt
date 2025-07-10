@@ -1,5 +1,0 @@
---- outputs/bash_err_132.txt	2025-07-10 23:10:29.792311542 +0200
-+++ outputs/mini_err_132.txt	2025-07-10 23:10:29.788311489 +0200
-@@ -1,2 +0,0 @@
--/bin/bash: line 1: syntax error near unexpected token `|'
--/bin/bash: line 1: `| >'
