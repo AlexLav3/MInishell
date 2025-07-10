@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:38:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/10 10:19:03 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	readirs(int dir, t_cmd *cmd, char *com)
 		cmd->redir_in = open(cmd->infile, O_RDONLY);
 		if (cmd->redir_in < 0)
 		{
-			perror("redir_in: ");
+			perror("redir_in");
 			cmd->redir_error = 1;
 		}
 	}
@@ -105,7 +105,7 @@ void	readirs(int dir, t_cmd *cmd, char *com)
 				0644);
 		if (cmd->redir_out < 0)
 		{
-			perror("redir_out: ");
+			perror("redir_out");
 			cmd->redir_error = 1;
 		}
 	}
