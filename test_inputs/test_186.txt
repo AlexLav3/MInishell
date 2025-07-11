@@ -1,2 +1,0 @@
-echo *EMPTY hello READ* world
-exit

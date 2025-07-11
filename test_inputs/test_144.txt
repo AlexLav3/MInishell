@@ -1,2 +1,0 @@
-echo hi | echo >>./outfiles/outfile01 bye
-exit

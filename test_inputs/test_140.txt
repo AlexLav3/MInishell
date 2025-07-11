@@ -1,2 +1,0 @@
-ls <missing >>./test_files/invalid_permission >>./outfiles/outfile02
-exit

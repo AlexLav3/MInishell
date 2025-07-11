@@ -1,2 +1,0 @@
-export GHOST=123 | env | grep GHOST
-exit

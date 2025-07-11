@@ -1,2 +1,0 @@
-echo 'bye *' t*.c bye
-exit

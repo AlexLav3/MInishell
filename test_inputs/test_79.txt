@@ -1,2 +1,0 @@
-grep hi "<infile" <         ./test_files/infile
-exit

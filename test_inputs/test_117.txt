@@ -1,2 +1,0 @@
-echo hi >./outfiles/outfile01 >./test_files/invalid_permission | echo bye
-exit

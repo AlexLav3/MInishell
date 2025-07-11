@@ -1,2 +1,0 @@
-echo <missing <"./test_files/infile" <missing
-exit

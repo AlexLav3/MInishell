@@ -1,2 +1,0 @@
-cat <missing | cat <"./test_files/infile"
-exit

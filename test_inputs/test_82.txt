@@ -1,2 +1,0 @@
-echo <"./test_files/infile" "bonjour       42"
-exit

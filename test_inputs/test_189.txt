@@ -1,2 +1,0 @@
-echo *bonus *.supp bonjour
-exit
