@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/09 17:03:42 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/11 19:43:03 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	token_has_unquoted_pipe(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->com && is_pipe(tokens->com[0]) && tokens->quoted == 0)
+		if (tokens->com && is_pipe(tokens->com[0]) && !tokens->quoted)
 			return (1);
 		tokens = tokens->next;
 	}
@@ -28,7 +28,7 @@ static int	token_has_unquoted_redir(t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->com && (tokens->com[0] == '>'
-				|| tokens->com[0] == '<') && tokens->quoted == 0)
+				|| tokens->com[0] == '<') && !tokens->quoted)
 			return (1);
 		tokens = tokens->next;
 	}
