@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/10 18:09:42 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:08:59 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	builtin_cd(char **cmd, t_shell *shell)
 	if (size_cmd_arg(cmd) > 2)
 	{
 		shell->exit_stat = 1;
+		printf("too many args\n");
 		return ;
 	}
 	if (!cmd[1])
