@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/11 21:08:59 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:53:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	ft_export(char **cmd, t_shell *shell)
 		equal = ft_strchr(cmd[i], '=');
 		if (equal)
 			set_var(cmd, shell, equal, i);
+		else
+			printf("missing equal sign\n");
 		i++;
 	}
 }

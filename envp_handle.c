@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 20:21:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:52:57 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	search_env(t_shell *shell, char *var)
 		return (i);
 	while (var[len] && (ft_isalnum(var[len]) || var[len] == '_'))
 		len++;
+	if (len <= 0)
+		return (printf("Invalid\n"), -1);
 	shell->var_len = len;
 	while (shell->env_var[i])
 	{

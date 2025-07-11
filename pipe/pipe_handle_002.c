@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/09 01:20:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/11 21:50:27 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,16 @@ void	execute_cmd(char *cmd, t_shell *px)
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 		pipex_error("split");
-	path = get_right_path(args[0], px, 1);
-	if (!path)
+	if (!handle_builtin(&cmd, px)) // pseudo idea - maybe not needed 
 	{
-		write(STDERR_FILENO, args[0], ft_strlen(args[0]));
-		write(STDERR_FILENO, ": command not found\n", 21);
-		free_array(args);
-		exit(127);
+		path = get_right_path(args[0], px, 1);
+		if (!path)
+		{
+			write(STDERR_FILENO, args[0], ft_strlen(args[0]));
+			write(STDERR_FILENO, ": command not found\n", 21);
+			free_array(args);
+			exit(127);
+		}
 	}
 	if (execve(path, args, px->envp) == -1)
 	{
