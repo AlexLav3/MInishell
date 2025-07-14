@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/10 23:12:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/14 21:48:27 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 //printf("builtin used\n"); // for checking if builtin is used or not
 bool	handle_builtin(char **cmd, t_shell *shell)
 {
+	printf("builtin used\n"); 
 	if (!cmd || !cmd[0] || ft_strchr(*cmd, '/'))
 		return (false);
 	if (ft_strcmp(cmd[0], "cd") == 0)
