@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/11 21:50:27 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/14 22:15:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ void	execute_cmd(char *cmd, t_shell *px)
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 		pipex_error("split");
-	if (!handle_builtin(&cmd, px)) // pseudo idea - maybe not needed 
+	if (handle_builtin(args, px))
+	 	exit(0);
+	else 
 	{
 		path = get_right_path(args[0], px, 1);
 		if (!path)

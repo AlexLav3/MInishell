@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/11 21:53:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/14 22:18:16 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,15 @@ void	builtin_cd(char **cmd, t_shell *shell)
 
 void	builtin_pwd(t_shell *shell)
 {
-	if (!shell->pwd || !is_valid_directory(shell->pwd))
+	char cwd[PATH_MAX];
+
+	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
-		shell->exit_stat = 128;
+		perror("pwd");
+		shell->exit_stat = 1;
 		return ;
 	}
-	printf("%s\n", shell->pwd);
+	printf("%s\n", cwd);
 	shell->exit_stat = 0;
 }
 
