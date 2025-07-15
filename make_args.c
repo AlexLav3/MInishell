@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/11 21:11:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:43:19 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ char	**make_args(t_token *tokens, t_shell *shell)
 	int		i;
 
 	i = 0;
+	if (!tokens)
+		return (NULL);
 	cmd = malloc(sizeof(char *) * (size_args(tokens) + 1));
-	if (!cmd || !tokens)
+	if (!cmd)
 		return (NULL);
 	while (tokens)
 	{
