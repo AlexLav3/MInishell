@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_001.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 11:49:23 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/15 20:06:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	create_pipes(char **cmds, t_shell *shell)
 {
 	int		i;
 	int		cmd_count;
-	t_shell px;
+	t_shell	px;
 
 	i = -1;
 	init_pipex(&px, shell);
