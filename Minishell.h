@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 12:03:35 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/15 12:08:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_shell
 	int				prev_fd[2];
 	pid_t			pid;
 	char			**av;
-	// char			**envp;
 	int				exit;
 	char			*infile;
 	char			*outfile;
