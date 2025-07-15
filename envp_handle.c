@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/14 22:12:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:04:47 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	print_env(t_shell shell)
 		return ;
 	}
 	i = 0;
-	while (shell.envp[i])
-    {
-        write(STDOUT_FILENO, shell.envp[i], ft_strlen(shell.envp[i]));
-        write(STDOUT_FILENO, "\n", 1);
-        i++;
-    }
+	while (shell.env_var[i])
+	{
+		write(STDOUT_FILENO, shell.env_var[i], ft_strlen(shell.env_var[i]));
+		write(STDOUT_FILENO, "\n", 1);
+		i++;
+	}
 }
 
 char	**copy_envp(char **envp, char *new_var)
