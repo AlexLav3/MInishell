@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/14 22:15:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:02:50 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	execute_cmd(char *cmd, t_shell *px)
 			exit(127);
 		}
 	}
-	if (execve(path, args, px->envp) == -1)
+	if (execve(path, args, px->env_var) == -1)
 	{
 		pipex_error("execve");
 		exit(127);

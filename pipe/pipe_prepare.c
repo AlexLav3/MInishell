@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:41 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/08 10:18:46 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/15 12:02:45 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,11 @@ char	*get_path_in(char *cmd, t_shell *px)
 
 	i = 0;
 	full_path = NULL;
-	while (px->envp[i] && strncmp(px->envp[i], "PATH=", 5))
+	while (px->env_var[i] && strncmp(px->env_var[i], "PATH=", 5))
 		i++;
-	if (!px->envp[i])
+	if (!px->env_var[i])
 		return (NULL);
-	paths = ft_split(px->envp[i] + 5, ':');
+	paths = ft_split(px->env_var[i] + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
