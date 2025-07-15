@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 20:06:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 01:03:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	middle_child_process(t_shell *px, char *cmd)
  */
 void	close_pipes_and_wait(t_shell *px)
 {
+	int		status;
+	pid_t	pid;
+
 	if (px->pipe_fd[0] != -1)
 		close(px->pipe_fd[0]);
 	if (px->pipe_fd[1] != -1)
@@ -68,8 +71,6 @@ void	close_pipes_and_wait(t_shell *px)
 		close(px->prev_fd[0]);
 	if (px->prev_fd[1] != -1)
 		close(px->prev_fd[1]);
-	while (wait(NULL) > 0)
-		;
 }
 
 /*
