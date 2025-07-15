@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 12:08:30 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/15 21:00:11 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void				run_child_redir(char *path, t_cmd *cmd, t_shell *shell);
 void				execve_cmd(t_cmd *cmd, t_shell *shell);
 void				close_all_pipe_fds(t_shell *px);
 //heredoc.c (static: 4)
-void				heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter);
+void				heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter, t_token *tokens);
 //parser_redir_utils.c
 int					redir_token_in_out(t_token *tokens, t_cmd *cmd);
 int					redir_token_append(t_token *tokens, t_cmd *cmd);

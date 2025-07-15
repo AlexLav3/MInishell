@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/08 10:16:17 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/15 21:36:01 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
 	{
 		if (cmd.args)
 			free_array(cmd.args);
-		reset_redirection(&cmd);
+		reset_redirection(&cmd);	
 		return ;
 	}
 	execute_single_redir(&cmd, shell);

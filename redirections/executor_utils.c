@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:37:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/15 21:37:24 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	execve_cmd(t_cmd *cmd, t_shell *shell)
  * Safely closes all pipe file descriptors (`pipe_fd` and `prev_fd`)
  * in the current process to avoid leaks or interference.
  */
+ //note - FREE shell, tokens in child before exiting!
 void	close_all_pipe_fds(t_shell *px)
 {
 	if (px->pipe_fd[0] >= 0)

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:39:04 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/15 20:59:03 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell)
 	{
 		if (tokens->next && tokens->next->com)
 		{
-			heredoc_do(cmd, shell, tokens->next->com);
+			heredoc_do(cmd, shell, tokens->next->com, tokens);
 			return (1);
 		}
 	}

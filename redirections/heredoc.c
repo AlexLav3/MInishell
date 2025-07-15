@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 20:38:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/15 21:27:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * until the specified delimiter is encountered. Each line is written
  * to the write-end of the heredoc pipe.
  */
-static void	heredoc_child_process(int write_fd, char *delimiter)
+static void	heredoc_child_process(int write_fd, char *delimiter, t_token *tokens, t_shell *shell)
 {
 	char	*line;
 
@@ -33,6 +33,7 @@ static void	heredoc_child_process(int write_fd, char *delimiter)
 		free(line);
 	}
 	free(line);
+	close_free(tokens, shell);
 	close(write_fd);
 	exit(0);
 }
@@ -54,7 +55,7 @@ static int	init_heredoc_pipe(int pipe_fd[2])
  * Forks a child process that writes heredoc input into the pipe.
  * In the child, closes read end and calls `heredoc_child_process`.
  */
-static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
+static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter, t_token *tokens, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -69,7 +70,7 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter)
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		heredoc_child_process(pipe_fd[1], delimiter);
+		heredoc_child_process(pipe_fd[1], delimiter, tokens, shell);
 	}
 	return (pid);
 }
@@ -104,14 +105,14 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
  * - Handles parent logic and stores input fd
  * Marks the command as errored on any failure.
  */
-void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter)
+void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter, t_token *tokens)
 {
 	int		pipe_fd[2];
 	pid_t	pid;
 
 	if (init_heredoc_pipe(pipe_fd) == -1)
 		return ;
-	pid = create_heredoc_child(pipe_fd, delimiter);
+	pid = create_heredoc_child(pipe_fd, delimiter, tokens, shell);
 	if (pid == -1)
 	{
 		cmd->redir_error = 1;
