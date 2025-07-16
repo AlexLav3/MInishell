@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:55:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:22:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	create_pipes(char **cmds, t_shell *shell, t_token *tokens)
 
 	i = -1;
 	init_pipex(&px, shell);
+	px.cmd = cmds;
 	cmd_count = size_cmd_arg(cmds);
 	while (++i < cmd_count)
 	{

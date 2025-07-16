@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:47:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:23:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	execute_cmd(char *cmd, t_shell *px, t_token *tokens)
 	{
 		close_free(tokens, px);
 		free_array(args);
-		free(cmd);
+		free_array(px->cmd);
 		exit(0);
 	}
 	else
@@ -113,16 +113,16 @@ void	execute_cmd(char *cmd, t_shell *px, t_token *tokens)
 			write(STDERR_FILENO, ": command not found\n", 21);
 			close_free(tokens, px);
 			free_array(args);
-			free(cmd);
+			free_array(px->cmd);
 			exit(127);
 		}
 	}
-	if (execve(path, args, px->env_var) == -1)
+	if (execve(path, args, px->env_var) == -1) 
 	{
-		pipex_error("execve");
+		pipex_error("execve"); 
 		close_free(tokens, px);
+		free_array(px->cmd);
 		free_array(args);
-		free(cmd);
 		exit(127);
 	}
 }

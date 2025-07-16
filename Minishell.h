@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:42:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 23:20:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_shell
 	int				exit;
 	char			*infile;
 	char			*outfile;
+	char 			**cmd;
 	int				env_idx;
 }					t_shell;
 
