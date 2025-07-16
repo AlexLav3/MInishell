@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_001.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 01:03:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:11:25 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ void	create_pipes(char **cmds, t_shell *shell)
 		}
 		fd_handle(i, cmd_count, &px);
 	}
-	close_pipes_and_wait(&px);
+	close_pipes_and_wait(&px, cmd_count);
 }

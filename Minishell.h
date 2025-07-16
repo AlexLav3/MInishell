@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 00:46:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:12:50 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void				create_pipes(char **cmds, t_shell *shell);
 void				first_child_process(t_shell *px, char *cmd);
 void				last_child_process(t_shell *px, char *cmd);
 void				middle_child_process(t_shell *px, char *cmd);
-void				close_pipes_and_wait(t_shell *px);
+void				close_pipes_and_wait(t_shell *px, int cmd_count);
 void				execute_cmd(char *cmd, t_shell *px);
 
 //dollar sign

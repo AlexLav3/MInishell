@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 01:03:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:13:35 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ void	first_child_process(t_shell *px, char *cmd)
  */
 void	last_child_process(t_shell *px, char *cmd)
 {
-	if (dup2(px->pipe_fd[0], STDIN_FILENO) == -1)
+	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1) // update
 		pipex_error("dup2 failed for last child");
 	close(px->pipe_fd[0]);
 	close(px->pipe_fd[1]);
+	close(px->prev_fd[0]); // update
 	execute_cmd(cmd, px);
 }
 
@@ -50,6 +51,7 @@ void	middle_child_process(t_shell *px, char *cmd)
 	if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
 		pipex_error("dup2 failed for intermediate child (stdout)");
 	close(px->prev_fd[0]);
+	close(px->pipe_fd[0]); // update
 	close(px->pipe_fd[1]);
 	execute_cmd(cmd, px);
 }
@@ -58,10 +60,11 @@ void	middle_child_process(t_shell *px, char *cmd)
  * Closes all remaining pipe FDs in the parent process.
  * Waits for all child processes to finish using `wait`.
  */
-void	close_pipes_and_wait(t_shell *px)
+void	close_pipes_and_wait(t_shell *px, int cmd_count)
 {
 	int		status;
 	pid_t	pid;
+	int		i;
 
 	if (px->pipe_fd[0] != -1)
 		close(px->pipe_fd[0]);
@@ -71,6 +74,15 @@ void	close_pipes_and_wait(t_shell *px)
 		close(px->prev_fd[0]);
 	if (px->prev_fd[1] != -1)
 		close(px->prev_fd[1]);
+	// Wait for all child processes
+	i = 0;
+	while (i < cmd_count)
+	{
+		pid = wait(&status);
+		if (pid == -1)
+			perror("wait");
+		i++;
+	}
 }
 
 /*

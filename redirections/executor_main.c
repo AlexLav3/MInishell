@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 21:36:01 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:13:40 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
 		}
 		update_fds(px);
 	}
-	close_pipes_and_wait(px);
+	close_pipes_and_wait(px, cmd_count);
 }
 
 /*
