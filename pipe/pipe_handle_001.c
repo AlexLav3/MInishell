@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_001.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 13:11:25 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/16 21:55:50 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	fd_handle(int i, int cmd_count, t_shell *px)
  * Decides which child function to run based on position in pipeline:
  * first, middle, or last. Also closes unused FDs in each child.
  */
-void	which_child(int i, int cmd_count, t_shell *px, char **cmds)
+void	which_child(int i, int cmd_count, t_shell *px, char **cmds, t_token *tokens)
 {
 	if (i == 0)
-		first_child_process(px, cmds[i]);
+		first_child_process(px, cmds[i], tokens);
 	else if (i == cmd_count - 1)
-		last_child_process(px, cmds[i]);
+		last_child_process(px, cmds[i], tokens);
 	else
-		middle_child_process(px, cmds[i]);
+		middle_child_process(px, cmds[i], tokens);
 	if (i > 0)
 		close(px->prev_fd[0]);
 	if (i < cmd_count - 1)
@@ -60,7 +60,7 @@ void	which_child(int i, int cmd_count, t_shell *px, char **cmds)
  * Iterates through commands, sets up pipes and forks children.
  * Each child handles one command. Parent closes FDs and waits.
  */
-void	create_pipes(char **cmds, t_shell *shell)
+void	create_pipes(char **cmds, t_shell *shell, t_token *tokens)
 {
 	int		i;
 	int		cmd_count;
@@ -79,7 +79,7 @@ void	create_pipes(char **cmds, t_shell *shell)
 			pipex_error("Fork failed");
 		if (px.pid == 0)
 		{
-			which_child(i, cmd_count, &px, cmds);
+			which_child(i, cmd_count, &px, cmds, tokens);
 			exit(0);
 		}
 		fd_handle(i, cmd_count, &px);

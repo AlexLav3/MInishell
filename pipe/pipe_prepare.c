@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_prepare.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:41 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 12:02:45 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/16 21:22:48 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	process_token(t_token *token, char **cmd_str, char **cmds, int *i)
 	{
 		if (*cmd_str)
 		{
-			tmp = ft_strjoin(" ", token->com);
+			tmp = join_and_free(" ", token->com);
 			*cmd_str = join_and_free(*cmd_str, tmp);
 		}
 		else

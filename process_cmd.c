@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/15 12:41:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/16 21:56:35 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,11 @@ void	pipe_cmds(t_token **tokens, t_shell *shell)
 	cmds = make_args_pipes(*tokens);
 	if (!cmds)
 	{
+		free_array(cmds);
 		deallocate(tokens);
 		return ;
 	}
-	create_pipes(cmds, shell);
+	create_pipes(cmds, shell, *tokens);
 	free_array(cmds);
 }
 
@@ -86,3 +87,4 @@ void	process_commands(t_token **tokens, t_shell *shell)
 		single_cmd(tokens, shell);
 	deallocate(tokens);
 }
+

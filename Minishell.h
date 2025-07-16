@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 13:12:50 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/16 21:42:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,13 @@ void				process_token(t_token *token, char **cmd_str, char **cmds,
 // pipes
 void				pipex_error(char *msg);
 void				fd_handle(int i, int cmd_count, t_shell *px);
-void				which_child(int i, int cmd_count, t_shell *px, char **cmds);
-void				create_pipes(char **cmds, t_shell *shell);
-void				first_child_process(t_shell *px, char *cmd);
-void				last_child_process(t_shell *px, char *cmd);
-void				middle_child_process(t_shell *px, char *cmd);
+void				which_child(int i, int cmd_count, t_shell *px, char **cmds, t_token *tokens);
+void				create_pipes(char **cmds, t_shell *shell, t_token *tokens);
+void				first_child_process(t_shell *px, char *cmd, t_token *tokens);
+void				last_child_process(t_shell *px, char *cmd, t_token *tokens);
+void				middle_child_process(t_shell *px, char *cmd, t_token *tokens);
 void				close_pipes_and_wait(t_shell *px, int cmd_count);
-void				execute_cmd(char *cmd, t_shell *px);
+void				execute_cmd(char *cmd, t_shell *px, t_token *tokens);
 
 //dollar sign
 char				*handle_dollar(char *cmd, t_shell *shell);

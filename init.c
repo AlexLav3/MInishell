@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 21:20:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 20:40:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_pipex(t_shell *px, t_shell *shell)
 {
 	px->env_var = shell->env_var;
+	px->pwd = shell->pwd;
 	px->pipe_fd[0] = -1;
 	px->pipe_fd[1] = -1;
 	px->prev_fd[0] = -1;

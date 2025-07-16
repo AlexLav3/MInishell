@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:07:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/15 21:20:57 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 21:36:22 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	free_array(char **arr)
 
 void	close_free(t_token *tokens, t_shell *shell)
 {
+	fprintf(stderr,"CHILD %d : cleaning up before exit\n",getpid());
 	deallocate(&tokens);
 	free_array(shell->env_var);
 	free(shell->pwd);
