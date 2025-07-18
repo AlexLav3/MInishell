@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_001.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 23:22:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:49:43 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ void	fd_handle(int i, int cmd_count, t_shell *px)
 		px->prev_fd[0] = px->pipe_fd[0];
 }
 
+
 /*
  * Decides which child function to run based on position in pipeline:
  * first, middle, or last. Also closes unused FDs in each child.
  */
-void	which_child(int i, int cmd_count, t_shell *px, char **cmds, t_token *tokens)
+void	which_child(int i, int cmd_count, t_shell *px, char **cmds, t_token **tokens)
 {
 	if (i == 0)
-		first_child_process(px, cmds[i], tokens);
+		first_child_process(px, cmds[i], tokens, cmds);
 	else if (i == cmd_count - 1)
-		last_child_process(px, cmds[i], tokens);
+		last_child_process(px, cmds[i], tokens, cmds);
 	else
-		middle_child_process(px, cmds[i], tokens);
+		middle_child_process(px, cmds[i], tokens, cmds);
 	if (i > 0)
 		close(px->prev_fd[0]);
 	if (i < cmd_count - 1)
@@ -60,7 +61,7 @@ void	which_child(int i, int cmd_count, t_shell *px, char **cmds, t_token *tokens
  * Iterates through commands, sets up pipes and forks children.
  * Each child handles one command. Parent closes FDs and waits.
  */
-void	create_pipes(char **cmds, t_shell *shell, t_token *tokens)
+void	create_pipes(char **cmds, t_shell *shell, t_token **tokens)
 {
 	int		i;
 	int		cmd_count;
@@ -68,7 +69,6 @@ void	create_pipes(char **cmds, t_shell *shell, t_token *tokens)
 
 	i = -1;
 	init_pipex(&px, shell);
-	px.cmd = cmds;
 	cmd_count = size_cmd_arg(cmds);
 	while (++i < cmd_count)
 	{

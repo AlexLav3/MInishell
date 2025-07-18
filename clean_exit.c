@@ -3,19 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:07:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/16 22:56:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:56:37 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+// void	free_cmd(t_cmd *cmd)
+// {
+// 	if (!cmd)
+// 		return ;
+
+// 	if (cmd->args)
+// 		free_array(cmd->args);
+// 	if (cmd->infile)
+// 		free(cmd->infile);
+// 	if (cmd->outfile)
+// 		free(cmd->outfile);
+
+// 	free(cmd);
+// }
+
+// void	free_cmd_array(t_cmd *cmds, int count)
+// {
+// 	int	i;
+
+// 	if (!cmds)
+// 		return ;
+
+// 	i = 0;
+// 	while (i < count)
+// 	{
+// 		if (cmds[i].args)
+// 			free_array(cmds[i].args);
+// 		free(cmds[i].infile);
+// 		free(cmds[i].outfile);
+// 		i++;
+// 	}
+// 	free(cmds);
+// }
+
 void	deallocate(t_token **root)
 {
 	t_token	*curr;
 	t_token	*token;
+	int		count = 0;
 
 	if (!root || !*root)
 		return ;
@@ -27,6 +62,7 @@ void	deallocate(t_token **root)
 		if (token->com)
 			free(token->com);
 		free(token);
+		count++;
 	}
 	*root = NULL;
 }
@@ -41,16 +77,31 @@ void	free_array(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
+		// arr[i] = NULL; // update
 		i++;
 	}
 	free(arr);
+	// arr = NULL; // update
 }
 
-void	close_free(t_token *tokens, t_shell *shell)
+void	close_free(t_token **tokens, t_shell *shell)
 {
-	deallocate(&tokens);
-	free_array(shell->env_var);
-	free(shell->pwd);
+	if (tokens)
+		deallocate(tokens);
+	if (shell)
+	{
+		if (shell->env_var)
+		{
+			free_array(shell->env_var);
+			shell->env_var = NULL;
+		}
+		if (shell->pwd)
+			free(shell->pwd);
+		if (shell->infile)
+			free(shell->infile);
+		if (shell->outfile)
+			free(shell->outfile);
+	}
 }
 
 void	ft_exit(char **cmd, t_shell *shell)

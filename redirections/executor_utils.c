@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 21:37:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:40:16 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ int	prep_command_path(t_cmd *cmd, t_shell *shell, char **path)
  * Applies input/output redirection for a single command, then
  * uses `execve()` to execute it. If execution fails, exits with 127.
  */
-void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell)
+void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell, t_token **tokens)
 {
 	apply_redirection(cmd);
+	if (!cmd->args || !cmd->args[0])
+		cleanup_child_and_exit(cmd, shell, tokens, 1);
 	execve(path, cmd->args, shell->env_var);
 	perror("execve failed utils.c redir");
-	exit(127);
+	cleanup_child_and_exit(cmd, shell, tokens, 1);
 }
 
 /*
@@ -69,7 +71,7 @@ void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell)
  * Applies redirection, gets full command path,
  * then executes using `execve`. Frees resources and exits on failure.
  */
-void	execve_cmd(t_cmd *cmd, t_shell *shell)
+void	execve_cmd(t_cmd *cmd, t_shell *shell, t_token **tokens)
 {
 	char	*full_path;
 
@@ -78,12 +80,13 @@ void	execve_cmd(t_cmd *cmd, t_shell *shell)
 	if (!full_path)
 	{
 		perror(cmd->args[0]);
-		exit(127);
+		cleanup_child_and_exit(cmd, shell, tokens, 127);
 	}
 	execve(full_path, cmd->args, shell->env_var);
 	perror("execve");
-	free(full_path);
-	exit(1);
+	if (full_path != cmd->args[0])
+		free(full_path);
+	cleanup_child_and_exit(cmd, shell, tokens, 1);
 }
 
 /*

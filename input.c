@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 00:29:49 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 21:23:46 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/17 10:30:32 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ int	input(char *str, t_token **tokens, t_shell *shell)
 		if (is_meta(str[i]))
 			i = handle_meta(str, tokens, i, false);
 		else
+		{
 			i = make_tok(tokens, str, i, shell);
+			if (!i)
+				close_free(tokens, shell);
+		}
 		if (i < 0)
 			return (printf("error!\n"), i);
 	}

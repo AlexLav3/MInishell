@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:42:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/18 13:27:44 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,29 @@ static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 	{
 		if (dup2(cmds[i].redir_in, STDIN_FILENO) == -1)
 			pipex_error("dup2 redir_in");
+		if (cmds[i].redir_in > 2)
+			close(cmds[i].redir_in);
 	}
 	else if (i > 0)
 	{
 		if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
 			pipex_error("dup2 prev_fd[0]");
+		if (px->prev_fd[0] > 2)
+			close(px->prev_fd[0]);
 	}
 	if (cmds[i].redir_out != -1)
 	{
 		if (dup2(cmds[i].redir_out, STDOUT_FILENO) == -1)
 			pipex_error("dup2 redir_out");
+		if (cmds[i].redir_out > 2)
+			close(cmds[i].redir_out);
 	}
 	else if (i < cmd_count - 1)
 	{
 		if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
 			pipex_error("dup2 pipe_fd[1]");
+		if (px->pipe_fd[1] > 2)
+			close(px->pipe_fd[1]);
 	}
 }
 
@@ -72,7 +80,7 @@ static void	update_fds(t_shell *px)
  * At the end, it waits for all child processes.
  */
 void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
-		t_shell *shell)
+		t_shell *shell, t_token **tokens)
 {
 	int	i;
 
@@ -88,7 +96,7 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
 		{
 			setup_in_out(px, cmds, cmd_count, i);
 			close_all_pipe_fds(px);
-			execve_cmd(&cmds[i], shell);
+			execve_cmd(&cmds[i], shell, tokens);
 			exit(127);
 		}
 		update_fds(px);
@@ -102,21 +110,22 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
  * executes the command using `execute_single_redir()`.
  * Performs memory cleanup afterward.
  */
-
 void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
 {
 	t_cmd	cmd;
 
 	init_cmd(&cmd);
-	cmd.args = parse_args_and_redirs(*tokens, &cmd, shell);
+	cmd.args = parse_args_and_redirs(tokens, &cmd, shell);
 	if (!cmd.args || !cmd.args[0] || cmd.redir_error)
 	{
 		if (cmd.args)
 			free_array(cmd.args);
-		reset_redirection(&cmd);	
+		reset_redirection(&cmd);
 		return ;
 	}
-	execute_single_redir(&cmd, shell);
+	execute_single_redir(&cmd, shell, tokens);
+	for (int j = 0; cmd.args[j]; j++)
+		printf("cmds: %s\n", cmd.args[j]);
 	free_array(cmd.args);
 	reset_redirection(&cmd);
 }
@@ -130,7 +139,7 @@ void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
  * Frees the command path if necessary.
  */
 
-void	execute_single_redir(t_cmd *cmd, t_shell *shell)
+void	execute_single_redir(t_cmd *cmd, t_shell *shell, t_token **tokens)
 {
 	char	*path;
 	int		status;
@@ -147,7 +156,7 @@ void	execute_single_redir(t_cmd *cmd, t_shell *shell)
 		return ;
 	}
 	if (shell->pid1 == 0)
-		run_child_redir(path, cmd, shell);
+		run_child_redir(path, cmd, shell, tokens);
 	waitpid(shell->pid1, &status, 0);
 	handle_exit_status(shell, status);
 	if (path && path != cmd->args[0])

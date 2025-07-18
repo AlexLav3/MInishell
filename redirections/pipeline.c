@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:41:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:57:18 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
 {
 	if (ctx->prev)
 		ctx->prev->next = NULL;
-	ctx->cmd->args = parse_args_and_redirs(*(ctx->start), ctx->cmd, shell);
+	ctx->cmd->args = parse_args_and_redirs(ctx->start, ctx->cmd, shell);
 	if (ctx->prev)
 		ctx->prev->next = ctx->curr;
 	*(ctx->start) = ctx->curr->next;
@@ -62,16 +62,16 @@ static void	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
  After processing all pipes, parses the remaining tokens as the last command.
  Stops processing if tokens are exhausted or all commands have been built.
  */
-static void	build_cmds_from_tokens(t_token *tokens, t_cmd *cmds, int cmd_count,
+static void	build_cmds_from_tokens(t_token **tokens, t_cmd *cmds, int cmd_count,
 		t_shell *shell)
 {
 	int				cmd_i;
 	t_pipe_context	ctx;
 
 	cmd_i = 0;
-	ctx.start = &tokens;
+	ctx.start = tokens;
 	ctx.prev = NULL;
-	ctx.curr = tokens;
+	ctx.curr = *tokens;
 	if (!tokens || cmd_count == 0)
 		return ;
 	while (ctx.curr && cmd_i < cmd_count)
@@ -86,7 +86,7 @@ static void	build_cmds_from_tokens(t_token *tokens, t_cmd *cmds, int cmd_count,
 		ctx.curr = ctx.curr->next;
 	}
 	if (cmd_i < cmd_count && *(ctx.start))
-		cmds[cmd_i].args = parse_args_and_redirs(*(ctx.start), &cmds[cmd_i],
+		cmds[cmd_i].args = parse_args_and_redirs(ctx.start, &cmds[cmd_i],
 				shell);
 }
 
@@ -106,7 +106,9 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 	t_cmd	*cmds;
 	t_shell	px;
 	int		i;
+	t_token *head;
 
+	head = *tokens; 
 	cmd_count = count_pipes(*tokens);
 	cmds = malloc(sizeof(t_cmd) * cmd_count);
 	if (!cmds)
@@ -114,9 +116,9 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 	i = 0;
 	while (i < cmd_count)
 		init_cmd(&cmds[i++]);
-	build_cmds_from_tokens(*tokens, cmds, cmd_count, shell);
+	build_cmds_from_tokens(tokens, cmds, cmd_count, shell);
 	init_pipex(&px, shell);
-	execute_piped_commands(&px, cmds, cmd_count, shell);
+	execute_piped_commands(&px, cmds, cmd_count, shell, tokens);
 	i = 0;
 	while (i < cmd_count)
 	{
@@ -125,4 +127,6 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 		i++;
 	}
 	free(cmds);
+	deallocate(&head);
+	*tokens = NULL;
 }

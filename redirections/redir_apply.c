@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_apply.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:44:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/04 13:35:15 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/17 15:55:27 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,17 @@ static void	apply_in_redirection(t_cmd *cmd)
 {
 	int	fd;
 
-	if (cmd->infile)
+	if (cmd->redir_in != -1)
+	{
+		if (dup2(cmd->redir_in, STDIN_FILENO) == -1)
+		{
+			perror("dup2 redir_in");
+			exit(EXIT_FAILURE);
+		}
+		if (cmd->redir_in > 2)
+			close(cmd->redir_in);
+	}
+	else if (cmd->infile)
 	{
 		fd = open(cmd->infile, O_RDONLY);
 		if (fd < 0 || dup2(fd, STDIN_FILENO) == -1)
@@ -33,16 +43,6 @@ static void	apply_in_redirection(t_cmd *cmd)
 		}
 		if (fd > 2)
 			close(fd);
-	}
-	else if (cmd->redir_in != -1)
-	{
-		if (dup2(cmd->redir_in, STDIN_FILENO) == -1)
-		{
-			perror("dup2 redir_in");
-			exit(EXIT_FAILURE);
-		}
-		if (cmd->redir_in > 2)
-			close(cmd->redir_in);
 	}
 }
 
@@ -56,17 +56,7 @@ static void	apply_out_redirection(t_cmd *cmd)
 {
 	int	fd;
 
-	if (cmd->redir_out != -1)
-	{
-		if (dup2(cmd->redir_out, STDOUT_FILENO) == -1)
-		{
-			perror("dup2 redir_out");
-			exit(EXIT_FAILURE);
-		}
-		if (cmd->redir_out > 2)
-			close(cmd->redir_out);
-	}
-	else if (cmd->outfile)
+	if (cmd->outfile)
 	{
 		fd = open(cmd->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (fd < 0 || dup2(fd, STDOUT_FILENO) == -1)
@@ -76,6 +66,16 @@ static void	apply_out_redirection(t_cmd *cmd)
 		}
 		if (fd > 2)
 			close(fd);
+	}
+	else if (cmd->redir_out != -1)
+	{
+		if (dup2(cmd->redir_out, STDOUT_FILENO) == -1)
+		{
+			perror("dup2 redir_out");
+			exit(EXIT_FAILURE);
+		}
+		if (cmd->redir_out > 2)
+			close(cmd->redir_out);
 	}
 }
 

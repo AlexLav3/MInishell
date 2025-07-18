@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/06/21 00:19:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:00:38 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ int	main(int argc, char **argv, char **envp)
 	setup_shell_signals();
 	if (!shell.exit)
 		take_comm(&token, &shell);
-	close_free(token, &shell);
+	close_free(&token, &shell);
 	return (EXIT_SUCCESS);
 }

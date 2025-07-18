@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/16 21:56:35 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/16 22:38:51 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	single_cmd(t_token **tokens, t_shell *shell)
 {
 	char	**cmd;
 
-	cmd = make_args(*tokens, shell);
+	cmd = make_args(tokens, shell);
 	if (!cmd)
 	{
-		free(cmd);
+		// free(cmd);
 		deallocate(tokens);
 		return ;
 	}
@@ -60,14 +60,13 @@ void	pipe_cmds(t_token **tokens, t_shell *shell)
 {
 	char	**cmds;
 
-	cmds = make_args_pipes(*tokens);
+	cmds = make_args_pipes(tokens);
 	if (!cmds)
 	{
-		free_array(cmds);
 		deallocate(tokens);
 		return ;
 	}
-	create_pipes(cmds, shell, *tokens);
+	create_pipes(cmds, shell, tokens);
 	free_array(cmds);
 }
 
@@ -87,4 +86,3 @@ void	process_commands(t_token **tokens, t_shell *shell)
 		single_cmd(tokens, shell);
 	deallocate(tokens);
 }
-
