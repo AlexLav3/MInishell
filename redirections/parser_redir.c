@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/18 13:41:28 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 09:08:32 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ char	**parse_args_and_redirs(t_token **tokens, t_cmd *cmd, t_shell *shell)
 		return NULL;
 
 	arg_count = count_non_redir_tokens(*tokens);
-	printf("arg_count; %d\n", arg_count);
 	args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!args)
 	{
