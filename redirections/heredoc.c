@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 21:50:38 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/17 01:11:40 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter, t_t
 		free(line);
 	}
 	free(line);
-	free_array(cmd->args); //I tried so hard and got so far.. but in the end... 
 	close_free(tokens, shell);
 	close(write_fd);
 	exit(0);
