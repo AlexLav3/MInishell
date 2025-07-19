@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 11:19:14 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 02:21:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		command = readline("prompt> ");
 		if (!command)
 		{
-			deallocate(tokens); // update
-			close_free(tokens, shell);
+			// deallocate(tokens); // update
+			close_free(tokens, shell); //deallocate tokens is already here(?) + I just tested it, the above line makes no difference leaks-wise.
 			write(1, "exit\n", 5);
-			exit(EXIT_SUCCESS);
+			exit(EXIT_SUCCESS); 
 		}
 		if (ft_strlen(command) > 0)
 			add_history(command);

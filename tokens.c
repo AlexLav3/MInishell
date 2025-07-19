@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/18 13:57:21 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 02:19:20 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*new_token(char *word, int quoted)
 	}
 	tokens->next = NULL;
 	tokens->quoted = quoted;
-	created_tokens++; // update
+	created_tokens++; // update - what for?
 	return (tokens);
 }
 

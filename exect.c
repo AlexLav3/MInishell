@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 20:05:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 02:31:34 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 		signal(SIGINT, SIG_DFL);
 		if (execve(path, cmd, shell->env_var) == -1)
 		{
+			free_array(shell->env_var);
+			free(shell->pwd);
+			free_array(cmd);
+			free(path);
 			perror("execve failed");
 			exit(EXIT_FAILURE);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:07:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/18 13:56:37 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 02:18:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	free_array(char **arr)
 		i++;
 	}
 	free(arr);
-	// arr = NULL; // update
+	// arr = NULL; // update - HUH?
 }
 
 void	close_free(t_token **tokens, t_shell *shell)
