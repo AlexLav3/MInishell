@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 15:07:33 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 18:10:45 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void				take_comm(t_token **tokens, t_shell *shell);
 int					input(char *str, t_token **tokens, t_shell *shell);
 char				**make_args(t_token **tokens, t_shell *shell);
 char				*set_pwd(t_shell *shell);
-void				execute_single_cmd(char **cmd, t_shell *shell);
+void				execute_single_cmd(char **cmd, t_shell *shell, t_token **tokens);
 
 // get_path
 void				process_commands(t_token **tokens, t_shell *shell);
