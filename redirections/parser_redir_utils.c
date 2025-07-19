@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 19:05:49 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/19 21:14:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	redir_token_append(t_token **tokens, t_cmd *cmd)
 		return (1);
 	}
 	cmd->redir_out = open(cmd->outfile,
-			O_WRONLY | O_CREAT | O_APPEND, 0644);
+							O_WRONLY | O_CREAT | O_APPEND,
+							0644);
 	if (cmd->redir_out < 0)
 	{
 		perror("redir: ");
@@ -101,8 +102,7 @@ void	readirs(int dir, t_cmd *cmd, char *com)
 		if (cmd->outfile)
 			free(cmd->outfile);
 		cmd->outfile = ft_strtrim(com, " \n\t");
-		cmd->redir_out = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC,
-				0644);
+		cmd->redir_out = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (cmd->redir_out < 0)
 		{
 			perror("redir_out");

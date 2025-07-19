@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:07:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/19 02:18:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:14:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void	deallocate(t_token **root)
 {
 	t_token	*curr;
 	t_token	*token;
-	int		count = 0;
+	int		count;
 
+	count = 0;
 	if (!root || !*root)
 		return ;
 	curr = *root;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 11:40:16 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 21:14:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	prep_command_path(t_cmd *cmd, t_shell *shell, char **path)
  * Applies input/output redirection for a single command, then
  * uses `execve()` to execute it. If execution fails, exits with 127.
  */
-void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell, t_token **tokens)
+void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell,
+		t_token **tokens)
 {
 	apply_redirection(cmd);
 	if (!cmd->args || !cmd->args[0])
@@ -93,7 +94,7 @@ void	execve_cmd(t_cmd *cmd, t_shell *shell, t_token **tokens)
  * Safely closes all pipe file descriptors (`pipe_fd` and `prev_fd`)
  * in the current process to avoid leaks or interference.
  */
- //note - FREE shell, tokens in child before exiting!
+//note - FREE shell, tokens in child before exiting!
 void	close_all_pipe_fds(t_shell *px)
 {
 	if (px->pipe_fd[0] >= 0)

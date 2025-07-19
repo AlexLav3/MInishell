@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 11:57:18 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 21:18:13 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 	t_cmd	*cmds;
 	t_shell	px;
 	int		i;
-	t_token *head;
+	t_token	*head;
 
-	head = *tokens; 
+	head = *tokens;
 	cmd_count = count_pipes(*tokens);
 	cmds = malloc(sizeof(t_cmd) * cmd_count);
 	if (!cmds)

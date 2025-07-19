@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 02:19:20 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:14:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_token	*new_token(char *word, int quoted)
 {
 	t_token	*tokens;
-	static int created_tokens = 0; // update
 
+	static int created_tokens = 0; // update
 	tokens = malloc(sizeof(t_token));
 	if (!tokens)
 		return (NULL);
@@ -32,7 +32,7 @@ t_token	*new_token(char *word, int quoted)
 	return (tokens);
 }
 
-void add_token(t_token **head, char *word, int quoted)
+void	add_token(t_token **head, char *word, int quoted)
 {
 	t_token	*new;
 	t_token	*tmp;

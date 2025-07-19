@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_001.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:33:46 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 22:49:43 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/19 21:13:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	fd_handle(int i, int cmd_count, t_shell *px)
 		px->prev_fd[0] = px->pipe_fd[0];
 }
 
-
 /*
  * Decides which child function to run based on position in pipeline:
  * first, middle, or last. Also closes unused FDs in each child.
  */
-void	which_child(int i, int cmd_count, t_shell *px, char **cmds, t_token **tokens)
+void	which_child(int i, int cmd_count, t_shell *px, char **cmds,
+		t_token **tokens)
 {
 	if (i == 0)
 		first_child_process(px, cmds[i], tokens, cmds);

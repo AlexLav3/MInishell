@@ -6,13 +6,14 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 20:54:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:13:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell, t_token **tokens)
+static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell,
+		t_token **tokens)
 {
 	int	status;
 

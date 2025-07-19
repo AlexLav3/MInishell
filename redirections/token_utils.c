@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:50:10 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 11:32:09 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 21:16:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	is_redir(const char *s)
 {
 	return (ft_strcmp(s, "<") == 0 || ft_strcmp(s, ">") == 0 || \
-	ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<<") == 0);
+			ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<<") == 0);
 }
 
 /*
@@ -45,7 +45,8 @@ int	token_has_redir(t_token *tokens)
 	return (0);
 }
 
-void	cleanup_child_and_exit(t_cmd *cmd, t_shell *shell, t_token **tokens, int status)
+void	cleanup_child_and_exit(t_cmd *cmd, t_shell *shell, t_token **tokens,
+		int status)
 {
 	if (tokens)
 		deallocate(tokens);
@@ -64,4 +65,3 @@ void	cleanup_child_and_exit(t_cmd *cmd, t_shell *shell, t_token **tokens, int st
 	}
 	exit(status);
 }
-
