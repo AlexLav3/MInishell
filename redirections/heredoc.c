@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 01:11:40 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:21:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter, t_token *tokens, t_shell *shell)
 {
 	char	*line;
-
+	(void)cmd; //delete cmd from the arguments instead
 	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
