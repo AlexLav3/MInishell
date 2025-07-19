@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 11:20:57 by fnagy            ###   ########.fr       */
+/*   Updated: 2025/07/19 21:25:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
  * Handles the first command in a pipeline.
  * Redirects STDOUT to pipe write end and executes the command.
  */
-void	first_child_process(t_shell *px, char *cmd, t_token **tokens, char **cmds)
+void	first_child_process(t_shell *px, char *cmd, t_token **tokens,
+		char **cmds)
 {
 	if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
 		pipex_error("dup2 failed for first child");
@@ -29,13 +30,14 @@ void	first_child_process(t_shell *px, char *cmd, t_token **tokens, char **cmds)
  * Handles the last command in a pipeline.
  * Redirects STDIN from pipe read end and executes the command.
  */
-void	last_child_process(t_shell *px, char *cmd, t_token **tokens, char **cmds)
+void	last_child_process(t_shell *px, char *cmd, t_token **tokens,
+		char **cmds)
 {
-	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1) // update
+	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
 		pipex_error("dup2 failed for last child");
 	close(px->pipe_fd[0]);
 	close(px->pipe_fd[1]);
-	close(px->prev_fd[0]); // update
+	close(px->prev_fd[0]);
 	execute_cmd(cmd, px, tokens, cmds);
 }
 
@@ -44,14 +46,15 @@ void	last_child_process(t_shell *px, char *cmd, t_token **tokens, char **cmds)
  * Redirects STDIN from previous pipe read end,
  * and STDOUT to current pipe write end, then executes.
  */
-void	middle_child_process(t_shell *px, char *cmd, t_token **tokens, char **cmds)
+void	middle_child_process(t_shell *px, char *cmd, t_token **tokens,
+		char **cmds)
 {
 	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
 		pipex_error("dup2 failed for intermediate child (stdin)");
 	if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
 		pipex_error("dup2 failed for intermediate child (stdout)");
 	close(px->prev_fd[0]);
-	close(px->pipe_fd[0]); // update
+	close(px->pipe_fd[0]);
 	close(px->pipe_fd[1]);
 	execute_cmd(cmd, px, tokens, cmds);
 }
@@ -74,7 +77,6 @@ void	close_pipes_and_wait(t_shell *px, int cmd_count)
 		close(px->prev_fd[0]);
 	if (px->prev_fd[1] != -1)
 		close(px->prev_fd[1]);
-	// Wait for all child processes
 	i = 0;
 	while (i < cmd_count)
 	{
@@ -105,7 +107,7 @@ void	execute_cmd(char *cmd, t_shell *px, t_token **tokens, char **cmds)
 		deallocate(tokens);
 		free_array(cmds);
 		exit(0);
-	}	
+	}
 	else
 	{
 		path = get_right_path(args[0], px, 1);

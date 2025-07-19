@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 19:44:56 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/19 21:28:18 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**make_args(t_token **tokens, t_shell *shell)
 {
 	char	**cmd;
 	int		i;
-	t_token *tmp;
+	t_token	*tmp;
 
 	i = 0;
 	if (!tokens || !*tokens)
@@ -30,8 +30,8 @@ char	**make_args(t_token **tokens, t_shell *shell)
 	{
 		if (tmp->com && tmp->com[0] != '\0')
 		{
-			cmd[i] = toks_to_args(tmp, NULL, shell); // NULL was *cmd
-			 if (!cmd[i])
+			cmd[i] = toks_to_args(tmp, NULL, shell);
+			if (!cmd[i])
 			{
 				while (i-- > 0)
 					free(cmd[i]);
@@ -49,7 +49,7 @@ char	**make_args(t_token **tokens, t_shell *shell)
 char	*toks_to_args(t_token *tokens, char *cmd, t_shell *shell)
 {
 	(void)shell;
-	free(cmd); // may not needed since we pass NULL
+	free(cmd);
 	cmd = ft_strdup(tokens->com);
 	if (!cmd)
 		return (free(cmd), NULL);

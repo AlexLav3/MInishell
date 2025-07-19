@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:14:49 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:27:05 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ int	redir_token_append(t_token **tokens, t_cmd *cmd)
 		cmd->redir_error = 1;
 		return (1);
 	}
-	cmd->redir_out = open(cmd->outfile,
-							O_WRONLY | O_CREAT | O_APPEND,
-							0644);
+	cmd->redir_out = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (cmd->redir_out < 0)
 	{
 		perror("redir: ");
