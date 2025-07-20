@@ -11,7 +11,7 @@ SOURCES = main.c init.c input.c utils.c exect.c process_cmd.c\
 		process_w.c var_utils.c\
 		redirections/executor_main.c redirections/executor_utils.c redirections/heredoc.c\
 		redirections/parser_redir.c redirections/parser_redir_utils.c redirections/pipeline.c\
-		redirections/redir_apply.c redirections/token_utils.c\
+		redirections/pipeline_utils.c redirections/redir_apply.c redirections/token_utils.c\
 		syntax_error.c\
 				
 

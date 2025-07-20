@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:25:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:27:43 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,36 +101,21 @@ void	execute_cmd(char *cmd, t_shell *px, t_token **tokens, char **cmds)
 		pipex_error("split");
 	if (handle_builtin(args, px))
 	{
-		free_array(args);
-		free_array(px->env_var);
-		free(px->pwd);
-		deallocate(tokens);
-		free_array(cmds);
+		cleanup(args, px, tokens, cmds);
 		exit(0);
 	}
-	else
+	path = get_right_path(args[0], px, 1);
+	if (!path)
 	{
-		path = get_right_path(args[0], px, 1);
-		if (!path)
-		{
-			write(STDERR_FILENO, args[0], ft_strlen(args[0]));
-			write(STDERR_FILENO, ": command not found\n", 21);
-			free_array(args);
-			free_array(px->env_var);
-			free(px->pwd);
-			deallocate(tokens);
-			free_array(cmds);
-			exit(127);
-		}
+		write(STDERR_FILENO, args[0], ft_strlen(args[0]));
+		write(STDERR_FILENO, ": command not found\n", 21);
+		cleanup(args, px, tokens, cmds);
+		exit(127);
 	}
 	if (execve(path, args, px->env_var) == -1)
 	{
-		free_array(args);
-		free_array(px->env_var);
-		free(px->pwd);
-		deallocate(tokens);
-		free_array(cmds);
 		pipex_error("execve");
+		cleanup(args, px, tokens, cmds);
 		exit(127);
 	}
 }

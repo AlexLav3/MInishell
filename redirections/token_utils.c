@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:50:10 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:16:28 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:08:22 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,25 @@ void	cleanup_child_and_exit(t_cmd *cmd, t_shell *shell, t_token **tokens,
 		if (shell->outfile)
 			free(shell->outfile);
 	}
-	exit(status);
+	if (status != 100)
+		exit(status);
+}
+
+t_grouped	build_group(t_shell *shell, t_cmd *cmds, int cmd_count,
+					t_token **tokens)
+{
+	t_grouped	group;
+
+	group.tokens = tokens;
+	group.shell = shell;
+	group.cmds = cmds;
+	group.cmd_count = cmd_count;
+	return (group);
+}
+
+void	free_partial_args(char **args, int i)
+{
+	while (--i >= 0)
+		free(args[i]);
+	free(args);
 }

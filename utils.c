@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 03:19:11 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/07 13:40:58 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:20:34 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	is_meta(char c)
 int	is_pipe(char c)
 {
 	return (c == '|');
+}
+
+int	token_is_redir(t_token *token)
+{
+	if (!token || !token->com)
+		return (0);
+	return (is_redir(token->com));
 }
 
 void	print_list(t_token *tokens)

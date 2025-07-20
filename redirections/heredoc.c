@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 07:55:22 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:24:02 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 		write(write_fd, "\n", 1);
 		free(line);
 	}
-	free(line);
+	if (line)
+		free(line);
 	close(write_fd);
 	cleanup_child_and_exit(NULL, shell, tokens, 0);
 }
@@ -82,7 +83,7 @@ static pid_t	create_heredoc_child(int pipe_fd[2],
  * - If interrupted by SIGINT, sets error and closes pipe
  * - Otherwise, stores read-end of pipe for command input
  */
-static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
+static void	handle_heredoc_parent(t_cmd *cmd, t_grouped *group, int pipe_fd[2],
 		pid_t pid)
 {
 	int	status;
@@ -91,7 +92,7 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		shell->exit_stat = 130;
+		group->shell->exit_stat = 130;
 		close(pipe_fd[0]);
 		reset_redirection(cmd);
 	}
@@ -109,9 +110,11 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
 void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
 		t_token **tokens)
 {
-	int		pipe_fd[2];
-	pid_t	pid;
+	int			pipe_fd[2];
+	pid_t		pid;
+	t_grouped	group;
 
+	group = build_group(shell, cmd, 1, tokens);
 	if (init_heredoc_pipe(pipe_fd) == -1)
 	{
 		close_free(tokens, shell);
@@ -125,5 +128,5 @@ void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
 		return ;
 	}
 	if (pid > 0)
-		handle_heredoc_parent(cmd, shell, pipe_fd, pid);
+		handle_heredoc_parent(cmd, &group, pipe_fd, pid);
 }

@@ -6,18 +6,11 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 07:58:45 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 18:47:46 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../Minishell.h>
-
-static int	token_is_redir(t_token *token)
-{
-	if (!token || !token->com)
-		return (0);
-	return (is_redir(token->com));
-}
 
 static int	count_non_redir_tokens(t_token *tokens)
 {
@@ -85,9 +78,7 @@ static bool	fill_args_only(t_token *tokens, char **args, t_cmd *cmd)
 		}
 		if (handle_arg_token(&curr, args, &i) == -1)
 		{
-			while (--i >= 0)
-				free(args[i]);
-			free(args);
+			free_partial_args(args, i);
 			cmd->args = NULL;
 			return (false);
 		}
@@ -152,10 +143,8 @@ int	handle_redirection_token(t_token **delim, t_cmd *cmd, t_shell *shell,
 		else
 		{
 			ft_putendl_fd("minishell: syntax error near `<<`", 2);
-			cmd->redir_error = 1;
-			return (1);
+			return (cmd->redir_error = 1, 1);
 		}
 	}
 	return (0);
 }
-

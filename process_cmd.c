@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 15:29:16 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/20 08:27:10 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:11:34 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	single_cmd(t_token **tokens, t_shell *shell)
 	cmd = make_args(tokens, shell);
 	if (!cmd)
 	{
-		// free(cmd);
 		deallocate(tokens);
 		return ;
 	}

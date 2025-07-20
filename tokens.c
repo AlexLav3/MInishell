@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:20:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:27:52 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:12:08 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 t_token	*new_token(char *word, int quoted)
 {
 	t_token		*tokens;
-	static int	created_tokens;
 
-	created_tokens = 0;
 	tokens = malloc(sizeof(t_token));
 	if (!tokens)
 		return (NULL);
@@ -29,7 +27,6 @@ t_token	*new_token(char *word, int quoted)
 	}
 	tokens->next = NULL;
 	tokens->quoted = quoted;
-	created_tokens++; // update - what for?
 	return (tokens);
 }
 

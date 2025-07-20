@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 09:12:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 18:35:54 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,23 @@ void	execute_piped_commands(t_shell *px, t_grouped *grp)
 	int	i;
 
 	i = -1;
-	while (++i <  grp->cmd_count)
+	while (++i < grp->cmd_count)
 	{
-		if (i <  grp->cmd_count - 1 && pipe(px->pipe_fd) == -1)
+		if (i < grp->cmd_count - 1 && pipe(px->pipe_fd) == -1)
 			pipex_error("pipe failed");
 		px->pid = fork();
 		if (px->pid == -1)
 			pipex_error("fork failed");
 		if (px->pid == 0)
 		{
-			setup_in_out(px,  grp->cmds,  grp->cmd_count, i);
+			setup_in_out(px, grp->cmds, grp->cmd_count, i);
 			close_all_pipe_fds(px);
-			execve_cmd(& grp->cmds[i],  grp->shell,  grp->tokens);
+			execve_cmd(& grp->cmds[i], grp->shell, grp->tokens);
 			exit(127);
 		}
 		update_fds(px);
 	}
-	close_pipes_and_wait(px,  grp->cmd_count);
+	close_pipes_and_wait(px, grp->cmd_count);
 }
 
 /*

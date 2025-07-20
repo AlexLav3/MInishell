@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 09:08:52 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 19:42:05 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_shell
 	int				env_idx;
 }					t_shell;
 
-typedef  struct s_grouped
+typedef struct s_grouped
 {
 	t_token			**tokens;
 	t_shell			*shell;
@@ -94,6 +94,21 @@ typedef  struct s_grouped
 	int				cmd_count;
 }					t_grouped;
 
+t_grouped			build_group(t_shell *shell, t_cmd *cmds, int cmd_count,
+						t_token **tokens);
+void				cleanup(char **args, t_shell *px, t_token **tokens,
+						char **cmds);
+void				free_partial_args(char **args, int i);
+int					token_is_redir(t_token *token);
+int					init_cmds_and_group(t_token **tokens, t_shell *shell,
+						t_cmd **cmds, t_grouped *grp);
+void				handle_cmd_failure(t_cmd *cmds, t_token **tokens,
+						t_shell *shell, int cmd_count);
+void				cleanup_pipe_cmds(t_cmd *cmds, int cmd_count,
+						t_token **tokens, t_token *head);
+int					count_pipes(t_token *tokens);
+
+// ---------------------------------
 
 void				cleanup_child_and_exit(t_cmd *cmd, t_shell *shell,
 						t_token **tokens, int status);
@@ -135,7 +150,8 @@ char				*process_token(t_token *token, char *cmd_str, char **cmds,
 // pipes
 void				pipex_error(char *msg);
 void				fd_handle(int i, int cmd_count, t_shell *px);
-void				which_child(int i, int cmd_count, t_shell *px, t_info *info);
+void				which_child(int i, int cmd_count, t_shell *px,
+						t_info *info);
 void				create_pipes(char **cmds, t_shell *shell, t_token **tokens);
 void				first_child_process(t_shell *px, char *cmd,
 						t_token **tokens, char **cmds);

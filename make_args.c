@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:28:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:15:26 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@ char	**make_args(t_token **tokens, t_shell *shell)
 		{
 			cmd[i] = toks_to_args(tmp, NULL, shell);
 			if (!cmd[i])
-			{
-				while (i-- > 0)
-					free(cmd[i]);
-				free(cmd);
-				return (NULL);
-			}
+				return (free_partial_args(cmd, i), NULL);
 			i++;
 		}
 		tmp = tmp->next;

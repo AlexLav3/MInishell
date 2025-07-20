@@ -3,48 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:07:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/19 21:14:09 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:41:10 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
-// void	free_cmd(t_cmd *cmd)
-// {
-// 	if (!cmd)
-// 		return ;
-
-// 	if (cmd->args)
-// 		free_array(cmd->args);
-// 	if (cmd->infile)
-// 		free(cmd->infile);
-// 	if (cmd->outfile)
-// 		free(cmd->outfile);
-
-// 	free(cmd);
-// }
-
-// void	free_cmd_array(t_cmd *cmds, int count)
-// {
-// 	int	i;
-
-// 	if (!cmds)
-// 		return ;
-
-// 	i = 0;
-// 	while (i < count)
-// 	{
-// 		if (cmds[i].args)
-// 			free_array(cmds[i].args);
-// 		free(cmds[i].infile);
-// 		free(cmds[i].outfile);
-// 		i++;
-// 	}
-// 	free(cmds);
-// }
 
 void	deallocate(t_token **root)
 {
@@ -78,11 +44,9 @@ void	free_array(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
-		// arr[i] = NULL; // update
 		i++;
 	}
 	free(arr);
-	// arr = NULL; // update - HUH?
 }
 
 void	close_free(t_token **tokens, t_shell *shell)
@@ -114,4 +78,13 @@ void	ft_exit(char **cmd, t_shell *shell)
 	}
 	else
 		shell->exit = 1;
+}
+
+void	cleanup(char **args, t_shell *px, t_token **tokens, char **cmds)
+{
+	free_array(args);
+	free_array(px->env_var);
+	free(px->pwd);
+	deallocate(tokens);
+	free_array(cmds);
 }
