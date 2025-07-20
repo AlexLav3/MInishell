@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:13:44 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 08:31:48 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,14 @@ typedef struct s_pipe_context
 	t_cmd			*cmd;
 }					t_pipe_context;
 
+typedef struct s_info
+{
+	char		*cmd;     // cmds[i]
+	char		**cmds;   // full cmds array
+	t_token		**tokens; // pointer to token array
+}				t_info;
+
+
 typedef struct s_shell
 {
 	char			**env_var;
@@ -78,6 +86,14 @@ typedef struct s_shell
 	char			*outfile;
 	int				env_idx;
 }					t_shell;
+
+typedef  struct s_grouped
+{
+	t_token			**tokens;
+	t_shell			*shell;
+	t_cmd			*cmd;
+}					t_grouped;
+
 
 void				cleanup_child_and_exit(t_cmd *cmd, t_shell *shell,
 						t_token **tokens, int status);
@@ -119,8 +135,7 @@ char				*process_token(t_token *token, char *cmd_str, char **cmds,
 // pipes
 void				pipex_error(char *msg);
 void				fd_handle(int i, int cmd_count, t_shell *px);
-void				which_child(int i, int cmd_count, t_shell *px, char **cmds,
-						t_token **tokens);
+void				which_child(int i, int cmd_count, t_shell *px, t_info *info);
 void				create_pipes(char **cmds, t_shell *shell, t_token **tokens);
 void				first_child_process(t_shell *px, char *cmd,
 						t_token **tokens, char **cmds);
