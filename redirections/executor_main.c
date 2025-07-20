@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_main.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:42:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:35:54 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,28 @@ static void	update_fds(t_shell *px)
  * - In the parent, updates pipe file descriptors
  * At the end, it waits for all child processes.
  */
-void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
-		t_shell *shell)
+void	execute_piped_commands(t_shell *px, t_grouped *grp)
 {
 	int	i;
 
 	i = -1;
-	while (++i < cmd_count)
+	while (++i < grp->cmd_count)
 	{
-		if (i < cmd_count - 1 && pipe(px->pipe_fd) == -1)
+		if (i < grp->cmd_count - 1 && pipe(px->pipe_fd) == -1)
 			pipex_error("pipe failed");
 		px->pid = fork();
 		if (px->pid == -1)
 			pipex_error("fork failed");
 		if (px->pid == 0)
 		{
-			setup_in_out(px, cmds, cmd_count, i);
+			setup_in_out(px, grp->cmds, grp->cmd_count, i);
 			close_all_pipe_fds(px);
-			execve_cmd(&cmds[i], shell);
+			execve_cmd(& grp->cmds[i], grp->shell, grp->tokens);
 			exit(127);
 		}
 		update_fds(px);
 	}
-	close_pipes_and_wait(px, cmd_count);
+	close_pipes_and_wait(px, grp->cmd_count);
 }
 
 /*
@@ -102,21 +101,20 @@ void	execute_piped_commands(t_shell *px, t_cmd *cmds, int cmd_count,
  * executes the command using `execute_single_redir()`.
  * Performs memory cleanup afterward.
  */
-
 void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
 {
 	t_cmd	cmd;
 
 	init_cmd(&cmd);
-	cmd.args = parse_args_and_redirs(*tokens, &cmd, shell);
+	cmd.args = parse_args_and_redirs(tokens, &cmd, shell);
 	if (!cmd.args || !cmd.args[0] || cmd.redir_error)
 	{
 		if (cmd.args)
 			free_array(cmd.args);
-		reset_redirection(&cmd);	
+		reset_redirection(&cmd);
 		return ;
 	}
-	execute_single_redir(&cmd, shell);
+	execute_single_redir(&cmd, shell, tokens);
 	free_array(cmd.args);
 	reset_redirection(&cmd);
 }
@@ -130,7 +128,7 @@ void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
  * Frees the command path if necessary.
  */
 
-void	execute_single_redir(t_cmd *cmd, t_shell *shell)
+void	execute_single_redir(t_cmd *cmd, t_shell *shell, t_token **tokens)
 {
 	char	*path;
 	int		status;
@@ -147,7 +145,7 @@ void	execute_single_redir(t_cmd *cmd, t_shell *shell)
 		return ;
 	}
 	if (shell->pid1 == 0)
-		run_child_redir(path, cmd, shell);
+		run_child_redir(path, cmd, shell, tokens);
 	waitpid(shell->pid1, &status, 0);
 	handle_exit_status(shell, status);
 	if (path && path != cmd->args[0])

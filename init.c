@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 20:40:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:29:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_pipex(t_shell *px, t_shell *shell)
 {
+	*px = *shell;
 	px->env_var = shell->env_var;
-	px->pwd = shell->pwd;
 	px->pipe_fd[0] = -1;
 	px->pipe_fd[1] = -1;
 	px->prev_fd[0] = -1;
@@ -56,7 +56,7 @@ void	take_comm(t_token **tokens, t_shell *shell)
 		command = readline("prompt> ");
 		if (!command)
 		{
-			close_free(*tokens, shell);
+			close_free(tokens, shell);
 			write(1, "exit\n", 5);
 			exit(EXIT_SUCCESS);
 		}

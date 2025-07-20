@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 22:22:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:22:17 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
  * until the specified delimiter is encountered. Each line is written
  * to the write-end of the heredoc pipe.
  */
-static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter,
-		t_token *tokens, t_shell *shell)
+static void	heredoc_child_process(int write_fd, char *delimiter,
+		t_token **tokens, t_shell *shell)
 {
 	char	*line;
 
@@ -34,10 +34,10 @@ static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter,
 		write(write_fd, "\n", 1);
 		free(line);
 	}
-	free(line);
-	close_free(tokens, shell);
+	if (line)
+		free(line);
 	close(write_fd);
-	exit(0);
+	cleanup_child_and_exit(NULL, shell, tokens, 0);
 }
 
 /*
@@ -57,8 +57,8 @@ static int	init_heredoc_pipe(int pipe_fd[2])
  * Forks a child process that writes heredoc input into the pipe.
  * In the child, closes read end and calls `heredoc_child_process`.
  */
-static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2],
-		char *delimiter, t_token *tokens, t_shell *shell)
+static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
+		t_token **tokens, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -73,7 +73,7 @@ static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2],
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		heredoc_child_process(cmd, pipe_fd[1], delimiter, tokens, shell);
+		heredoc_child_process(pipe_fd[1], delimiter, tokens, shell);
 	}
 	return (pid);
 }
@@ -84,18 +84,20 @@ static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2],
  * - If interrupted by SIGINT, sets error and closes pipe
  * - Otherwise, stores read-end of pipe for command input
  */
-static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
+static void	handle_heredoc_parent(t_cmd *cmd, t_grouped *group, int pipe_fd[2],
 		pid_t pid)
 {
 	int	status;
 
+	status = 0;
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		shell->exit_stat = 130;
+		perror("waitpid");
+		group->shell->exit_stat = 130;
 		close(pipe_fd[0]);
-		cmd->redir_in = -1;
+		reset_redirection(cmd);
 	}
 	else
 		cmd->redir_in = pipe_fd[0];
@@ -108,19 +110,26 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
  * - Handles parent logic and stores input fd
  * Marks the command as errored on any failure.
  */
-void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter, t_token *tokens)
+void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
+		t_token **tokens)
 {
-	int		pipe_fd[2];
-	pid_t	pid;
+	int			pipe_fd[2];
+	pid_t		pid;
+	t_grouped	group;
 
+	group = build_group(shell, cmd, 1, tokens);
 	if (init_heredoc_pipe(pipe_fd) == -1)
+	{
+		close_free(tokens, shell);
 		return ;
-	pid = create_heredoc_child(cmd, pipe_fd, delimiter, tokens, shell);
+	}
+	pid = create_heredoc_child(pipe_fd, delimiter, tokens, shell);
 	if (pid == -1)
 	{
 		cmd->redir_error = 1;
+		close_free(tokens, shell);
 		return ;
 	}
 	if (pid > 0)
-		handle_heredoc_parent(cmd, shell, pipe_fd, pid);
+		handle_heredoc_parent(cmd, &group, pipe_fd, pid);
 }

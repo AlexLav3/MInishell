@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 21:41:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:43:46 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * Iterates through the tokens, incrementing
   count each time a pipe token is found.
  */
-static int	count_pipes(t_token *tokens)
+int	count_pipes(t_token *tokens)
 {
 	int	count;
 
@@ -44,14 +44,33 @@ static int	count_pipes(t_token *tokens)
  Restores the original linked list connections.
  Advances the start pointer to the token after the current command.
  */
-static void	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
+static int	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
 {
 	if (ctx->prev)
 		ctx->prev->next = NULL;
-	ctx->cmd->args = parse_args_and_redirs(*(ctx->start), ctx->cmd, shell);
+	ctx->cmd->args = parse_args_and_redirs(ctx->start, ctx->cmd, shell);
+	if (!ctx->cmd->args)
+	{
+		if (ctx->prev)
+			ctx->prev->next = ctx->curr;
+		return (0);
+	}
 	if (ctx->prev)
 		ctx->prev->next = ctx->curr;
 	*(ctx->start) = ctx->curr->next;
+	return (1);
+}
+
+static int	handle_last_command(t_grouped *grp, t_pipe_context *ctx, int cmd_i)
+{
+	if (cmd_i < grp->cmd_count && *(ctx->start))
+	{
+		grp->cmds[cmd_i].args = parse_args_and_redirs(
+				ctx->start, &grp->cmds[cmd_i], grp->shell);
+		if (!grp->cmds[cmd_i].args)
+			return (0);
+	}
+	return (1);
 }
 
 /* Builds an array of commands (cmds) from a linked list 
@@ -62,32 +81,30 @@ static void	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
  After processing all pipes, parses the remaining tokens as the last command.
  Stops processing if tokens are exhausted or all commands have been built.
  */
-static void	build_cmds_from_tokens(t_token *tokens, t_cmd *cmds, int cmd_count,
-		t_shell *shell)
+static int	build_cmds_from_tokens(t_grouped *grp)
 {
 	int				cmd_i;
 	t_pipe_context	ctx;
 
 	cmd_i = 0;
-	ctx.start = &tokens;
+	ctx.start = grp->tokens;
 	ctx.prev = NULL;
-	ctx.curr = tokens;
-	if (!tokens || cmd_count == 0)
-		return ;
-	while (ctx.curr && cmd_i < cmd_count)
+	ctx.curr = *(grp->tokens);
+	if (!grp->tokens || grp->cmd_count == 0)
+		return (0);
+	while (ctx.curr && cmd_i < grp->cmd_count)
 	{
 		if (ctx.curr->com && ft_strcmp(ctx.curr->com, "|") == 0)
 		{
-			ctx.cmd = &cmds[cmd_i];
-			process_pipe_token(&ctx, shell);
+			ctx.cmd = &(grp->cmds[cmd_i]);
+			if (!process_pipe_token(&ctx, grp->shell))
+				return (0);
 			cmd_i++;
 		}
 		ctx.prev = ctx.curr;
 		ctx.curr = ctx.curr->next;
 	}
-	if (cmd_i < cmd_count && *(ctx.start))
-		cmds[cmd_i].args = parse_args_and_redirs(*(ctx.start), &cmds[cmd_i],
-				shell);
+	return (handle_last_command(grp, &ctx, cmd_i));
 }
 
 /*
@@ -102,27 +119,17 @@ static void	build_cmds_from_tokens(t_token *tokens, t_cmd *cmds, int cmd_count,
   then frees the commands array.*/
 void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 {
-	int		cmd_count;
-	t_cmd	*cmds;
-	t_shell	px;
-	int		i;
+	int			cmd_count;
+	t_cmd		*cmds;
+	t_shell		px;
+	t_token		*head;
+	t_grouped	grp;
 
-	cmd_count = count_pipes(*tokens);
-	cmds = malloc(sizeof(t_cmd) * cmd_count);
-	if (!cmds)
-		return ;
-	i = 0;
-	while (i < cmd_count)
-		init_cmd(&cmds[i++]);
-	build_cmds_from_tokens(*tokens, cmds, cmd_count, shell);
+	head = *tokens;
+	cmd_count = init_cmds_and_group(tokens, shell, &cmds, &grp);
+	if (!cmd_count || !build_cmds_from_tokens(&grp))
+		return (handle_cmd_failure(cmds, tokens, shell, cmd_count));
 	init_pipex(&px, shell);
-	execute_piped_commands(&px, cmds, cmd_count, shell);
-	i = 0;
-	while (i < cmd_count)
-	{
-		free_array(cmds[i].args);
-		reset_redirection(&cmds[i]);
-		i++;
-	}
-	free(cmds);
+	execute_piped_commands(&px, &grp);
+	cleanup_pipe_cmds(cmds, cmd_count, tokens, head);
 }

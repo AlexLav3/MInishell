@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 20:05:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:10:51 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
+static void	child_exec(char *path, char **cmd, t_shell *shell, t_token **tokens)
+{
+	signal(SIGINT, SIG_DFL);
+	if (execve(path, cmd, shell->env_var) == -1)
+	{
+		close_free(tokens, shell);
+		free(path);
+		free_array(cmd);
+		perror("execve failed");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell,
+		t_token **tokens)
 {
 	int	status;
 
@@ -24,14 +38,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 		return ;
 	}
 	else if (shell->pid1 == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		if (execve(path, cmd, shell->env_var) == -1)
-		{
-			perror("execve failed");
-			exit(EXIT_FAILURE);
-		}
-	}
+		child_exec(path, cmd, shell, tokens);
 	signal(SIGINT, SIG_IGN);
 	waitpid(shell->pid1, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
@@ -40,7 +47,7 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell)
 	setup_shell_signals();
 }
 
-void	execute_single_cmd(char **cmd, t_shell *shell)
+void	execute_single_cmd(char **cmd, t_shell *shell, t_token **tokens)
 {
 	char	*path;
 
@@ -53,7 +60,7 @@ void	execute_single_cmd(char **cmd, t_shell *shell)
 		shell->exit_stat = 127;
 		return ;
 	}
-	exec_fork_and_wait(path, cmd, shell);
+	exec_fork_and_wait(path, cmd, shell, tokens);
 	if (path != cmd[0])
 		free(path);
 }

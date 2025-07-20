@@ -6,30 +6,111 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/17 01:11:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:22:24 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../Minishell.h>
+
+static int	count_non_redir_tokens(t_token *tokens)
+{
+	int	count;
+
+	count = 0;
+	while (tokens)
+	{
+		if (token_is_redir(tokens))
+		{
+			tokens = tokens->next;
+			if (tokens)
+				tokens = tokens->next;
+		}
+		else
+		{
+			count++;
+			tokens = tokens->next;
+		}
+	}
+	return (count);
+}
+
+static bool	handle_redirs_only(t_token *delim, t_cmd *cmd, t_shell *shell,
+		t_token **tokens)
+{
+	t_token	*curr;
+
+	curr = delim;
+	while (curr)
+	{
+		if (token_is_redir(curr))
+		{
+			if (handle_redirection_token(&curr, cmd, shell, tokens))
+			{
+				if (cmd->redir_error)
+				{
+					ft_putendl_fd("minishell: syntax error", 2);
+					return (false);
+				}
+				curr = curr->next->next;
+				continue ;
+			}
+		}
+		curr = curr->next;
+	}
+	return (true);
+}
+
+static bool	fill_args_only(t_token *tokens, char **args, t_cmd *cmd)
+{
+	t_token	*curr;
+	int		i;
+
+	curr = tokens;
+	i = 0;
+	while (curr)
+	{
+		if (token_is_redir(curr))
+		{
+			curr = curr->next;
+			if (curr)
+				curr = curr->next;
+			continue ;
+		}
+		if (handle_arg_token(&curr, args, &i) == -1)
+		{
+			free_partial_args(args, i);
+			cmd->args = NULL;
+			return (false);
+		}
+		i++;
+		curr = curr->next;
+	}
+	args[i] = NULL;
+	return (true);
+}
 
 /*
  * Parses the command's tokens into arguments and handles redirection
  * tokens (e.g. `<`, `>`, `>>`, `<<`). Returns the final arguments array.
  * Sets redirection fields in the `t_cmd` struct.
  */
-char	**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell)
+char	**parse_args_and_redirs(t_token **tokens, t_cmd *cmd, t_shell *shell)
 {
 	char	**args;
 	int		arg_count;
 
-	arg_count = count_args(tokens);
+	if (!handle_redirs_only(*tokens, cmd, shell, tokens))
+		return (NULL);
+	arg_count = count_non_redir_tokens(*tokens);
 	args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!args)
 	{
 		reset_redirection(cmd);
+		close_free(tokens, shell);
 		return (NULL);
 	}
-	fill_args_and_handle_redir(tokens, cmd, args, shell);
+	if (!fill_args_only(*tokens, args, cmd))
+		return (NULL);
 	return (args);
 }
 
@@ -38,56 +119,32 @@ char	**parse_args_and_redirs(t_token *tokens, t_cmd *cmd, t_shell *shell)
  * Delegates to appropriate functions for `<`, `>`, `>>`, or `<<`.
  * Returns 1 if it was a redirection token.
  */
-int	handle_redirection_token(t_token *tokens, t_cmd *cmd, t_shell *shell)
+int	handle_redirection_token(t_token **delim, t_cmd *cmd, t_shell *shell,
+		t_token **tokens)
 {
+	if (!delim || !*delim || !cmd || !shell || !tokens)
+		return (0);
 	if (cmd->redir_error)
 		return (1);
-	if (tokens->next == NULL)
+	if ((*delim)->next == NULL)
 		return (0);
-	if (ft_strcmp(tokens->com, "<") == 0 || ft_strcmp(tokens->com, ">") == 0)
-		return (redir_token_in_out(tokens, cmd));
-	else if (ft_strcmp(tokens->com, ">>") == 0)
-		return (redir_token_append(tokens, cmd));
-	else if (ft_strcmp(tokens->com, "<<") == 0)
+	if (ft_strcmp((*delim)->com, "<") == 0 || ft_strcmp((*delim)->com,
+			">") == 0)
+		return (redir_token_in_out(delim, cmd));
+	else if (ft_strcmp((*delim)->com, ">>") == 0)
+		return (redir_token_append(delim, cmd));
+	else if ((*delim)->com && ft_strcmp((*delim)->com, "<<") == 0)
 	{
-		if (tokens->next && tokens->next->com)
+		if ((*delim)->next && (*delim)->next->com)
 		{
-			heredoc_do(cmd, shell, tokens->next->com, tokens);
+			heredoc_do(cmd, shell, (*delim)->next->com, tokens);
 			return (1);
-		}
-	}
-	return (0);
-}
-
-/*
- * Iterates over tokens and fills the args array.
- * Skips redirection tokens using `handle_redirection_token`.
- * Adds normal command arguments using `handle_arg_token`.
- */
-void	fill_args_and_handle_redir(t_token *tokens, t_cmd *cmd, char **args,
-		t_shell *shell)
-{
-	int	i;
-
-	i = 0;
-	while (tokens)
-	{
-		if (handle_redirection_token(tokens, cmd, shell))
-		{
-			if (!tokens->next)
-			{
-				ft_putendl_fd("minishell: syntax error", 2);
-				break ;
-			}
-			tokens = tokens->next->next;
 		}
 		else
 		{
-			if (handle_arg_token(tokens, args, &i) == -1)
-				return ;
-			i++;
-			tokens = tokens->next;
+			ft_putendl_fd("minishell: syntax error near `<<`", 2);
+			return (cmd->redir_error = 1, 1);
 		}
 	}
-	args[i] = NULL;
+	return (0);
 }

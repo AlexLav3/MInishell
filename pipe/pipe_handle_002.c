@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_handle_002.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:34:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 23:23:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:27:43 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,29 @@
  * Handles the first command in a pipeline.
  * Redirects STDOUT to pipe write end and executes the command.
  */
-void	first_child_process(t_shell *px, char *cmd, t_token *tokens)
+void	first_child_process(t_shell *px, char *cmd, t_token **tokens,
+		char **cmds)
 {
 	if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
 		pipex_error("dup2 failed for first child");
 	close(px->pipe_fd[0]);
 	close(px->pipe_fd[1]);
-	execute_cmd(cmd, px, tokens);
+	execute_cmd(cmd, px, tokens, cmds);
 }
 
 /*
  * Handles the last command in a pipeline.
  * Redirects STDIN from pipe read end and executes the command.
  */
-void	last_child_process(t_shell *px, char *cmd, t_token *tokens)
+void	last_child_process(t_shell *px, char *cmd, t_token **tokens,
+		char **cmds)
 {
-	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1) // update
+	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
 		pipex_error("dup2 failed for last child");
 	close(px->pipe_fd[0]);
 	close(px->pipe_fd[1]);
-	close(px->prev_fd[0]); // update
-	execute_cmd(cmd, px, tokens);
+	close(px->prev_fd[0]);
+	execute_cmd(cmd, px, tokens, cmds);
 }
 
 /*
@@ -44,16 +46,17 @@ void	last_child_process(t_shell *px, char *cmd, t_token *tokens)
  * Redirects STDIN from previous pipe read end,
  * and STDOUT to current pipe write end, then executes.
  */
-void	middle_child_process(t_shell *px, char *cmd, t_token *tokens)
+void	middle_child_process(t_shell *px, char *cmd, t_token **tokens,
+		char **cmds)
 {
 	if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
 		pipex_error("dup2 failed for intermediate child (stdin)");
 	if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
 		pipex_error("dup2 failed for intermediate child (stdout)");
 	close(px->prev_fd[0]);
-	close(px->pipe_fd[0]); // update
+	close(px->pipe_fd[0]);
 	close(px->pipe_fd[1]);
-	execute_cmd(cmd, px, tokens);
+	execute_cmd(cmd, px, tokens, cmds);
 }
 
 /*
@@ -74,7 +77,6 @@ void	close_pipes_and_wait(t_shell *px, int cmd_count)
 		close(px->prev_fd[0]);
 	if (px->prev_fd[1] != -1)
 		close(px->prev_fd[1]);
-	// Wait for all child processes
 	i = 0;
 	while (i < cmd_count)
 	{
@@ -89,7 +91,7 @@ void	close_pipes_and_wait(t_shell *px, int cmd_count)
  * Parses a command string into args and searches for the binary path.
  * If found, executes the command with `execve`, else prints an error.
  */
-void	execute_cmd(char *cmd, t_shell *px, t_token *tokens)
+void	execute_cmd(char *cmd, t_shell *px, t_token **tokens, char **cmds)
 {
 	char	**args;
 	char	*path;
@@ -99,30 +101,21 @@ void	execute_cmd(char *cmd, t_shell *px, t_token *tokens)
 		pipex_error("split");
 	if (handle_builtin(args, px))
 	{
-		close_free(tokens, px);
-		free_array(args);
-		free_array(px->cmd);
+		cleanup(args, px, tokens, cmds);
 		exit(0);
 	}
-	else
+	path = get_right_path(args[0], px, 1);
+	if (!path)
 	{
-		path = get_right_path(args[0], px, 1);
-		if (!path)
-		{
-			write(STDERR_FILENO, args[0], ft_strlen(args[0]));
-			write(STDERR_FILENO, ": command not found\n", 21);
-			close_free(tokens, px);
-			free_array(args);
-			free_array(px->cmd);
-			exit(127);
-		}
+		write(STDERR_FILENO, args[0], ft_strlen(args[0]));
+		write(STDERR_FILENO, ": command not found\n", 21);
+		cleanup(args, px, tokens, cmds);
+		exit(127);
 	}
-	if (execve(path, args, px->env_var) == -1) 
+	if (execve(path, args, px->env_var) == -1)
 	{
-		pipex_error("execve"); 
-		close_free(tokens, px);
-		free_array(px->cmd);
-		free_array(args);
+		pipex_error("execve");
+		cleanup(args, px, tokens, cmds);
 		exit(127);
 	}
 }

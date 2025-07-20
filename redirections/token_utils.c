@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:50:10 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/03 21:07:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 19:08:22 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	is_redir(const char *s)
 {
 	return (ft_strcmp(s, "<") == 0 || ft_strcmp(s, ">") == 0 || \
-	ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<<") == 0);
+			ft_strcmp(s, ">>") == 0 || ft_strcmp(s, "<<") == 0);
 }
 
 /*
@@ -45,28 +45,43 @@ int	token_has_redir(t_token *tokens)
 	return (0);
 }
 
-/*
- * Helper function that removes a redirection token and its associated argument
- * from the token list, adjusting pointers and freeing memory.
- * It removes **a single redirection token 
- * and its argument** from the linked list.
- * For example, given tokens: [ls] [>] [file.txt], 
- * it removes both ">" and "file.txt".
- */
-// static void	remove_redir(t_token **tokens, t_token **curr, t_token **prev)
-// {
-// 	t_token	*to_free;
-// 	t_token	*next_token;
+void	cleanup_child_and_exit(t_cmd *cmd, t_shell *shell, t_token **tokens,
+		int status)
+{
+	if (tokens)
+		deallocate(tokens);
+	if (cmd)
+		reset_redirection(cmd);
+	if (shell)
+	{
+		if (shell->env_var)
+			free_array(shell->env_var);
+		if (shell->pwd)
+			free(shell->pwd);
+		if (shell->infile)
+			free(shell->infile);
+		if (shell->outfile)
+			free(shell->outfile);
+	}
+	if (status != 100)
+		exit(status);
+}
 
-// 	to_free = *curr;
-// 	next_token = (*curr)->next;
-// 	if (*prev)
-// 		(*prev)->next = next_token->next;
-// 	else
-// 		*tokens = next_token->next;
-// 	*curr = next_token->next;
-// 	free(to_free->com);
-// 	free(to_free);
-// 	free(next_token->com);
-// 	free(next_token);
-// }
+t_grouped	build_group(t_shell *shell, t_cmd *cmds, int cmd_count,
+					t_token **tokens)
+{
+	t_grouped	group;
+
+	group.tokens = tokens;
+	group.shell = shell;
+	group.cmds = cmds;
+	group.cmd_count = cmd_count;
+	return (group);
+}
+
+void	free_partial_args(char **args, int i)
+{
+	while (--i >= 0)
+		free(args[i]);
+	free(args);
+}
