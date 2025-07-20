@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 23:22:17 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 23:28:48 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 {
 	char	*line;
 
-	(void)cmd;
 	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)	
-			break;
+		if (!line || ft_strcmp(line, delimiter) == 0)
+			break ;
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
