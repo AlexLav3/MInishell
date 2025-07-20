@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 19:24:02 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 23:21:15 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static int	init_heredoc_pipe(int pipe_fd[2])
  * Forks a child process that writes heredoc input into the pipe.
  * In the child, closes read end and calls `heredoc_child_process`.
  */
-static pid_t	create_heredoc_child(int pipe_fd[2],
-		char *delimiter, t_token **tokens, t_shell *shell)
+static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
+		t_token **tokens, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -88,10 +88,12 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_grouped *group, int pipe_fd[2],
 {
 	int	status;
 
+	status = 0;
 	close(pipe_fd[1]);
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
+		perror("waitpid");
 		group->shell->exit_stat = 130;
 		close(pipe_fd[0]);
 		reset_redirection(cmd);
