@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 07:58:19 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 09:07:02 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,38 +69,48 @@ static int	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
  After processing all pipes, parses the remaining tokens as the last command.
  Stops processing if tokens are exhausted or all commands have been built.
  */
-static int	build_cmds_from_tokens(t_token **tokens, t_cmd *cmds, int cmd_count,
-		t_shell *shell)
+static int	build_cmds_from_tokens(t_grouped *grp)
 {
 	int				cmd_i;
 	t_pipe_context	ctx;
 
 	cmd_i = 0;
-	ctx.start = tokens;
+	ctx.start = grp->tokens;;
 	ctx.prev = NULL;
-	ctx.curr = *tokens;
-	if (!tokens || cmd_count == 0)
+	ctx.curr = *(grp->tokens);
+	if (!grp->tokens || grp->cmd_count == 0)
 		return (0);
-	while (ctx.curr && cmd_i < cmd_count)
+	while (ctx.curr && cmd_i < grp->cmd_count)
 	{
 		if (ctx.curr->com && ft_strcmp(ctx.curr->com, "|") == 0)
 		{
-			ctx.cmd = &cmds[cmd_i];
-			if (!process_pipe_token(&ctx, shell))
+			ctx.cmd = &(grp->cmds[cmd_i]);
+			if (!process_pipe_token(&ctx, grp->shell))
 				return 0;
 			cmd_i++;
 		}
 		ctx.prev = ctx.curr;
 		ctx.curr = ctx.curr->next;
 	}
-	if (cmd_i < cmd_count && *(ctx.start))
+	if (cmd_i < grp->cmd_count && *(ctx.start))
 	{
-		cmds[cmd_i].args = parse_args_and_redirs(ctx.start, &cmds[cmd_i],
-			shell);
-		if (!cmds[cmd_i].args)
+		grp->cmds[cmd_i].args = parse_args_and_redirs(ctx.start, &grp->cmds[cmd_i],
+			grp->shell);
+		if (!grp->cmds[cmd_i].args)
 			return 0;
 	}
 	return 1;
+}
+
+static t_grouped build_group(t_shell *shell, t_cmd *cmds, int cmd_count, t_token **tokens)
+{
+	t_grouped group;
+
+	group.tokens = tokens;
+	group.shell = shell;
+	group.cmds = cmds;
+	group.cmd_count = cmd_count;
+	return group;
 }
 
 /*
@@ -115,11 +125,12 @@ static int	build_cmds_from_tokens(t_token **tokens, t_cmd *cmds, int cmd_count,
   then frees the commands array.*/
 void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 {
-	int		cmd_count;
-	t_cmd	*cmds;
-	t_shell	px;
-	int		i;
-	t_token *head;
+	int			cmd_count;
+	t_cmd		*cmds;
+	t_shell		px;
+	int			i;
+	t_token 	*head;
+	t_grouped   grp;
 
 	head = *tokens; 
 	cmd_count = count_pipes(*tokens);
@@ -129,7 +140,8 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 	i = 0;
 	while (i < cmd_count)
 		init_cmd(&cmds[i++]);
-	if (!build_cmds_from_tokens(tokens, cmds, cmd_count, shell))
+	grp = build_group(shell, cmds, cmd_count, tokens);
+	if (!build_cmds_from_tokens(&grp)) // update
 	{
 		free(cmds);
 		deallocate(tokens);
@@ -138,7 +150,7 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 		return; // or propagate error code
 	}
 	init_pipex(&px, shell);
-	execute_piped_commands(&px, cmds, cmd_count, shell, tokens);
+	execute_piped_commands(&px, &grp); // update
 	i = 0;
 	while (i < cmd_count)
 	{

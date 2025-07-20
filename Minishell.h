@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 08:31:48 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 09:08:52 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,10 @@ typedef struct s_pipe_context
 
 typedef struct s_info
 {
-	char		*cmd;     // cmds[i]
-	char		**cmds;   // full cmds array
-	t_token		**tokens; // pointer to token array
-}				t_info;
-
+	char			*cmd;
+	char			**cmds;
+	t_token			**tokens;
+}					t_info;
 
 typedef struct s_shell
 {
@@ -91,7 +90,8 @@ typedef  struct s_grouped
 {
 	t_token			**tokens;
 	t_shell			*shell;
-	t_cmd			*cmd;
+	t_cmd			*cmds;
+	int				cmd_count;
 }					t_grouped;
 
 
@@ -152,8 +152,7 @@ char				*handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
 //executor_main.c (static: 2)
-void				execute_piped_commands(t_shell *px, t_cmd *cmds,
-						int cmd_count, t_shell *shell, t_token **tokens);
+void				execute_piped_commands(t_shell *px, t_grouped *grp);
 void				single_cmd_with_redir(t_token **tokens, t_shell *shell);
 void				execute_single_redir(t_cmd *cmd, t_shell *shell,
 						t_token **tokens);
