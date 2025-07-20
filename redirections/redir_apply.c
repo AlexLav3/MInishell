@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:44:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 09:05:59 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 07:58:42 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,39 +45,6 @@ static void	apply_in_redirection(t_cmd *cmd)
 			close(fd);
 	}
 }
-
-/*
- * Sets up output redirection for a command.
- * Handles either an output file (`outfile`) 
- * or a pipe/appending FD (`redir_out`).
- * Uses `dup2` to redirect STDOUT, then closes the used FD if needed.
- */
-// static void	apply_out_redirection(t_cmd *cmd)
-// {
-// 	int	fd;
-
-// 	if (cmd->outfile)
-// 	{
-// 		fd = open(cmd->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-// 		if (fd < 0 || dup2(fd, STDOUT_FILENO) == -1)
-// 		{
-// 			perror("stdout redir");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		if (fd > 2)
-// 			close(fd);
-// 	}
-// 	else if (cmd->redir_out != -1)
-// 	{
-// 		if (dup2(cmd->redir_out, STDOUT_FILENO) == -1)
-// 		{
-// 			perror("dup2 redir_out");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		if (cmd->redir_out > 2)
-// 			close(cmd->redir_out);
-// 	}
-// }
 
 static void	apply_out_redirection(t_cmd *cmd)
 {

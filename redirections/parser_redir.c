@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:17:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 07:58:45 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,53 +159,3 @@ int	handle_redirection_token(t_token **delim, t_cmd *cmd, t_shell *shell,
 	return (0);
 }
 
-/*
- * Iterates over tokens and fills the args array.
- * Skips redirection tokens using `handle_redirection_token`.
- * Adds normal command arguments using `handle_arg_token`.
-//  */
-// void	fill_args_and_handle_redir(t_token **tokens, t_cmd *cmd, char **args,
-// 		t_shell *shell)
-// {
-// 	int	i;
-// 	t_token	*curr;
-
-// 	if (!tokens || !*tokens || !cmd || !shell)
-// 		return ;
-
-// 	if (!args)
-// 	{
-// 		args[0] = NULL;
-// 		return ;
-// 	}
-// 	i = 0;
-// 	curr = *tokens;
-// 	while (curr)
-// 	{
-// 		if (handle_redirection_token(&curr, cmd, shell, tokens))
-// 		{
-// 			printf("handle_redirection_token loop\n");
-// 			if (cmd->redir_error || !curr || !curr->next)
-// 			{
-// 				ft_putendl_fd("minishell: syntax error", 2);
-// 				break ;
-// 			}
-// 			curr = curr->next->next;
-// 		}
-// 		else
-// 		{
-// 			if (handle_arg_token(&curr, args, &i) == -1)
-// 			{
-// 				printf("handle_arg_token loop\n");
-// 				while (--i >= 0)
-// 					free(args[i]);
-// 				free(args);
-// 				cmd->args = NULL;
-// 				return ;
-// 			}
-// 			i++;
-// 			curr = curr->next;
-// 		}
-// 	}
-// 	args[i] = NULL;
-// }

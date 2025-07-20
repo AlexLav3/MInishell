@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:14:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 07:55:22 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * until the specified delimiter is encountered. Each line is written
  * to the write-end of the heredoc pipe.
  */
-static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter,
+static void	heredoc_child_process(int write_fd, char *delimiter,
 		t_token **tokens, t_shell *shell)
 {
 	char	*line;
@@ -34,9 +34,8 @@ static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter,
 		free(line);
 	}
 	free(line);
-	// free_array(cmd->args);
 	close(write_fd);
-	cleanup_child_and_exit(cmd, shell, tokens, 0);
+	cleanup_child_and_exit(NULL, shell, tokens, 0);
 }
 
 /*
@@ -56,7 +55,7 @@ static int	init_heredoc_pipe(int pipe_fd[2])
  * Forks a child process that writes heredoc input into the pipe.
  * In the child, closes read end and calls `heredoc_child_process`.
  */
-static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2],
+static pid_t	create_heredoc_child(int pipe_fd[2],
 		char *delimiter, t_token **tokens, t_shell *shell)
 {
 	pid_t	pid;
@@ -72,7 +71,7 @@ static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2],
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		heredoc_child_process(cmd, pipe_fd[1], delimiter, tokens, shell);
+		heredoc_child_process(pipe_fd[1], delimiter, tokens, shell);
 	}
 	return (pid);
 }
@@ -94,7 +93,7 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_shell *shell, int pipe_fd[2],
 	{
 		shell->exit_stat = 130;
 		close(pipe_fd[0]);
-		cmd->redir_in = -1;
+		reset_redirection(cmd);
 	}
 	else
 		cmd->redir_in = pipe_fd[0];
@@ -118,7 +117,7 @@ void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
 		close_free(tokens, shell);
 		return ;
 	}
-	pid = create_heredoc_child(cmd, pipe_fd, delimiter, tokens, shell);
+	pid = create_heredoc_child(pipe_fd, delimiter, tokens, shell);
 	if (pid == -1)
 	{
 		cmd->redir_error = 1;
