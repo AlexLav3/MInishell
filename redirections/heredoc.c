@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:21:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/20 22:22:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,19 @@
  * until the specified delimiter is encountered. Each line is written
  * to the write-end of the heredoc pipe.
  */
-static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter, t_token *tokens, t_shell *shell)
+static void	heredoc_child_process(t_cmd *cmd, int write_fd, char *delimiter,
+		t_token *tokens, t_shell *shell)
 {
 	char	*line;
-	(void)cmd; //delete cmd from the arguments instead
+
+	(void)cmd;
 	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
-			break ;
+		if (!line || ft_strcmp(line, delimiter) == 0)	
+			break;
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
@@ -55,7 +57,8 @@ static int	init_heredoc_pipe(int pipe_fd[2])
  * Forks a child process that writes heredoc input into the pipe.
  * In the child, closes read end and calls `heredoc_child_process`.
  */
-static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2], char *delimiter, t_token *tokens, t_shell *shell)
+static pid_t	create_heredoc_child(t_cmd *cmd, int pipe_fd[2],
+		char *delimiter, t_token *tokens, t_shell *shell)
 {
 	pid_t	pid;
 
