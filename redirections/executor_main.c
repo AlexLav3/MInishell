@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 09:06:59 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/20 09:12:54 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,6 @@
  * - Previous pipe for input (if not the first command)
  * - Next pipe for output (if not the last command)
  */
-// static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
-// {
-// 	if (cmds[i].redir_in != -1)
-// 	{
-// 		if (dup2(cmds[i].redir_in, STDIN_FILENO) == -1)
-// 			pipex_error("dup2 redir_in");
-// 		if (cmds[i].redir_in > 2)
-// 			close(cmds[i].redir_in);
-// 	}
-// 	else if (i > 0)
-// 	{
-// 		if (dup2(px->prev_fd[0], STDIN_FILENO) == -1)
-// 			pipex_error("dup2 prev_fd[0]");
-// 		if (px->prev_fd[0] > 2)
-// 			close(px->prev_fd[0]);
-// 	}
-// 	if (cmds[i].redir_out != -1)
-// 	{
-// 		if (dup2(cmds[i].redir_out, STDOUT_FILENO) == -1)
-// 			pipex_error("dup2 redir_out");
-// 		if (cmds[i].redir_out > 2)
-// 			close(cmds[i].redir_out);
-// 	}
-// 	else if (i < cmd_count - 1)
-// 	{
-// 		if (dup2(px->pipe_fd[1], STDOUT_FILENO) == -1)
-// 			pipex_error("dup2 pipe_fd[1]");
-// 		if (px->pipe_fd[1] > 2)
-// 			close(px->pipe_fd[1]);
-// 	}
-// }
-
 static void	setup_in_out(t_shell *px, t_cmd *cmds, int cmd_count, int i)
 {
 	if (cmds[i].redir_in != -1)
