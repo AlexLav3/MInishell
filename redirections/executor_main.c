@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 18:35:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/21 19:02:35 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	update_fds(t_shell *px)
  * - In the parent, updates pipe file descriptors
  * At the end, it waits for all child processes.
  */
-void	execute_piped_commands(t_shell *px, t_grouped *grp)
+void	execute_piped_commands(t_shell *px, t_grouped grp)
 {
 	int	i;
 

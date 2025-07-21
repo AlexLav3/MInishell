@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 22:53:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:43:06 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,13 @@ typedef struct s_grouped
 	t_shell			*shell;
 	t_cmd			*cmds;
 	int				cmd_count;
-}					t_grouped;
+	char			*line;
+}					*t_grouped;
 
+extern t_grouped	g_global;
+
+void				cleanup_heredoc_and_exit(t_cmd *cmd, t_grouped group,
+						int status);
 t_grouped			build_group(t_shell *shell, t_cmd *cmds, int cmd_count,
 						t_token **tokens);
 void				cleanup(char **args, t_shell *px, t_token **tokens,
@@ -168,7 +173,7 @@ char				*handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
 //executor_main.c (static: 2)
-void				execute_piped_commands(t_shell *px, t_grouped *grp);
+void				execute_piped_commands(t_shell *px, t_grouped grp);
 void				single_cmd_with_redir(t_token **tokens, t_shell *shell);
 void				execute_single_redir(t_cmd *cmd, t_shell *shell,
 						t_token **tokens);

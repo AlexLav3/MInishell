@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:27:05 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:42:23 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,30 @@ void	readirs(int dir, t_cmd *cmd, char *com)
 			cmd->redir_error = 1;
 		}
 	}
+}
+
+void	cleanup_heredoc_and_exit(t_cmd *cmd, t_grouped group,
+		int status)
+{
+	if (group)
+	{
+		if (group->tokens)
+			deallocate(group->tokens);
+		if (group->shell)
+		{
+			if (group->shell->env_var)
+				free_array(group->shell->env_var);
+			if (group->shell->pwd)
+				free(group->shell->pwd);
+			if (group->shell->infile)
+				free(group->shell->infile);
+			if (group->shell->outfile)
+				free(group->shell->outfile);
+		}
+		free(group);
+	}
+	if (cmd)
+		reset_redirection(cmd);
+	if (status != 100)
+		exit(status);
 }

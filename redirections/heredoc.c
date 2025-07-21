@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 23:21:15 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/21 19:40:31 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../Minishell.h>
+
+t_grouped	g_global = NULL;
 
 /*
  * Child process responsible for reading heredoc input line-by-line
@@ -18,25 +20,28 @@
  * to the write-end of the heredoc pipe.
  */
 static void	heredoc_child_process(int write_fd, char *delimiter,
-		t_token **tokens, t_shell *shell)
+		t_grouped group)
 {
 	char	*line;
 
+	g_global = group;
 	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
+		group->line = line;
 		if (!line || ft_strcmp(line, delimiter) == 0)
 			break ;
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
+		group->line = NULL;
 	}
 	if (line)
 		free(line);
 	close(write_fd);
-	cleanup_child_and_exit(NULL, shell, tokens, 0);
+	cleanup_heredoc_and_exit(NULL, group, 0);
 }
 
 /*
@@ -57,7 +62,7 @@ static int	init_heredoc_pipe(int pipe_fd[2])
  * In the child, closes read end and calls `heredoc_child_process`.
  */
 static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
-		t_token **tokens, t_shell *shell)
+		t_grouped group)
 {
 	pid_t	pid;
 
@@ -72,7 +77,7 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
 	if (pid == 0)
 	{
 		close(pipe_fd[0]);
-		heredoc_child_process(pipe_fd[1], delimiter, tokens, shell);
+		heredoc_child_process(pipe_fd[1], delimiter, group);
 	}
 	return (pid);
 }
@@ -83,7 +88,7 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
  * - If interrupted by SIGINT, sets error and closes pipe
  * - Otherwise, stores read-end of pipe for command input
  */
-static void	handle_heredoc_parent(t_cmd *cmd, t_grouped *group, int pipe_fd[2],
+static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
 		pid_t pid)
 {
 	int	status;
@@ -117,12 +122,17 @@ void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
 	t_grouped	group;
 
 	group = build_group(shell, cmd, 1, tokens);
+	if (!group)
+	{
+		close_free(tokens, shell);
+		return ;
+	}
 	if (init_heredoc_pipe(pipe_fd) == -1)
 	{
 		close_free(tokens, shell);
 		return ;
 	}
-	pid = create_heredoc_child(pipe_fd, delimiter, tokens, shell);
+	pid = create_heredoc_child(pipe_fd, delimiter, group);
 	if (pid == -1)
 	{
 		cmd->redir_error = 1;
@@ -130,5 +140,6 @@ void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
 		return ;
 	}
 	if (pid > 0)
-		handle_heredoc_parent(cmd, &group, pipe_fd, pid);
+		handle_heredoc_parent(cmd, group, pipe_fd, pid);
+	free(group);
 }

@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 19:43:46 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/21 19:04:48 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	process_pipe_token(t_pipe_context *ctx, t_shell *shell)
 	return (1);
 }
 
-static int	handle_last_command(t_grouped *grp, t_pipe_context *ctx, int cmd_i)
+static int	handle_last_command(t_grouped grp, t_pipe_context *ctx, int cmd_i)
 {
 	if (cmd_i < grp->cmd_count && *(ctx->start))
 	{
@@ -81,7 +81,7 @@ static int	handle_last_command(t_grouped *grp, t_pipe_context *ctx, int cmd_i)
  After processing all pipes, parses the remaining tokens as the last command.
  Stops processing if tokens are exhausted or all commands have been built.
  */
-static int	build_cmds_from_tokens(t_grouped *grp)
+static int	build_cmds_from_tokens(t_grouped grp)
 {
 	int				cmd_i;
 	t_pipe_context	ctx;
@@ -127,9 +127,10 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 
 	head = *tokens;
 	cmd_count = init_cmds_and_group(tokens, shell, &cmds, &grp);
-	if (!cmd_count || !build_cmds_from_tokens(&grp))
-		return (handle_cmd_failure(cmds, tokens, shell, cmd_count));
+	if (!cmd_count || !build_cmds_from_tokens(grp))
+		return (free(grp), handle_cmd_failure(cmds, tokens, shell, cmd_count));
 	init_pipex(&px, shell);
-	execute_piped_commands(&px, &grp);
+	execute_piped_commands(&px, grp);
 	cleanup_pipe_cmds(cmds, cmd_count, tokens, head);
+	free(grp);
 }
