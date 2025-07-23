@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 23:36:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:29:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:20:01 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_shell(t_shell *shell, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	shell->pwd = set_pwd(shell);
+	shell->heredoc_on = false;
 }
 
 void	take_comm(t_token **tokens, t_shell *shell)

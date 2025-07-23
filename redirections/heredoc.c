@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/21 19:40:31 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:26:06 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,32 +114,22 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
  * - Handles parent logic and stores input fd
  * Marks the command as errored on any failure.
  */
-void	heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
-		t_token **tokens)
+void	heredoc_do(t_cmd *cmd, t_grouped group, char *delimiter)
 {
 	int			pipe_fd[2];
 	pid_t		pid;
-	t_grouped	group;
 
-	group = build_group(shell, cmd, 1, tokens);
-	if (!group)
-	{
-		close_free(tokens, shell);
-		return ;
-	}
+	if (token_has_pipe(group->tokens))
+		group->heredoc_pipe = true;
 	if (init_heredoc_pipe(pipe_fd) == -1)
-	{
-		close_free(tokens, shell);
-		return ;
-	}
+		return (cleanup_heredoc_and_exit(cmd, group, 100));
 	pid = create_heredoc_child(pipe_fd, delimiter, group);
 	if (pid == -1)
 	{
 		cmd->redir_error = 1;
-		close_free(tokens, shell);
+		cleanup_heredoc_and_exit(cmd, group, 100);
 		return ;
 	}
 	if (pid > 0)
 		handle_heredoc_parent(cmd, group, pipe_fd, pid);
-	free(group);
 }

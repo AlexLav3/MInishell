@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 18:47:46 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/23 17:03:19 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static int	count_non_redir_tokens(t_token *tokens)
 	return (count);
 }
 
-static bool	handle_redirs_only(t_token *delim, t_cmd *cmd, t_shell *shell,
-		t_token **tokens)
+static bool	handle_redirs_only(t_token *delim, t_cmd *cmd, t_grouped group)
 {
 	t_token	*curr;
 
@@ -44,7 +43,7 @@ static bool	handle_redirs_only(t_token *delim, t_cmd *cmd, t_shell *shell,
 	{
 		if (token_is_redir(curr))
 		{
-			if (handle_redirection_token(&curr, cmd, shell, tokens))
+			if (handle_redirection_token(&curr, cmd, group))
 			{
 				if (cmd->redir_error)
 				{
@@ -94,19 +93,18 @@ static bool	fill_args_only(t_token *tokens, char **args, t_cmd *cmd)
  * tokens (e.g. `<`, `>`, `>>`, `<<`). Returns the final arguments array.
  * Sets redirection fields in the `t_cmd` struct.
  */
-char	**parse_args_and_redirs(t_token **tokens, t_cmd *cmd, t_shell *shell)
+char	**parse_args_and_redirs(t_token **tokens, t_cmd *cmd, t_grouped group)
 {
 	char	**args;
 	int		arg_count;
 
-	if (!handle_redirs_only(*tokens, cmd, shell, tokens))
+	if (!handle_redirs_only(*tokens, cmd, group))
 		return (NULL);
 	arg_count = count_non_redir_tokens(*tokens);
 	args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!args)
 	{
-		reset_redirection(cmd);
-		close_free(tokens, shell);
+		cleanup_heredoc_and_exit(cmd, group, 100);
 		return (NULL);
 	}
 	if (!fill_args_only(*tokens, args, cmd))
@@ -119,10 +117,9 @@ char	**parse_args_and_redirs(t_token **tokens, t_cmd *cmd, t_shell *shell)
  * Delegates to appropriate functions for `<`, `>`, `>>`, or `<<`.
  * Returns 1 if it was a redirection token.
  */
-int	handle_redirection_token(t_token **delim, t_cmd *cmd, t_shell *shell,
-		t_token **tokens)
+int	handle_redirection_token(t_token **delim, t_cmd *cmd, t_grouped group)
 {
-	if (!delim || !*delim || !cmd || !shell || !tokens)
+	if (!delim || !*delim || !cmd || !group->shell || !group->tokens)
 		return (0);
 	if (cmd->redir_error)
 		return (1);
@@ -137,7 +134,7 @@ int	handle_redirection_token(t_token **delim, t_cmd *cmd, t_shell *shell,
 	{
 		if ((*delim)->next && (*delim)->next->com)
 		{
-			heredoc_do(cmd, shell, (*delim)->next->com, tokens);
+			heredoc_do(cmd, group, (*delim)->next->com);
 			return (1);
 		}
 		else

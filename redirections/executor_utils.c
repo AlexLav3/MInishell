@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:14:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:40:59 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,21 @@ void	run_child_redir(char *path, t_cmd *cmd, t_shell *shell,
 void	execve_cmd(t_cmd *cmd, t_shell *shell, t_token **tokens)
 {
 	char	*full_path;
+	int		i;
 
 	apply_redirection(cmd);
 	full_path = get_cmd_path(cmd->args[0], shell);
 	if (!full_path)
-	{
-		perror(cmd->args[0]);
 		cleanup_child_and_exit(cmd, shell, tokens, 127);
+	i = 0;
+	while (cmd->args[i] != NULL)
+	{
+		if (ft_strcmp(cmd->args[i], "|") == 0 && shell->heredoc_on)
+		{
+			cmd->args[i] = NULL;
+			break ;
+		}
+		i++;
 	}
 	execve(full_path, cmd->args, shell->env_var);
 	perror("execve");

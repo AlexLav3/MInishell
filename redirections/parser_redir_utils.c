@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/21 19:42:23 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/23 16:27:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,19 +114,18 @@ void	cleanup_heredoc_and_exit(t_cmd *cmd, t_grouped group,
 {
 	if (group)
 	{
+		if (group->shell->env_var)
+			free_array(group->shell->env_var);
+		if (group->shell->pwd)
+			free(group->shell->pwd);
+		if (group->shell->infile)
+			free(group->shell->infile);
+		if (group->shell->outfile)
+			free(group->shell->outfile);
 		if (group->tokens)
 			deallocate(group->tokens);
-		if (group->shell)
-		{
-			if (group->shell->env_var)
-				free_array(group->shell->env_var);
-			if (group->shell->pwd)
-				free(group->shell->pwd);
-			if (group->shell->infile)
-				free(group->shell->infile);
-			if (group->shell->outfile)
-				free(group->shell->outfile);
-		}
+		if (group->heredoc_pipe)
+			free(group->cmds);
 		free(group);
 	}
 	if (cmd)
