@@ -42,8 +42,12 @@ static void	exec_fork_and_wait(char *path, char **cmd, t_shell *shell,
 	signal(SIGINT, SIG_IGN);
 	waitpid(shell->pid1, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
 		write(1, "\n", 1);
-	shell->exit_stat = WEXITSTATUS(status);
+		shell->exit_stat = 128 + WTERMSIG(status);
+	}
+	else
+		shell->exit_stat = WEXITSTATUS(status);
 	setup_shell_signals();
 }
 
