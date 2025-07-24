@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 16:26:06 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:05:30 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 	{
 		line = readline("heredoc> ");
 		group->line = line;
-		if (!line || ft_strcmp(line, delimiter) == 0)
-			break ;
+		if (!line)
+		{
+			close(write_fd);
+			cleanup_heredoc_and_exit(NULL, group, 0);
+		}
+		if (ft_strcmp(line, delimiter) == 0)
+			break;
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
