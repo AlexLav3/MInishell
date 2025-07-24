@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 16:09:56 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/23 17:30:05 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/24 16:54:16 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,6 @@ static int	syntax_redir(t_token *tokens, t_shell *shell)
 	return (0);
 }
 
-static void	check_heredoc_flag(t_token *tokens, t_shell *shell)
-{
-	while (tokens)
-	{
-		if (ft_strcmp(tokens->com, "<<") == 0)
-		{
-			shell->heredoc_on = true;
-			return ;
-		}
-		tokens = tokens->next;
-	}
-}
-
 int	syntax_error(t_token **tokens, t_shell *shell)
 {
 	int	len;
@@ -89,8 +76,6 @@ int	syntax_error(t_token **tokens, t_shell *shell)
 		len = syntax_pipe(*tokens, shell);
 	if (len == 0)
 		len = syntax_redir(*tokens, shell);
-	if (len == 0)
-		check_heredoc_flag(*tokens, shell);
 	if (len > 0)
 		deallocate(tokens);
 	return (len);

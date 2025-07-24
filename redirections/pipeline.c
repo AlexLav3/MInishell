@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 17:11:42 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:00:50 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,16 @@ int	count_pipes(t_token *tokens)
  */
 static int	process_pipe_token(t_pipe_context *ctx, t_grouped group)
 {
+	t_token	*tmp;
+
 	ctx->cmd->args = parse_args_and_redirs(ctx->start, ctx->cmd, group);
 	if (!ctx->cmd->args)
 		return (0);
-	if (ctx->curr)
-		*(ctx->start) = ctx->curr->next;
-	else
-		*(ctx->start) = NULL;
+	tmp = *(ctx->start);
+	while (tmp && !(tmp->com && ft_strcmp(tmp->com, "|") == 0))
+		tmp = tmp->next;
+	if (tmp)
+		ctx->start = &(tmp->next);
 	return (1);
 }
 

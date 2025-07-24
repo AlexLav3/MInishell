@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 17:19:42 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/24 16:53:35 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct s_shell
 	char			*infile;
 	char			*outfile;
 	int				env_idx;
-	bool			heredoc_on;
 }					t_shell;
 
 typedef struct s_grouped

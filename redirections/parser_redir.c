@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 17:03:19 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:15:39 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	count_non_redir_tokens(t_token *tokens)
 	count = 0;
 	while (tokens)
 	{
+		if (tokens->com && ft_strcmp(tokens->com, "|") == 0)
+			break ;
 		if (token_is_redir(tokens))
 		{
 			tokens = tokens->next;
@@ -41,6 +43,8 @@ static bool	handle_redirs_only(t_token *delim, t_cmd *cmd, t_grouped group)
 	curr = delim;
 	while (curr)
 	{
+		if (curr->com && ft_strcmp(curr->com, "|") == 0)
+			break ;
 		if (token_is_redir(curr))
 		{
 			if (handle_redirection_token(&curr, cmd, group))
@@ -68,6 +72,8 @@ static bool	fill_args_only(t_token *tokens, char **args, t_cmd *cmd)
 	i = 0;
 	while (curr)
 	{
+		if (curr->com && ft_strcmp(curr->com, "|") == 0)
+			break ;
 		if (token_is_redir(curr))
 		{
 			curr = curr->next;
@@ -76,11 +82,7 @@ static bool	fill_args_only(t_token *tokens, char **args, t_cmd *cmd)
 			continue ;
 		}
 		if (handle_arg_token(&curr, args, &i) == -1)
-		{
-			free_partial_args(args, i);
-			cmd->args = NULL;
-			return (false);
-		}
+			return (free_partial_args(args, i), cmd->args = NULL, false);
 		i++;
 		curr = curr->next;
 	}
