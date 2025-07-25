@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/19 21:14:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/25 23:52:29 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
  */
 void	handle_exit_status(t_shell *shell, int status)
 {
+	printf("raw status: %d\n", status);
+	printf("exit: %d\n", WEXITSTATUS(status));
+	printf("signaled: %d\n", WIFSIGNALED(status));
+	printf("signal: %d\n", WTERMSIG(status));
 	if (WIFEXITED(status))
 		shell->exit_stat = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
