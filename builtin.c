@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 02:47:33 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/16 19:56:17 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/25 22:38:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_echo(char **cmd)
 			write(1, " ", 1);
 		i++;
 	}
-	if (n_option || cmd[i] == NULL)
+	if (!n_option)
 		write(1, "\n", 1);
 	return (i);
 }
