@@ -6,13 +6,13 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/24 19:05:30 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/26 22:51:50 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../Minishell.h>
 
-t_grouped	g_global = NULL;
+volatile sig_atomic_t g_signal = 0;
 
 /*
  * Child process responsible for reading heredoc input line-by-line
@@ -24,29 +24,32 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 {
 	char	*line;
 
-	g_global = group;
 	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
-		group->line = line;
+		if (g_signal != 0 || !line)
+		{
+			free(line);
+			close(write_fd);
+			cleanup_heredoc_and_exit(NULL, group, 130);
+		}
 		if (!line)
 		{
 			close(write_fd);
-			cleanup_heredoc_and_exit(NULL, group, 0);
+			cleanup_heredoc_and_exit(NULL, group, 130);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
 			break;
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
-		group->line = NULL;
 	}
 	if (line)
 		free(line);
 	close(write_fd);
-	cleanup_heredoc_and_exit(NULL, group, 0);
+	cleanup_heredoc_and_exit(NULL, group, 130);
 }
 
 /*
@@ -105,7 +108,9 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
 	{
 		write(1, "\n", 1);
 		group->shell->exit_stat = 128 + WTERMSIG(status);
+		cmd->redir_error = 1;
 		close(pipe_fd[0]);
+		cmd->redir_in = -1;
 		reset_redirection(cmd);
 	}
 	else
@@ -124,6 +129,7 @@ void	heredoc_do(t_cmd *cmd, t_grouped group, char *delimiter)
 	int			pipe_fd[2];
 	pid_t		pid;
 
+	g_signal = 0;
 	if (token_has_pipe(group->tokens))
 		group->heredoc_pipe = true;
 	if (init_heredoc_pipe(pipe_fd) == -1)

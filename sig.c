@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 17:42:13 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/26 22:50:13 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,7 @@ void	setup_heredoc_signals(void)
 void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
-	write(2, "\n", 1);
-	if (g_global)
-	{
-		if (g_global->line)
-			free(g_global->line);
-		cleanup_heredoc_and_exit(NULL, g_global, 130);
-	}
-	_exit(130);
+	g_signal = 1;
+	rl_replace_line("", 0);
+	rl_done = 1;
 }

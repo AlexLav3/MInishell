@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/24 16:53:35 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/26 22:48:20 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ typedef struct s_grouped
 	bool			heredoc_pipe;
 }					*t_grouped;
 
-extern t_grouped	g_global;
+extern volatile sig_atomic_t g_signal;
+
 
 void				cleanup_heredoc_and_exit(t_cmd *cmd, t_grouped group,
 						int status);
