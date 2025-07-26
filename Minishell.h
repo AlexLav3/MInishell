@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 22:53:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:53:35 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,14 @@ typedef struct s_grouped
 	t_shell			*shell;
 	t_cmd			*cmds;
 	int				cmd_count;
-}					t_grouped;
+	char			*line;
+	bool			heredoc_pipe;
+}					*t_grouped;
 
+extern t_grouped	g_global;
+
+void				cleanup_heredoc_and_exit(t_cmd *cmd, t_grouped group,
+						int status);
 t_grouped			build_group(t_shell *shell, t_cmd *cmds, int cmd_count,
 						t_token **tokens);
 void				cleanup(char **args, t_shell *px, t_token **tokens,
@@ -168,7 +174,7 @@ char				*handle_dollar(char *cmd, t_shell *shell);
 
 // handle redir (COPY_REDIR)
 //executor_main.c (static: 2)
-void				execute_piped_commands(t_shell *px, t_grouped *grp);
+void				execute_piped_commands(t_shell *px, t_grouped grp);
 void				single_cmd_with_redir(t_token **tokens, t_shell *shell);
 void				execute_single_redir(t_cmd *cmd, t_shell *shell,
 						t_token **tokens);
@@ -180,8 +186,7 @@ void				run_child_redir(char *path, t_cmd *cmd, t_shell *shell,
 void				execve_cmd(t_cmd *cmd, t_shell *shell, t_token **tokens);
 void				close_all_pipe_fds(t_shell *px);
 //heredoc.c (static: 4)
-void				heredoc_do(t_cmd *cmd, t_shell *shell, char *delimiter,
-						t_token **tokens);
+void				heredoc_do(t_cmd *cmd, t_grouped group, char *delimiter);
 //parser_redir_utils.c
 int					redir_token_in_out(t_token **tokens, t_cmd *cmd);
 int					redir_token_append(t_token **tokens, t_cmd *cmd);
@@ -189,11 +194,11 @@ int					handle_arg_token(t_token **token, char **args, int *i);
 void				readirs(int dir, t_cmd *cmd, char *com);
 //parser_redir.c
 char				**parse_args_and_redirs(t_token **tokens, t_cmd *cmd,
-						t_shell *shell);
+						t_grouped group);
 int					handle_redirection_token(t_token **delim, t_cmd *cmd,
-						t_shell *shell, t_token **tokens);
-void				fill_args_and_handle_redir(t_token **tokens, t_cmd *cmd,
-						char **args, t_shell *shell);
+						t_grouped group);
+// void				fill_args_and_handle_redir(t_token **tokens, t_cmd *cmd,
+// 						char **args, t_shell *shell);
 //pipeline.c (static: 1)
 void				pipe_cmds_with_redir(t_token **tokens, t_shell *shell);
 //redir_apply.c (static: 2)

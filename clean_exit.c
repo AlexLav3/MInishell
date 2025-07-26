@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 12:07:17 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/20 18:41:10 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/22 19:32:53 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	free_array(char **arr)
 	while (arr[i])
 	{
 		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
 	free(arr);

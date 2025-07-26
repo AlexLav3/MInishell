@@ -1,0 +1,82 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "C/C++: gcc build and debug",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceRoot}/minishell",
+			"stopAtEntry": false,
+			"cwd": "${workspaceRoot}",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				},
+				{
+					"description": "Set Disassembly Flavor to Intel",
+					"text": "-gdb-set disassembly-flavor intel",
+					"ignoreFailures": true
+				},
+				{
+					// https://sourceware.org/gdb/onlinedocs/gdb/Forks.html
+					"description": "Fork follows Child process",
+					"text": "set follow-fork-mode child",
+					// "text": "set follow-fork-mode parent",
+					"ignoreFailures": true
+				},
+				{
+					// https://sourceware.org/gdb/onlinedocs/gdb/Forks.html
+					"description": "Fork will keep the other process attached to debugger",
+					// "text": "set detach-on-fork off",
+					"text": "set detach-on-fork on",
+					"ignoreFailures": true
+				},
+				{
+					// https://sourceware.org/gdb/onlinedocs/gdb/Forks.html
+					"description": "GDB will retain control of all forked processes (including nested forks)",
+					"text": "show detach-on-fork",
+					"ignoreFailures": true
+				},
+				{
+					"description": "Follow child after fork",
+					"text": "set follow-fork-mode child"
+				},
+				{
+					"description": "Don't detach parent after fork",
+					"text": "set detach-on-fork off"
+				}
+				// {
+				// 	// https://sourceware.org/gdb/onlinedocs/gdb/Forks.html
+				// 	"description": "GDB will follow the child process after a fork",
+				// 	"text": "show follow-fork-mode",
+				// 	"ignoreFailures": true
+				// },
+				// {
+				// 	// https://sourceware.org/gdb/onlinedocs/gdb/Forks.html
+				// 	"description": "GDB will not detach the child process on fork",
+				// 	"text": "show detach-on-fork",
+				// 	"ignoreFailures": true
+				// },
+				// {
+				// 	"description": "Stay with parent after fork",
+				// 	"text": "set follow-fork-mode parent"
+				// },
+				// {
+				// 	"description": "Don't detach child on fork",
+				// 	"text": "set detach-on-fork off"
+				// }
+			],
+			// "preLaunchTask": "C/C++: gcc build subproject",
+			// "preLaunchTask":"make project",
+			"miDebuggerPath": "/usr/bin/gdb"
+		}
+	]
+}

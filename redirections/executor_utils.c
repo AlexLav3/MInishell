@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:47 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/26 20:55:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:53:48 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ void	execve_cmd(t_cmd *cmd, t_shell *shell, t_token **tokens)
 	apply_redirection(cmd);
 	full_path = get_cmd_path(cmd->args[0], shell);
 	if (!full_path)
-	{
-		perror(cmd->args[0]);
 		cleanup_child_and_exit(cmd, shell, tokens, 127);
-	}
 	execve(full_path, cmd->args, shell->env_var);
 	perror("execve");
 	if (full_path != cmd->args[0])

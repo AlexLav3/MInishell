@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 23:21:28 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:42:13 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	setup_shell_signals(void)
 void	handle_sigint_prompt(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
 	rl_replace_line("", 0);
+	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_redisplay();
 }
@@ -48,5 +48,11 @@ void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	write(2, "\n", 1);
+	if (g_global)
+	{
+		if (g_global->line)
+			free(g_global->line);
+		cleanup_heredoc_and_exit(NULL, g_global, 130);
+	}
 	_exit(130);
 }

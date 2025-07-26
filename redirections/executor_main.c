@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:37:01 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 18:35:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/24 19:00:41 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	update_fds(t_shell *px)
  * - In the parent, updates pipe file descriptors
  * At the end, it waits for all child processes.
  */
-void	execute_piped_commands(t_shell *px, t_grouped *grp)
+void	execute_piped_commands(t_shell *px, t_grouped grp)
 {
 	int	i;
 
@@ -87,7 +87,7 @@ void	execute_piped_commands(t_shell *px, t_grouped *grp)
 		{
 			setup_in_out(px, grp->cmds, grp->cmd_count, i);
 			close_all_pipe_fds(px);
-			execve_cmd(& grp->cmds[i], grp->shell, grp->tokens);
+			execve_cmd(&grp->cmds[i], grp->shell, grp->tokens);
 			exit(127);
 		}
 		update_fds(px);
@@ -103,20 +103,26 @@ void	execute_piped_commands(t_shell *px, t_grouped *grp)
  */
 void	single_cmd_with_redir(t_token **tokens, t_shell *shell)
 {
-	t_cmd	cmd;
+	t_cmd		cmd;
+	t_grouped	group;
 
 	init_cmd(&cmd);
-	cmd.args = parse_args_and_redirs(tokens, &cmd, shell);
+	group = build_group(shell, &cmd, 1, tokens);
+	if (!group)
+		return ;
+	cmd.args = parse_args_and_redirs(tokens, &cmd, group);
 	if (!cmd.args || !cmd.args[0] || cmd.redir_error)
 	{
 		if (cmd.args)
 			free_array(cmd.args);
 		reset_redirection(&cmd);
+		free(group);
 		return ;
 	}
 	execute_single_redir(&cmd, shell, tokens);
 	free_array(cmd.args);
 	reset_redirection(&cmd);
+	free(group);
 }
 
 /*
@@ -132,6 +138,7 @@ void	execute_single_redir(t_cmd *cmd, t_shell *shell, t_token **tokens)
 {
 	char	*path;
 	int		status;
+	pid_t	ret;
 
 	if (!prep_command_path(cmd, shell, &path))
 		return ;
@@ -146,8 +153,11 @@ void	execute_single_redir(t_cmd *cmd, t_shell *shell, t_token **tokens)
 	}
 	if (shell->pid1 == 0)
 		run_child_redir(path, cmd, shell, tokens);
-	waitpid(shell->pid1, &status, 0);
-	handle_exit_status(shell, status);
+	ret = waitpid(shell->pid1, &status, 0);
+	if (ret == -1)
+		shell->exit_stat = 1;
+	else
+		handle_exit_status(shell, status);
 	if (path && path != cmd->args[0])
 		free(path);
 }
