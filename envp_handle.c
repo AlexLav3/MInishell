@@ -90,7 +90,7 @@ int	search_env(t_shell *shell, char *var)
 	while (var[len] && (ft_isalnum(var[len]) || var[len] == '_'))
 		len++;
 	if (len <= 0)
-		return (printf("Invalid\n"), -1);
+		return (-1); 
 	shell->var_len = len;
 	while (shell->env_var[i])
 	{

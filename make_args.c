@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_args.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 08:21:24 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 19:15:26 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/25 23:17:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,8 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else
-		return (free(prefix), NULL);
+	{
+		shell->env_idx = -1;
+		return (process_env_var(cmd, shell, prefix, i));
+	}
 }

@@ -90,7 +90,7 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
 /*
  * Parent process after forking heredoc child.
  * - Waits for child to finish
- * - If interrupted by SIGINT, sets error and closes pipe
+ * - If interrupted by SIGINT, sets error and closes pipe - this is not happening
  * - Otherwise, stores read-end of pipe for command input
  */
 static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
@@ -103,8 +103,8 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
-		perror("waitpid");
-		group->shell->exit_stat = 130;
+		write(1, "\n", 1);
+		group->shell->exit_stat = 128 + WTERMSIG(status);
 		close(pipe_fd[0]);
 		reset_redirection(cmd);
 	}
