@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/24 19:05:30 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/27 14:47:04 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <../Minishell.h>
-
-t_grouped	g_global = NULL;
 
 /*
  * Child process responsible for reading heredoc input line-by-line
@@ -24,27 +22,23 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 {
 	char	*line;
 
-	g_global = group;
 	signal(SIGINT, handle_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("heredoc> ");
-		group->line = line;
 		if (!line)
 		{
 			close(write_fd);
-			cleanup_heredoc_and_exit(NULL, group, 0);
+			cleanup_heredoc_and_exit(NULL, group, 1);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
-			break;
+			break ;
 		write(write_fd, line, ft_strlen(line));
 		write(write_fd, "\n", 1);
 		free(line);
-		group->line = NULL;
 	}
-	if (line)
-		free(line);
+	free(line);
 	close(write_fd);
 	cleanup_heredoc_and_exit(NULL, group, 0);
 }
@@ -90,7 +84,8 @@ static pid_t	create_heredoc_child(int pipe_fd[2], char *delimiter,
 /*
  * Parent process after forking heredoc child.
  * - Waits for child to finish
- * - If interrupted by SIGINT, sets error and closes pipe - this is not happening
+ * - If interrupted by SIGINT, sets error and closes pipe
+	- this is not happening
  * - Otherwise, stores read-end of pipe for command input
  */
 static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
@@ -105,7 +100,9 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
 	{
 		write(1, "\n", 1);
 		group->shell->exit_stat = 128 + WTERMSIG(status);
+		cmd->redir_error = 1;
 		close(pipe_fd[0]);
+		cmd->redir_in = -1;
 		reset_redirection(cmd);
 	}
 	else
@@ -121,8 +118,8 @@ static void	handle_heredoc_parent(t_cmd *cmd, t_grouped group, int pipe_fd[2],
  */
 void	heredoc_do(t_cmd *cmd, t_grouped group, char *delimiter)
 {
-	int			pipe_fd[2];
-	pid_t		pid;
+	int		pipe_fd[2];
+	pid_t	pid;
 
 	if (token_has_pipe(group->tokens))
 		group->heredoc_pipe = true;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:00 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/24 17:15:39 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/27 15:15:55 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static bool	handle_redirs_only(t_token *delim, t_cmd *cmd, t_grouped group)
 				if (cmd->redir_error)
 				{
 					ft_putendl_fd("minishell: syntax error", 2);
+					group->shell->exit_stat = 1;
 					return (false);
 				}
 				curr = curr->next->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_handle.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 17:53:36 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/15 12:04:47 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/26 21:07:49 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	search_env(t_shell *shell, char *var)
 	while (var[len] && (ft_isalnum(var[len]) || var[len] == '_'))
 		len++;
 	if (len <= 0)
-		return (-1); 
+		return (-1);
 	shell->var_len = len;
 	while (shell->env_var[i])
 	{

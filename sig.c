@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 17:42:13 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/27 00:22:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,15 @@ void	setup_heredoc_signals(void)
 	struct sigaction	sa;
 
 	sa.sa_handler = handle_sigint_heredoc;
+	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-	sa.sa_handler = SIG_IGN;
-	sigaction(SIGQUIT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
-	write(2, "\n", 1);
-	if (g_global)
-	{
-		if (g_global->line)
-			free(g_global->line);
-		cleanup_heredoc_and_exit(NULL, g_global, 130);
-	}
+	write(1, "\n", 1);
 	_exit(130);
 }
