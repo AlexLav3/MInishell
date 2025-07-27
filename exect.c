@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exect.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 15:17:31 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/20 19:10:51 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/27 22:33:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	child_exec(char *path, char **cmd, t_shell *shell, t_token **tokens)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (execve(path, cmd, shell->env_var) == -1)
 	{
 		close_free(tokens, shell);
