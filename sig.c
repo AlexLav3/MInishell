@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:53:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/27 00:22:54 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/27 22:44:08 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,21 @@ void	handle_sigint_prompt(int sig)
 	rl_redisplay();
 }
 
-void	setup_heredoc_signals(void)
-{
-	struct sigaction	sa;
+//maybe not needed
+// void	setup_heredoc_signals(void)
+// {
+// 	struct sigaction	sa;
 
-	sa.sa_handler = handle_sigint_heredoc;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
+// 	sa.sa_handler = handle_sigint_heredoc;
+// 	sa.sa_flags = 0;
+// 	sigemptyset(&sa.sa_mask);
+// 	sigaction(SIGINT, &sa, NULL);
+// 	signal(SIGQUIT, SIG_IGN);
+// }
 
-void	handle_sigint_heredoc(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	_exit(130);
-}
+// void	handle_sigint_heredoc(int sig)
+// {
+// 	(void)sig;
+// 	write(1, "\n", 1);
+// 	_exit(130);
+// }
