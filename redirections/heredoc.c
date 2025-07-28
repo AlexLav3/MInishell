@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:38:04 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/27 22:39:08 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:12:14 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 {
 	char	*line;
 
+	if (group->heredoc_pipe)
+		free_left_pipe_side(group->tokens, group->heredoc_token,
+			group->cmds, group->cmd_count - 1);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -30,6 +33,7 @@ static void	heredoc_child_process(int write_fd, char *delimiter,
 		if (!line)
 		{
 			close(write_fd);
+			line = NULL;
 			cleanup_heredoc_and_exit(NULL, group, 1);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
@@ -121,6 +125,11 @@ void	heredoc_do(t_cmd *cmd, t_grouped group, char *delimiter)
 	int		pipe_fd[2];
 	pid_t	pid;
 
+	if (token_has_pipe(group->tokens))
+	{
+		group->heredoc_pipe = true;
+		group->heredoc_token = find_heredoc_token(*group->tokens);
+	}
 	if (token_has_pipe(group->tokens))
 		group->heredoc_pipe = true;
 	if (init_heredoc_pipe(pipe_fd) == -1)

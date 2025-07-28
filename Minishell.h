@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/26 23:38:17 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/07/28 10:14:07 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,12 @@ typedef struct s_grouped
 	int				cmd_count;
 	char			*line;
 	bool			heredoc_pipe;
+	t_token			*heredoc_token;
 }					*t_grouped;
+
+void				free_left_pipe_side(t_token **tokens,
+						t_token *heredoc_token, t_cmd *cmds, int cmd_count);
+t_token				*find_heredoc_token(t_token *tokens);
 
 void				cleanup_heredoc_and_exit(t_cmd *cmd, t_grouped group,
 						int status);

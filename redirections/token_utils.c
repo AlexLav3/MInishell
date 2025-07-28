@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:50:10 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 17:02:59 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/28 09:51:11 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_grouped	build_group(t_shell *shell, t_cmd *cmds, int cmd_count,
 	group->cmd_count = cmd_count;
 	group->line = NULL;
 	group->heredoc_pipe = false;
+	group->heredoc_token = NULL;
 	return (group);
 }
 

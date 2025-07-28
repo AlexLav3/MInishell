@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 18:58:49 by ferenc            #+#    #+#             */
-/*   Updated: 2025/07/23 17:24:53 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:12:58 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,41 @@ void	cleanup_pipe_cmds(t_cmd *cmds, int cmd_count, t_token **tokens,
 	free(cmds);
 	deallocate(&head);
 	*tokens = NULL;
+}
+
+t_token	*find_heredoc_token(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->com && ft_strcmp(tokens->com, "<<") == 0)
+			return (tokens);
+		tokens = tokens->next;
+	}
+	return (NULL);
+}
+
+void	free_left_pipe_side(t_token **tokens, t_token *heredoc_token,
+			t_cmd *cmds, int cmd_count)
+{
+	int		i;
+	t_token	*curr;
+	t_token	*tmp;
+
+	curr = *tokens;
+	while (curr && curr != heredoc_token)
+	{
+		tmp = curr->next;
+		if (curr->com)
+			free(curr->com);
+		free(curr);
+		curr = tmp;
+	}
+	*tokens = heredoc_token;
+	i = 0;
+	while (i < cmd_count)
+	{
+		free_array(cmds[i].args);
+		reset_redirection(&cmds[i]);
+		i++;
+	}
 }
