@@ -10,3 +10,10 @@ hello
  world
  here is more world with hello
  hello
+
+ issue with commands:
+ segfault:
+ echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $ \ <<"
+
+ reachables:
+ << eof | ls
