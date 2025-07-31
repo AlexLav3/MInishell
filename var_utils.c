@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 12:28:06 by fnagy             #+#    #+#             */
-/*   Updated: 2025/07/31 10:27:54 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/31 16:16:48 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,38 +63,6 @@ char	*expand_nested_dollar(char *suf, t_shell *shell)
 	return (tmp);
 }
 
-static char	*handle_var_exit_status(char *cmd, t_shell *shell,
-				int i, char **suf)
-{
-	char	*value;
-
-	value = ft_itoa(shell->exit_stat);
-	*suf = ft_strdup(cmd + (i + 2));
-	return (value);
-}
-
-static char	*handle_invalid_env(char c)
-{
-	if (c != ' ')
-		return (ft_strdup(""));
-	return (ft_strdup("$"));
-}
-
-static char	*handle_valid_env(t_shell *shell, char *prefix)
-{
-	char	*env;
-	char	*value;
-
-	env = shell->env_var[shell->env_idx];
-	value = ft_strchr(env, '=');
-	if (!value)
-	{
-		free(prefix);
-		return (ft_strdup(""));
-	}
-	return (ft_strdup(value + 1));
-}
-
 char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 {
 	char	*value;
@@ -113,40 +81,6 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 		suf = expand_nested_dollar(suf, shell);
 	return (join_and_free(prefix, join_and_free(value, suf)));
 }
-
-// char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
-// {
-// 	char	*env;
-// 	char	*value;
-// 	char	*suf = NULL;
-
-// 	value = NULL;
-// 	if (cmd[i + 1] == '?')
-// 	{
-// 		value = ft_itoa(shell->exit_stat);
-// 		suf = ft_strdup(cmd + (i + 2));
-// 	}
-// 	else if (shell->env_idx < 0)
-// 	{
-// 		if(cmd[i + 1] != ' ')
-// 			value = ft_strdup("");
-// 		else 
-// 			value = ft_strdup("$");
-// 	}
-// 	else if (shell->env_idx >= 0)
-// 	{
-// 		env = shell->env_var[shell->env_idx];
-// 		value = ft_strchr(env, '=');
-// 		if (!value)
-// 			return (free(prefix), ft_strdup(""));
-// 		value = ft_strdup(value + 1);
-// 	}
-// 	if (cmd[i + 1] != '?')
-// 		suf = ft_strdup(cmd + (i + 1) + shell->var_len);
-// 	if (ft_strchr(suf, '$') != NULL)
-// 		suf = expand_nested_dollar(suf, shell);
-// 	return (join_and_free(prefix, join_and_free(value, suf)));
-// }
 
 int	valid_name(char *name)
 {

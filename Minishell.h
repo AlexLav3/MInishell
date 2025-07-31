@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fnagy <fnagy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/28 14:44:59 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/31 07:39:01 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/31 16:16:34 by fnagy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ typedef struct s_grouped
 	bool			heredoc_pipe;
 	t_token			*heredoc_token;
 }					*t_grouped;
+
+char				*handle_var_exit_status(char *cmd, t_shell *shell,
+						int i, char **suf);
+char				*handle_invalid_env(char c);
+char				*handle_valid_env(t_shell *shell, char *prefix);
 
 bool				segment_has_only_heredoc(t_token *token);
 
