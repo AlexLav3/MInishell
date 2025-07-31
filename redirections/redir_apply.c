@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:44:09 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/23 16:31:02 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/31 07:40:45 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +115,17 @@ void	reset_redirection(t_cmd *cmd)
 		close(cmd->redir_out);
 		cmd->redir_out = -1;
 	}
+}
+
+bool	segment_has_only_heredoc(t_token *token)
+{
+	while (token && token->com && ft_strcmp(token->com, "|") != 0)
+	{
+		if (!token_is_redir(token))
+			return (false);
+		if (ft_strcmp(token->com, "<<") == 0)
+			return (true);
+		token = token->next;
+	}
+	return (false);
 }

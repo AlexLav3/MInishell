@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:39:08 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/24 17:00:50 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/31 07:40:23 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,19 @@ int	count_pipes(t_token *tokens)
 static int	process_pipe_token(t_pipe_context *ctx, t_grouped group)
 {
 	t_token	*tmp;
+	t_token	*new;
 
+	if (segment_has_only_heredoc(*(ctx->start)))
+	{
+		new = malloc(sizeof(t_token));
+		if (!new)
+			return (0);
+		new->com = ft_strdup("true");
+		new->next = *(ctx->start);
+		*(ctx->start) = new;
+		if (group->tokens && *(group->tokens) == new->next)
+			*(group->tokens) = new;
+	}
 	ctx->cmd->args = parse_args_and_redirs(ctx->start, ctx->cmd, group);
 	if (!ctx->cmd->args)
 		return (0);
@@ -120,16 +132,14 @@ void	pipe_cmds_with_redir(t_token **tokens, t_shell *shell)
 	int			cmd_count;
 	t_cmd		*cmds;
 	t_shell		px;
-	t_token		*head;
 	t_grouped	group;
 
-	head = *tokens;
 	cmd_count = init_cmds_and_group(tokens, shell, &cmds, &group);
 	if (!cmd_count || !build_cmds_from_tokens(group))
 		return (free(group), handle_cmd_failure(cmds, tokens, shell,
 				cmd_count));
 	init_pipex(&px, shell);
 	execute_piped_commands(&px, group);
-	cleanup_pipe_cmds(cmds, cmd_count, tokens, head);
+	cleanup_pipe_cmds(cmds, cmd_count, tokens, *tokens);
 	free(group);
 }

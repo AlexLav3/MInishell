@@ -6,7 +6,7 @@
 /*   By: ferenc <ferenc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 20:50:10 by elavrich          #+#    #+#             */
-/*   Updated: 2025/07/30 22:13:49 by ferenc           ###   ########.fr       */
+/*   Updated: 2025/07/31 07:48:35 by ferenc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,7 @@ void	cleanup_child_and_exit(t_cmd *cmd, t_shell *shell, t_token **tokens,
 	if (tokens)
 		deallocate(tokens);
 	if (cmd)
-	{
-		if (cmd->args)
-			free_array(cmd->args);	
 		reset_redirection(cmd);
-	}		
 	if (shell)
 	{
 		if (shell->env_var)
