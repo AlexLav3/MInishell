@@ -67,7 +67,7 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 {
 	char	*env;
 	char	*value;
-	char	*suf;
+	char	*suf = NULL;
 
 	value = NULL;
 	if (cmd[i + 1] == '?')
@@ -76,7 +76,12 @@ char	*process_env_var(char *cmd, t_shell *shell, char *prefix, int i)
 		suf = ft_strdup(cmd + (i + 2));
 	}
 	else if (shell->env_idx < 0)
-		value = ft_strdup("");
+	{
+		if(cmd[i + 1] != ' ')
+			value = ft_strdup("");
+		else 
+			value = ft_strdup("$");
+	}
 	else if (shell->env_idx >= 0)
 	{
 		env = shell->env_var[shell->env_idx];

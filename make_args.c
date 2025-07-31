@@ -70,7 +70,7 @@ char	*handle_dollar(char *cmd, t_shell *shell)
 	idx = search_env(shell, cmd + (i + 1));
 	if (idx >= 0)
 	{
-		shell->env_idx = search_env(shell, cmd + (i + 1));
+		shell->env_idx = idx;
 		return (process_env_var(cmd, shell, prefix, i));
 	}
 	else

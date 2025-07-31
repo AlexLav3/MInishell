@@ -38,6 +38,8 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->exit_stat = 0;
 	shell->infile = NULL;
 	shell->outfile = NULL;
+	shell->env_idx = 0;
+	shell->var_len = 0;
 	shell->env_var = copy_envp(envp, NULL);
 	if (!shell->env_var)
 	{
