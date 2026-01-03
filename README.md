@@ -1,4 +1,4 @@
-# Minishell - 42Core project 
+# Minishell - 42Core project  >_ 
 
 ## Project Overview:
 A small shell that has to imitate bash behavior 
